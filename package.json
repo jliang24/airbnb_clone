@@ -1,0 +1,18 @@
+{
+  "name": "airbnb_clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client": "cd client && npm start",
+    "server": "cd server && npm run dev",
+    "mongo": "concurrently \"service mongod start\" \"mongod\"",
+    "dev": "concurrently \"npm run client\" \"npm run mongo\" \"npm run server\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
+}
