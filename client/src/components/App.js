@@ -3,7 +3,7 @@ import Header from './Header';
 
 export default ({ children }) => {
   return (
-    <div>
+    <div className="ui container">
       <Header />
       {children}
     </div>

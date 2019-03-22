@@ -8,9 +8,10 @@ import reduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import Welcome from './components/Welcome';
 import Signup from './components/auth/Signup';
-import Feature from './components/Feature';
+import ListingCreate from './components/listing/ListingCreate';
 import Signout from './components/auth/Signout';
 import Signin from './components/auth/Signin';
+import './semantic/dist/semantic.min.css';
 
 const store = createStore(
   reducers,
@@ -26,9 +27,9 @@ ReactDOM.render(
       <App>
         <Route path="/" exact component={Welcome} />
         <Route path="/signup" component={Signup} />
-        <Route path="/feature" component={Feature} />
         <Route path="/signout" component={Signout} />
         <Route path="/signin" component={Signin} />
+        <Route path="/listing/create" component={ListingCreate} />
       </App>
     </BrowserRouter>
   </Provider>,
