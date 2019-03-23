@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import renderField from '../renderField';
+import { renderField, renderError } from '../../utils/renderField';
 import states from '../../utils/states';
+import Counter from '../../utils/Counter';
 
 class ListingForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      details: {
-        guests: 0,
-        bedrooms: 0,
-        beds: 0,
-        baths: 0
-      }
-    };
     this.detailKeys = ['guests', 'bedrooms', 'beds', 'baths'];
+    this.state = { guests: 0, bedrooms: 0, beds: 0, baths: 0 };
   }
 
   renderStates() {
@@ -27,53 +21,48 @@ class ListingForm extends Component {
     });
   }
 
-  renderSelectField({ input, children }) {
-    return <select {...input}>{children}</select>;
+  renderSelectField({ input, children, meta }) {
+    return (
+      <>
+        <select {...input}>{children}</select>
+        {renderError(meta)}
+      </>
+    );
   }
 
-  capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
-  renderIncrementButtons() {
-    console.log('initiated');
-    const incrementValue = (item, value) => {
-      return prevState => {
-        return {
-          ...prevState,
-          details: { ...prevState.details, [item]: (value += 1) }
-        };
+  incrementValue = item => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        [item]: prevState[item] + 1
       };
-    };
+    });
+  };
 
+  decrementValue = item => {
+    if (this.state[item] === 0) return;
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        [item]: prevState[item] - 1
+      };
+    });
+  };
+
+  renderIncrementButtons = () => {
     return this.detailKeys.map(detailItem => {
-      const detailValue = this.state.details[detailItem];
       return (
         <React.Fragment key={detailItem}>
-          <div className="column">
-            <label>
-              {this.capitalizeFirstLetter(detailItem)}:<h5>{detailValue}</h5>
-            </label>
-          </div>
-          <div className="column">
-            <div className="ui icon buttons">
-              <div className="decrement ui basic red button icon">
-                <i className="minus icon" />
-              </div>
-              <div className="increment ui basic green button icon">
-                <i
-                  onClick={() =>
-                    this.setState(incrementValue(detailItem, detailValue))
-                  }
-                  className="plus icon"
-                />
-              </div>
-            </div>
-          </div>
+          <Counter
+            incrementValue={() => this.incrementValue(detailItem)}
+            decrementValue={() => this.decrementValue(detailItem)}
+            count={this.state[detailItem]}
+            detailItem={detailItem}
+          />
         </React.Fragment>
       );
     });
-  }
+  };
 
   render() {
     return (
@@ -133,6 +122,28 @@ class ListingForm extends Component {
   }
 }
 
+const validate = values => {
+  const errors = {};
+  console.log(values);
+  if (!values.title) {
+    errors.title = 'Please enter a title!';
+  }
+  if (!values.address) {
+    errors.address = 'Please enter an address';
+  }
+  if (!values.city) {
+    errors.city = 'Please enter a city';
+  }
+  if (!values.zip) {
+    errors.zip = 'Please enter a zip code';
+  }
+  if (!values.state) {
+    errors.state = 'Please enter a state';
+  }
+  return errors;
+};
+
 export default reduxForm({
-  form: 'listing'
+  form: 'listing',
+  validate
 })(ListingForm);
