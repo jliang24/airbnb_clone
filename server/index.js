@@ -3,7 +3,8 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
-const router = require('./router');
+require('./routes/authRoutes')(app);
+require('./routes/uploadRoutes')(app);
 const mongoose = require('mongoose');
 const cors = require('cors');
 mongoose.connect('mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb');
@@ -11,7 +12,6 @@ mongoose.connect('mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb');
 app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json({ type: '*/*' }));
-router(app);
 
 const port = process.env.PORT || 3090;
 const server = http.createServer(app);

@@ -1,20 +1,40 @@
 import React, { Component } from 'react';
 import requireAuth from '../requireAuth';
 import ListingForm from './ListingForm';
+import ListingAmenities from './ListingAmenities';
 import ListingFormReview from './ListingFormReview';
 
 class ListingCreate extends Component {
-  state = { showFormReview: false };
+  constructor(props) {
+    super(props);
+    this.nextPage = this.nextPage.bind(this);
+    this.previousPage = this.previousPage.bind(this);
+    this.state = {
+      page: 2
+    };
+  }
 
-  renderContent() {
-    if (this.state.showFormReview) {
-      return <ListingFormReview />;
-    }
-    return <ListingForm />;
+  nextPage() {
+    this.setState({ page: this.state.page + 1 });
+  }
+
+  previousPage() {
+    this.setState({ page: this.state.page - 1 });
   }
 
   render() {
-    return <div> {this.renderContent()} </div>;
+    const { page } = this.state;
+    return (
+      <div>
+        {page === 1 && <ListingForm onSubmit={this.nextPage} />}
+        {page === 2 && (
+          <ListingAmenities
+            previousPage={this.previousPage}
+            onSubmit={this.nextPage}
+          />
+        )}
+      </div>
+    );
   }
 }
 
