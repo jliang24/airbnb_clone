@@ -7,7 +7,7 @@ import { compose } from 'redux';
 class Signin extends Component {
   onSubmit = formProps => {
     this.props.signin(formProps, () => {
-      this.props.history.push('/feature');
+      this.props.history.push('/');
     });
   };
 
