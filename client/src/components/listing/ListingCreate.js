@@ -10,7 +10,7 @@ class ListingCreate extends Component {
     this.nextPage = this.nextPage.bind(this);
     this.previousPage = this.previousPage.bind(this);
     this.state = {
-      page: 2
+      page: 3
     };
   }
 
@@ -33,6 +33,7 @@ class ListingCreate extends Component {
             onSubmit={this.nextPage}
           />
         )}
+        {page === 3 && <ListingFormReview previousPage={this.previousPage} />}
       </div>
     );
   }

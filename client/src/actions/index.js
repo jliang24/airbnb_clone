@@ -1,4 +1,10 @@
-import { AUTH_USER, AUTH_ERROR } from './types';
+import {
+  AUTH_USER,
+  AUTH_ERROR,
+  SUBMIT_LISTING,
+  UPLOAD_PICTURES,
+  ADD_DETAILS
+} from './types';
 import axios from 'axios';
 
 export const signup = (formProps, callback) => async dispatch => {
@@ -36,5 +42,33 @@ export const signout = () => {
   return {
     type: AUTH_USER,
     payload: ''
+  };
+};
+
+export const submitListing = files => async (dispatch, getState) => {
+  const { auth } = getState();
+  const uploadURLS = [];
+  for (let file of files) {
+    const uploadConfig = await axios.get('http://localhost:3090/api/upload', {
+      headers: {
+        authorization: auth.authenticated
+      }
+    });
+    uploadURLS.push(uploadConfig.data.key);
+
+    await axios.put(uploadConfig.data.url, file, {
+      headers: {
+        'Content-Type': file.type
+      }
+    });
+  }
+
+  dispatch({ type: UPLOAD_PICTURES, payload: uploadURLS });
+};
+
+export const addDetails = formValues => {
+  return {
+    type: ADD_DETAILS,
+    payload: formValues
   };
 };

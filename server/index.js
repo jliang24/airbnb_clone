@@ -6,10 +6,10 @@ const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
 mongoose.connect('mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb');
-
 app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json({ type: '*/*' }));
+require('./models/listing');
 require('./routes/authRoutes')(app);
 require('./routes/uploadRoutes')(app);
 

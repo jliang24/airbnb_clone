@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { renderField, renderError } from '../../utils/renderField';
+import * as actions from '../../actions';
 import states from '../../utils/states';
 import Counter from '../../utils/Counter';
 import DatePicker from 'react-datepicker';
@@ -114,8 +117,8 @@ class ListingForm extends Component {
     });
   };
 
-  handleSubmit = values => {
-    const formValues = { ...values, ...this.state };
+  handleSubmit = () => {
+    this.props.addDetails(this.state);
     this.props.onSubmit();
   };
 
@@ -207,7 +210,7 @@ class ListingForm extends Component {
                     </div>
                   </DatePicker>
                 </div>
-                <div className="column field">
+                <div className="required column field">
                   <Field
                     name="cost"
                     label="Cost Per Night"
@@ -256,10 +259,19 @@ const validate = values => {
   if (!values.state) {
     errors.state = 'Please enter a state!';
   }
+  if (!values.cost) {
+    errors.cost = 'Please enter a price!';
+  }
   return errors;
 };
 
+ListingForm = connect(
+  null,
+  actions
+)(ListingForm);
+
 export default reduxForm({
   form: 'listing',
+  destroyOnUnmount: false,
   validate
 })(ListingForm);
