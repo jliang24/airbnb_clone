@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { renderField, renderError } from '../../utils/renderField';
 import * as actions from '../../actions';
@@ -8,6 +7,7 @@ import states from '../../utils/states';
 import Counter from '../../utils/Counter';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import NavigateButtons from './NavigateButtons';
 
 class ListingForm extends Component {
   constructor(props) {
@@ -227,15 +227,12 @@ class ListingForm extends Component {
             </div>
           </form>
         </div>
-        <div>
-          <button className="ui red button left floated">Cancel</button>
-          <button
-            onClick={this.props.handleSubmit(this.handleSubmit)}
-            className="ui primary button right floated"
-          >
-            Next
-          </button>
-        </div>
+        <NavigateButtons
+          onDismiss={this.props.previousPage}
+          dismiss="Cancel"
+          submit="Next"
+          onSubmit={this.props.handleSubmit(this.handleSubmit)}
+        />
       </>
     );
   }

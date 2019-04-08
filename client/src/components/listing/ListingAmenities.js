@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
+import NavigateButtons from './NavigateButtons';
 
 const getColor = props => {
   if (props.isDragAccept) {
@@ -134,9 +135,14 @@ const ListingAmenities = props => {
           </div>
           {files.length > 0 && <h5>Files</h5>}
           <ul>{dropFiles}</ul>
-          <button type="submit">Submit</button>
         </form>
       </div>
+      <NavigateButtons
+        onDismiss={props.previousPage}
+        dismiss="Back"
+        submit="Next"
+        onSubmit={props.handleSubmit(onFormSubmit)}
+      />
     </div>
   );
 };

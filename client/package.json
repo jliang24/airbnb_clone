@@ -8,6 +8,7 @@
     "react-datepicker": "^2.2.0",
     "react-dom": "^16.8.4",
     "react-dropzone": "^10.1.0",
+    "react-image-gallery": "^0.8.16",
     "react-redux": "^6.0.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.8",
