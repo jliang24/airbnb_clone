@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import amenities from '../../utils/amenities';
 import * as actions from '../../actions';
@@ -7,6 +7,8 @@ import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 import NavigateButtons from './NavigateButtons';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const getColor = props => {
   if (props.isDragAccept) {
@@ -54,6 +56,11 @@ const Icon = styled.div`
 
 const ListingAmenities = props => {
   const [files, setFile] = useState([]);
+  const [descriptionText, setDescriptionText] = useState('');
+
+  useEffect(() => {
+    if (props.descriptionText) setDescriptionText(props.descriptionText);
+  }, []);
 
   const renderAmenities = () => {
     return amenities.order.map(amenity => {
@@ -66,14 +73,6 @@ const ListingAmenities = props => {
         </div>
       );
     });
-  };
-
-  const onFormSubmit = formValues => {
-    if (files) {
-      const image = props.submitListing(files);
-    }
-
-    props.onSubmit();
   };
 
   const onDrop = useCallback(acceptedFiles => {
@@ -114,6 +113,19 @@ const ListingAmenities = props => {
     </div>
   ));
 
+  const changeDescriptionText = text => {
+    setDescriptionText(text);
+  };
+
+  const onFormSubmit = formValues => {
+    if (files) {
+      const image = props.submitListing(files);
+    }
+    props.addDetails({ descriptionText });
+
+    props.onSubmit();
+  };
+
   return (
     <div>
       <div className="ui container segment">
@@ -140,8 +152,12 @@ const ListingAmenities = props => {
           {files.length > 0 && <h5>Files</h5>}
           <ul>{dropFiles}</ul>
           <h4 className="ui dividing header">
-            Summary <div className="ui sub header">Optional</div>
+            Listing Details <div className="ui sub header">Optional</div>
           </h4>
+          <ReactQuill
+            value={descriptionText}
+            onChange={changeDescriptionText}
+          />
         </form>
       </div>
       <NavigateButtons
@@ -154,9 +170,15 @@ const ListingAmenities = props => {
   );
 };
 
+const mapStateToProps = state => {
+  return {
+    descriptionText: state.details.descriptionText
+  };
+};
+
 export default compose(
   connect(
-    null,
+    mapStateToProps,
     actions
   ),
   reduxForm({

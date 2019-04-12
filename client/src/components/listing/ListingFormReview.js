@@ -4,6 +4,8 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import ImageGallery from 'react-image-gallery';
 import ImageList from './Images/ImageList';
 import NavigateButtons from './NavigateButtons';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.bubble.css';
 
 class ListingFormReview extends Component {
   constructor(props) {
@@ -89,9 +91,14 @@ class ListingFormReview extends Component {
         <h2>Listing Form Preview</h2>
         {this.renderPictures()}
         <h2>{this.listing.title}</h2>
-        <h2 className="ui sub header">
+        <h2 style={{ marginTop: '0px' }} className="ui sub header">
           {this.name.first} {this.name.last}
         </h2>
+        <ReactQuill
+          readOnly
+          value={this.props.details.descriptionText}
+          theme="bubble"
+        />
         <NavigateButtons
           onDismiss={this.props.previousPage}
           dismiss="Back"

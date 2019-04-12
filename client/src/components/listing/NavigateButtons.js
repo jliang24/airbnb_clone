@@ -2,7 +2,7 @@ import React from 'react';
 
 const NavigateButtons = props => {
   return (
-    <div>
+    <div style={{ marginTop: '5px' }}>
       <button className="ui left floated red button " onClick={props.onDismiss}>
         {props.dismiss}
       </button>
