@@ -83,6 +83,7 @@ const ListingAmenities = props => {
         if (droppedFile.name === file.name) return;
       }
     }
+
     setFile([...files, ...acceptedFiles]);
   });
 
@@ -118,10 +119,13 @@ const ListingAmenities = props => {
       <div className="ui container segment">
         <form onSubmit={props.handleSubmit(onFormSubmit)}>
           <h4 className="ui dividing header">
-            Please select available amenities
+            Please select available amenities{' '}
+            <div className="ui sub header">Optional</div>
           </h4>
           {renderAmenities()}
-          <h4 className="ui dividing header">Pictures</h4>
+          <h4 className="ui dividing header">
+            Pictures <div className="ui sub header">Optional</div>
+          </h4>
           <h5>Add some pictures!</h5>
           <div className="container">
             <Container
@@ -135,6 +139,9 @@ const ListingAmenities = props => {
           </div>
           {files.length > 0 && <h5>Files</h5>}
           <ul>{dropFiles}</ul>
+          <h4 className="ui dividing header">
+            Summary <div className="ui sub header">Optional</div>
+          </h4>
         </form>
       </div>
       <NavigateButtons

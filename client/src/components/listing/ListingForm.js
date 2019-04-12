@@ -15,7 +15,7 @@ class ListingForm extends Component {
     this.detailKeys = ['guests', 'bedrooms', 'beds', 'baths'];
     this.todaysDate = new Date();
     this.state = {
-      guests: 0,
+      guests: 1,
       bedrooms: 0,
       beds: 0,
       baths: 0,
@@ -152,7 +152,7 @@ class ListingForm extends Component {
               <div className="two wide field">
                 <Field
                   name="apt"
-                  label="APT, Suite (Optional)"
+                  label="APT, Suite"
                   type="text"
                   placeholder="APT #"
                   component={renderField}
