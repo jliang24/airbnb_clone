@@ -12,6 +12,7 @@ import ListingCreate from './components/listing/ListingCreate';
 import Signout from './components/auth/Signout';
 import Signin from './components/auth/Signin';
 import './semantic/dist/semantic.min.css';
+import './css/themes.css';
 
 const store = createStore(
   reducers,

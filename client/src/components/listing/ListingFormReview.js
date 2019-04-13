@@ -6,6 +6,8 @@ import ImageList from './Images/ImageList';
 import NavigateButtons from './NavigateButtons';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
+import DatePicker from 'react-datepicker';
+import '../../css/datepicker.css';
 
 class ListingFormReview extends Component {
   constructor(props) {
@@ -23,6 +25,15 @@ class ListingFormReview extends Component {
     this.name = {
       first: 'John',
       last: 'Doe'
+    };
+
+    this.details = {
+      guests: 1,
+      bedrooms: 0,
+      beds: 0,
+      baths: 0,
+      startDate: new Date(),
+      endDate: new Date()
     };
 
     this.pictures = [
@@ -58,7 +69,11 @@ class ListingFormReview extends Component {
     //   });
     // }
     if (this.state.renderCarousel) {
-      return <ImageGallery items={this.pictures} swipeThreshold={30} />;
+      return (
+        <div className="dolly800-background">
+          <ImageGallery items={this.pictures} swipeThreshold={30} />
+        </div>
+      );
     }
     return <ImageList images={this.pictures} />;
   }
@@ -85,20 +100,29 @@ class ListingFormReview extends Component {
   }
 
   render() {
+    var d = new Date();
+    d.setDate(d.getDate() - 30);
+    var c = new Date();
+    c.setDate(c.getDate() - 1);
     return (
       <div>
         {this.renderPictureButton()}
         <h2>Listing Form Preview</h2>
         {this.renderPictures()}
-        <h2>{this.listing.title}</h2>
-        <h2 style={{ marginTop: '0px' }} className="ui sub header">
-          {this.name.first} {this.name.last}
-        </h2>
-        <ReactQuill
-          readOnly
-          value={this.props.details.descriptionText}
-          theme="bubble"
-        />
+        <div className="general">
+          <h2>{this.listing.title}</h2>
+          <h2 style={{ marginTop: '0px' }} className="ui sub header dolly600">
+            {this.name.first} {this.name.last}
+          </h2>
+          <ReactQuill
+            readOnly
+            value={this.props.details.descriptionText}
+            theme="bubble"
+          />
+          <h3 className="ui dividing header">Amenities</h3>
+          <h3 className="ui dividing header">Availability</h3>
+          <DatePicker inline readOnly monthsShown={2} includeDates={[c, d]} />
+        </div>
         <NavigateButtons
           onDismiss={this.props.previousPage}
           dismiss="Back"

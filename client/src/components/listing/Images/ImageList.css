@@ -1,16 +1,13 @@
 .image-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  grid-gap: 0 10px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-gap: 0px 0px;
   grid-auto-rows: 10px;
+  background-color: var(--dolly-800);
+  border: 1px solid var(--dolly-200);
 }
 
 .image-list img {
-  width: 360px;
-  border: 1px solid white;
-  border-radius: 3px;
-}
-
-.card {
-  border: 2px solid black !important;
+  max-width: 375px;
+  border: 1px solid var(--dolly-800);
 }

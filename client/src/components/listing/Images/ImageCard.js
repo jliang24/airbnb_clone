@@ -24,13 +24,14 @@ class ImageCard extends React.Component {
 
   onMouseOver = () => {
     this.setState({ currentHover: true });
+
     this.props.setActive(true);
   };
 
   onMouseLeave = () => {
     this.setState({ currentHover: false });
 
-    setTimeout(() => this.props.setActive(false), 10);
+    this.props.setActive(false);
   };
 
   determineStyle = () => {
@@ -39,12 +40,13 @@ class ImageCard extends React.Component {
         border: 'solid black 2px',
         transform: `scale(1.1)`,
         transition: 'all .4s linear',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        zIndex: 2,
+        position: 'relative'
       };
     } else if (this.props.active) {
       return {
         opacity: '.5',
-        zIndex: -10,
         position: 'relative'
       };
     }
@@ -59,7 +61,6 @@ class ImageCard extends React.Component {
     const { description, original } = this.props.image;
     return (
       <div
-        className="imgcard"
         style={{
           gridRowEnd: `span ${this.state.spans}`
         }}

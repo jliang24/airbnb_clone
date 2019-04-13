@@ -6,7 +6,7 @@ import * as actions from '../../actions';
 import states from '../../utils/states';
 import Counter from '../../utils/Counter';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker.min.css';
 import NavigateButtons from './NavigateButtons';
 
 class ListingForm extends Component {
@@ -125,7 +125,7 @@ class ListingForm extends Component {
   render() {
     return (
       <>
-        <div className="ui container segment">
+        <div className="ui container segment general">
           <form
             className="ui form"
             onSubmit={this.props.handleSubmit(this.handleSubmit)}
@@ -191,6 +191,7 @@ class ListingForm extends Component {
                     selectsStart
                     startDate={this.state.startDate}
                     endDate={this.state.endDate}
+                    withPortal
                   />
                 </div>
                 <div className="column field">
@@ -204,6 +205,7 @@ class ListingForm extends Component {
                     endDate={this.state.endDate}
                     monthsShown={this.state.startDate.getDate() > 27 ? 2 : 1}
                     todayButton="Select Today"
+                    withPortal
                   >
                     <div style={{ color: 'red' }}>
                       This is not check out date!
@@ -223,6 +225,15 @@ class ListingForm extends Component {
                   <label>Nights</label>
                   <label>{this.findDateDifference()}</label>
                 </div>
+              </div>
+              <div>
+                <h4 className="ui dividing header">Select unavailable dates</h4>
+                <DatePicker
+                  inline
+                  readOnly
+                  monthsShown={2}
+                  includeDates={[this.state.startDate, this.state.endDate]}
+                />
               </div>
             </div>
           </form>

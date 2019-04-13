@@ -128,7 +128,7 @@ const ListingAmenities = props => {
 
   return (
     <div>
-      <div className="ui container segment">
+      <div className="ui container segment general">
         <form onSubmit={props.handleSubmit(onFormSubmit)}>
           <h4 className="ui dividing header">
             Please select available amenities{' '}
@@ -155,6 +155,7 @@ const ListingAmenities = props => {
             Listing Details <div className="ui sub header">Optional</div>
           </h4>
           <ReactQuill
+            className="nobackground"
             value={descriptionText}
             onChange={changeDescriptionText}
           />
