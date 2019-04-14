@@ -60,6 +60,7 @@ const ListingAmenities = props => {
 
   useEffect(() => {
     if (props.descriptionText) setDescriptionText(props.descriptionText);
+    if (props.files) setFile(props.files);
   }, []);
 
   const renderAmenities = () => {
@@ -164,7 +165,7 @@ const ListingAmenities = props => {
       <NavigateButtons
         onDismiss={props.previousPage}
         dismiss="Back"
-        submit="Next"
+        submit="Show Preview"
         onSubmit={props.handleSubmit(onFormSubmit)}
       />
     </div>

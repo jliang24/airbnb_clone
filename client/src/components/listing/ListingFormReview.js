@@ -99,16 +99,26 @@ class ListingFormReview extends Component {
     );
   }
 
+  removeUnavailableDates() {
+    const { includedDates, unavailableDates } = this.props.details;
+    return includedDates.filter(includedDate => {
+      if (
+        unavailableDates.some(
+          unavailableDate =>
+            includedDate.getTime() === unavailableDate.getTime()
+        )
+      ) {
+        return false;
+      }
+      return true;
+    });
+  }
+
   render() {
-    var d = new Date();
-    d.setDate(d.getDate() - 30);
-    var c = new Date();
-    c.setDate(c.getDate() - 1);
     return (
       <div>
-        {this.renderPictureButton()}
-        <h2>Listing Form Preview</h2>
         {this.renderPictures()}
+        {this.renderPictureButton()}
         <div className="general">
           <h2>{this.listing.title}</h2>
           <h2 style={{ marginTop: '0px' }} className="ui sub header dolly600">
@@ -121,7 +131,12 @@ class ListingFormReview extends Component {
           />
           <h3 className="ui dividing header">Amenities</h3>
           <h3 className="ui dividing header">Availability</h3>
-          <DatePicker inline readOnly monthsShown={2} includeDates={[c, d]} />
+          <DatePicker
+            inline
+            readOnly
+            monthsShown={2}
+            includeDates={this.removeUnavailableDates()}
+          />
         </div>
         <NavigateButtons
           onDismiss={this.props.previousPage}

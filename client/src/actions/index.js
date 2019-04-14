@@ -3,7 +3,8 @@ import {
   AUTH_ERROR,
   SUBMIT_LISTING,
   UPLOAD_PICTURES,
-  ADD_DETAILS
+  ADD_DETAILS,
+  CLEAR_DETAILS
 } from './types';
 import axios from 'axios';
 
@@ -70,5 +71,11 @@ export const addDetails = formValues => {
   return {
     type: ADD_DETAILS,
     payload: formValues
+  };
+};
+
+export const clearDetails = () => {
+  return {
+    type: CLEAR_DETAILS
   };
 };

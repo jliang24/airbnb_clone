@@ -20,15 +20,55 @@ class ListingForm extends Component {
       beds: 0,
       baths: 0,
       startDate: new Date(),
-      endDate: new Date()
+      endDate: new Date(),
+      includedDates: [],
+      unavailableDates: [],
+      dateError: false
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
+    this.handleUnavailableDate = this.handleUnavailableDate.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.details.hasOwnProperty('includedDates')) {
+      this.setState(this.props.details);
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.state.includedDates.length !== this.findDateDifference()) {
+      const includedDatesArr = this.dateDiffArr();
+      this.setState({ includedDates: includedDatesArr });
+      const unavailableDates = this.state.unavailableDates.filter(date => {
+        return includedDatesArr.some(
+          includedDate => includedDate.getTime() === date.getTime()
+        );
+      });
+
+      this.setState({ unavailableDates });
+    }
+  }
+
+  dateDiffArr() {
+    const dateArr = [];
+    let currentDate = this.state.startDate;
+    let endDate = this.state.endDate;
+    currentDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
+    while (currentDate.getTime() <= endDate.getTime()) {
+      dateArr.push(currentDate);
+      currentDate = this.changeDateValue(currentDate, 1);
+    }
+    return dateArr;
   }
 
   changeDateValue = (date, num) => {
     const copiedDate = new Date(date);
-    return new Date(copiedDate.setDate(copiedDate.getDate() + num));
+    copiedDate.setDate(copiedDate.getDate() + num);
+    copiedDate.setHours(0, 0, 0, 0);
+
+    return new Date(copiedDate);
   };
 
   handleStartDateChange(date) {
@@ -55,6 +95,20 @@ class ListingForm extends Component {
     });
   }
 
+  handleUnavailableDate(date) {
+    if (
+      this.state.unavailableDates.some(
+        unavailableDate => date.getTime() === unavailableDate.getTime()
+      )
+    ) {
+      const unavailableDatesArr = this.state.unavailableDates.filter(
+        unavailableDate => unavailableDate.getTime() !== date.getTime()
+      );
+      return this.setState({ unavailableDates: unavailableDatesArr });
+    }
+    this.setState({ unavailableDates: [...this.state.unavailableDates, date] });
+  }
+
   findDateDifference() {
     if (!this.state.endDate || !this.state.startDate) return;
     const timeDiff = Math.abs(
@@ -62,6 +116,19 @@ class ListingForm extends Component {
     );
     const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     return diffDays + 1;
+  }
+
+  renderDateError() {
+    if (this.findDateDifference() - this.state.unavailableDates.length === 0) {
+      return (
+        <div
+          style={{ position: 'absolute', top: '35%', width: '100px' }}
+          className="ui left pointing red basic label"
+        >
+          Please allow at least one night!
+        </div>
+      );
+    }
   }
 
   renderStates() {
@@ -118,6 +185,8 @@ class ListingForm extends Component {
   };
 
   handleSubmit = () => {
+    if (this.findDateDifference() - this.state.unavailableDates.length === 0)
+      return;
     this.props.addDetails(this.state);
     this.props.onSubmit();
   };
@@ -201,7 +270,7 @@ class ListingForm extends Component {
                     onChange={this.handleEndDateChange}
                     selectsEnd
                     minDate={new Date()}
-                    startDate={this.changeDateValue(this.state.startDate, -1)}
+                    startDate={this.state.startDate}
                     endDate={this.state.endDate}
                     monthsShown={this.state.startDate.getDate() > 27 ? 2 : 1}
                     todayButton="Select Today"
@@ -223,17 +292,26 @@ class ListingForm extends Component {
                 </div>
                 <div className="column field">
                   <label>Nights</label>
-                  <label>{this.findDateDifference()}</label>
+                  <label>
+                    {this.findDateDifference() -
+                      this.state.unavailableDates.length}
+                  </label>
                 </div>
               </div>
               <div>
                 <h4 className="ui dividing header">Select unavailable dates</h4>
-                <DatePicker
-                  inline
-                  readOnly
-                  monthsShown={2}
-                  includeDates={[this.state.startDate, this.state.endDate]}
-                />
+                <div style={{ position: 'relative' }}>
+                  <DatePicker
+                    inline
+                    monthsShown={2}
+                    includeDates={this.state.includedDates}
+                    onChange={this.handleUnavailableDate}
+                    highlightDates={this.state.unavailableDates}
+                    inlineFocusSelectedMonth
+                    openToDate={this.state.startDate}
+                  />
+                  {this.renderDateError()}
+                </div>
               </div>
             </div>
           </form>
@@ -273,8 +351,13 @@ const validate = values => {
   return errors;
 };
 
+const mapStateToProps = state => {
+  return {
+    details: state.details
+  };
+};
 ListingForm = connect(
-  null,
+  mapStateToProps,
   actions
 )(ListingForm);
 

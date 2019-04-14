@@ -3,6 +3,9 @@ import requireAuth from '../requireAuth';
 import ListingForm from './ListingForm';
 import ListingAmenities from './ListingAmenities';
 import ListingFormReview from './ListingFormReview';
+import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 class ListingCreate extends Component {
   constructor(props) {
@@ -10,7 +13,7 @@ class ListingCreate extends Component {
     this.nextPage = this.nextPage.bind(this);
     this.previousPage = this.previousPage.bind(this);
     this.state = {
-      page: 3
+      page: 1
     };
   }
 
@@ -20,6 +23,10 @@ class ListingCreate extends Component {
 
   previousPage() {
     this.setState({ page: this.state.page - 1 });
+  }
+
+  componentWillUnmount() {
+    this.props.clearDetails();
   }
 
   render() {
@@ -39,4 +46,9 @@ class ListingCreate extends Component {
   }
 }
 
-export default requireAuth(ListingCreate);
+ListingCreate = connect(
+  null,
+  actions
+)(ListingCreate);
+
+export default reduxForm({ form: 'listing' })(requireAuth(ListingCreate));

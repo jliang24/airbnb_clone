@@ -32,3 +32,10 @@
   border-left-color: var(--dolly-800);
   right: 1em;
 }
+.react-datepicker__day--highlighted {
+  background-color: #fa2323;
+}
+
+.react-datepicker__day--highlighted:hover {
+  background-color: #ff7777;
+}
