@@ -9,19 +9,21 @@ import 'react-quill/dist/quill.bubble.css';
 import DatePicker from 'react-datepicker';
 import '../../css/datepicker.css';
 import { capitalizeFirstLetter } from '../../utils/text';
+import amenities from '../../utils/amenities';
+import Scheduler from './Scheduler';
 
 class ListingFormReview extends Component {
   constructor(props) {
     super(props);
     //test data
     this.listing = {
-      'Bed Sheets': true,
       address: '1900 lindoo rd',
       city: 'las vegas',
       cost: '31',
       state: 'arizona',
       zip: '89146',
-      title: "Jeff's amazing house!"
+      title: "Jeff's amazing house!",
+      ...amenities
     };
     this.name = {
       first: 'John',
@@ -122,7 +124,9 @@ class ListingFormReview extends Component {
     const renderIcons = (num, icon) => {
       const totalIcons = [];
       for (let icons = 0; icons < num; icons++) {
-        totalIcons.push(<i className={`large ${icon} icon`} />);
+        totalIcons.push(
+          <i key={`${icon} ${icons}`} className={`large ${icon} icon`} />
+        );
       }
       return totalIcons;
     };
@@ -133,16 +137,35 @@ class ListingFormReview extends Component {
           const detailValue = this.details[detailKey];
           const detailIcon = this.details.detailIcons[idx];
           return (
-            <>
+            <React.Fragment key={detailIcon}>
               <div className="listing-detail four wide column bottom aligned content">
                 <div>{renderIcons(detailValue, detailIcon)}</div>
                 <div>
-                  {' '}
                   <h3>{detailValue}</h3>
                 </div>
                 {capitalizeFirstLetter(detailKey)}
               </div>
-            </>
+            </React.Fragment>
+          );
+        })}
+      </div>
+    );
+  }
+
+  renderAmenities() {
+    return (
+      <div className="ui four column grid">
+        {amenities.order.map(amenity => {
+          const { icon } = amenities[amenity];
+          return (
+            <div className="column">
+              <div className="equal width row">
+                <h4>
+                  <i className={`${icon} large icon`} />
+                  {amenity}
+                </h4>
+              </div>
+            </div>
           );
         })}
       </div>
@@ -168,14 +191,38 @@ class ListingFormReview extends Component {
                 theme="bubble"
               />
             ))}
-          <h3 className="ui dividing header">Amenities</h3>
-          <h3 className="ui dividing header">Availability</h3>
-          <DatePicker
-            inline
-            readOnly
-            monthsShown={2}
-            includeDates={this.removeUnavailableDates()}
-          />
+          <div className="ui two column grid">
+            <div className="row">
+              <div className="column field">
+                <h3 className="ui dividing header">Amenities</h3>
+                {this.renderAmenities()}
+              </div>
+              <div
+                style={{
+                  right: '0px',
+                  position: 'absolute',
+                  top: '50px'
+                }}
+                className="column field"
+              >
+                // scheduler component
+                <Scheduler />
+              </div>
+            </div>
+          </div>
+          <div className="ui two column grid">
+            <div className="row">
+              <div className="column field">
+                <h3 className="ui dividing header">Availability</h3>
+                <DatePicker
+                  inline
+                  readOnly
+                  monthsShown={2}
+                  includeDates={this.removeUnavailableDates()}
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <NavigateButtons
           onDismiss={this.props.previousPage}

@@ -52,3 +52,7 @@ select:focus {
   padding: 0px !important;
   margin: 10px 0px 3px -20px !important;
 }
+
+.quill {
+  margin-bottom: 15px;
+}
