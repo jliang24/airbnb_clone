@@ -8,6 +8,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.bubble.css';
 import DatePicker from 'react-datepicker';
 import '../../css/datepicker.css';
+import { capitalizeFirstLetter } from '../../utils/text';
 
 class ListingFormReview extends Component {
   constructor(props) {
@@ -29,11 +30,13 @@ class ListingFormReview extends Component {
 
     this.details = {
       guests: 1,
-      bedrooms: 0,
-      beds: 0,
-      baths: 0,
+      bedrooms: 2,
+      beds: 8,
+      baths: 5,
       startDate: new Date(),
-      endDate: new Date()
+      endDate: new Date(),
+      detailKeys: ['guests', 'bedrooms', 'beds', 'baths'],
+      detailIcons: ['user outline', 'cube', 'bed', 'bath']
     };
 
     this.pictures = [
@@ -101,6 +104,7 @@ class ListingFormReview extends Component {
 
   removeUnavailableDates() {
     const { includedDates, unavailableDates } = this.props.details;
+    if (!includedDates) return;
     return includedDates.filter(includedDate => {
       if (
         unavailableDates.some(
@@ -114,6 +118,37 @@ class ListingFormReview extends Component {
     });
   }
 
+  renderListingDetails() {
+    const renderIcons = (num, icon) => {
+      const totalIcons = [];
+      for (let icons = 0; icons < num; icons++) {
+        totalIcons.push(<i className={`large ${icon} icon`} />);
+      }
+      return totalIcons;
+    };
+
+    return (
+      <div className="ui page grid listing-grid">
+        {this.details.detailKeys.map((detailKey, idx) => {
+          const detailValue = this.details[detailKey];
+          const detailIcon = this.details.detailIcons[idx];
+          return (
+            <>
+              <div className="listing-detail four wide column bottom aligned content">
+                <div>{renderIcons(detailValue, detailIcon)}</div>
+                <div>
+                  {' '}
+                  <h3>{detailValue}</h3>
+                </div>
+                {capitalizeFirstLetter(detailKey)}
+              </div>
+            </>
+          );
+        })}
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -124,11 +159,15 @@ class ListingFormReview extends Component {
           <h2 style={{ marginTop: '0px' }} className="ui sub header dolly600">
             {this.name.first} {this.name.last}
           </h2>
-          <ReactQuill
-            readOnly
-            value={this.props.details.descriptionText}
-            theme="bubble"
-          />
+          {this.renderListingDetails()}
+          {this.props.details.descriptionText &&
+            (this.props.details.descriptionText !== '' && (
+              <ReactQuill
+                readOnly
+                value={this.props.details.descriptionText}
+                theme="bubble"
+              />
+            ))}
           <h3 className="ui dividing header">Amenities</h3>
           <h3 className="ui dividing header">Availability</h3>
           <DatePicker

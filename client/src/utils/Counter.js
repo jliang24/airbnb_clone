@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
+import { capitalizeFirstLetter } from '../utils/text';
 
 class Counter extends Component {
-  capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   render() {
     return (
       <>
         <div className="column">
           <label>
-            {this.capitalizeFirstLetter(this.props.detailItem)}:
+            {capitalizeFirstLetter(this.props.detailItem)}:
             <h5>{this.props.count}</h5>
           </label>
         </div>
