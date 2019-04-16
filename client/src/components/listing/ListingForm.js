@@ -14,16 +14,18 @@ class ListingForm extends Component {
     super(props);
     this.detailKeys = ['guests', 'bedrooms', 'beds', 'baths'];
     this.todaysDate = new Date();
+    this.todaysDate.setHours(0, 0, 0, 0);
     this.state = {
       guests: 1,
       bedrooms: 0,
       beds: 0,
       baths: 0,
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: this.todaysDate,
+      endDate: this.todaysDate,
       includedDates: [],
       unavailableDates: [],
-      dateError: false
+      dateError: false,
+      forward: false
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
@@ -37,7 +39,10 @@ class ListingForm extends Component {
   }
 
   componentDidUpdate() {
-    if (this.state.includedDates.length !== this.findDateDifference()) {
+    if (
+      this.state.includedDates.length !== this.findDateDifference() ||
+      this.state.forward
+    ) {
       const includedDatesArr = this.dateDiffArr();
       this.setState({ includedDates: includedDatesArr });
       const unavailableDates = this.state.unavailableDates.filter(date => {
@@ -46,7 +51,7 @@ class ListingForm extends Component {
         );
       });
 
-      this.setState({ unavailableDates });
+      this.setState({ unavailableDates, forward: false });
     }
   }
 
@@ -74,7 +79,8 @@ class ListingForm extends Component {
   handleStartDateChange(date) {
     if (this.state.endDate < date) {
       this.setState({
-        endDate: date
+        endDate: date,
+        forward: true
       });
     }
 
