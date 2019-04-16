@@ -57,6 +57,9 @@ const Icon = styled.div`
 const ListingAmenities = props => {
   const [files, setFile] = useState([]);
   const [descriptionText, setDescriptionText] = useState('');
+  const [customAmenity, setAmenity] = useState('');
+  const [customIcon, setIcon] = useState('');
+  const [customAmenityObj, setCustomAmenity] = useState({ order: [] });
 
   useEffect(() => {
     if (props.descriptionText) setDescriptionText(props.descriptionText);
@@ -69,7 +72,11 @@ const ListingAmenities = props => {
         <div key={amenity}>
           <div className="ui checkbox">
             <Field type="checkbox" name={amenity} component="input" />
-            <label>{amenity}</label>
+            <label>
+              {' '}
+              <i className={`${amenities[amenity].icon} icon`} />
+              {amenity}
+            </label>
           </div>
         </div>
       );
@@ -97,6 +104,7 @@ const ListingAmenities = props => {
 
   const removeFile = fileSelected => {
     const newFileArr = files.filter(file => file.name !== fileSelected.name);
+
     setFile(newFileArr);
   };
 
@@ -127,6 +135,25 @@ const ListingAmenities = props => {
     props.onSubmit();
   };
 
+  const onCustomAmenitySubmit = () => {
+    if (customAmenityObj.hasOwnProperty(customAmenity)) return;
+
+    const order = [...customAmenityObj.order, customAmenity];
+    setCustomAmenity({
+      ...customAmenityObj,
+      [customAmenity]: customIcon,
+      order: order
+    });
+
+    setAmenity('');
+  };
+
+  const renderCustomAmenities = () => {
+    return customAmenityObj.order.map(amenity => {
+      return <div key={amenity}>{amenity}</div>;
+    });
+  };
+
   return (
     <div>
       <div className="ui container segment general">
@@ -135,7 +162,31 @@ const ListingAmenities = props => {
             Please select available amenities{' '}
             <div className="ui sub header">Optional</div>
           </h4>
-          {renderAmenities()}
+          <div className="ui grid">
+            <div className="three wide column">{renderAmenities()}</div>
+            <div className="three wide column">{renderCustomAmenities()}</div>
+            <div className="four wide column">
+              <div>
+                <label>Add your own amenities!</label>
+                <input
+                  value={customAmenity}
+                  onChange={e => setAmenity(e.target.value)}
+                  type="text"
+                />
+              </div>
+              <div>
+                <label>Have an icon name for it?</label>
+                <input
+                  value={customIcon}
+                  onChange={e => setIcon(e.target.value)}
+                  type="text"
+                />
+              </div>
+              <button type="button" onClick={onCustomAmenitySubmit}>
+                Submit
+              </button>
+            </div>
+          </div>
           <h4 className="ui dividing header">
             Pictures <div className="ui sub header">Optional</div>
           </h4>
