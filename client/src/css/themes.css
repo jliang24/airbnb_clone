@@ -20,6 +20,14 @@
   background-color: var(--dolly-800) !important;
 }
 
+.dolly200-background {
+  background-color: var(--dolly-200) !important;
+}
+
+.dolly100-background {
+  background-color: var(--dolly-100) !important;
+}
+
 .nobackground {
   background-color: white;
 }

@@ -136,21 +136,37 @@ const ListingAmenities = props => {
   };
 
   const onCustomAmenitySubmit = () => {
-    if (customAmenityObj.hasOwnProperty(customAmenity)) return;
+    if (customAmenityObj.hasOwnProperty(customAmenity) || customAmenity === '')
+      return;
 
     const order = [...customAmenityObj.order, customAmenity];
     setCustomAmenity({
       ...customAmenityObj,
-      [customAmenity]: customIcon,
+      [customAmenity]: customIcon.toLowerCase(),
       order: order
     });
 
     setAmenity('');
+    setIcon('');
   };
 
   const renderCustomAmenities = () => {
     return customAmenityObj.order.map(amenity => {
-      return <div key={amenity}>{amenity}</div>;
+      return (
+        <div
+          key={amenity}
+          style={{ display: 'block', margin: '2px 0px' }}
+          className="ui checkbox"
+        >
+          <Field type="checkbox" name={amenity} component="input" />
+          <label>
+            {customAmenityObj[amenity] !== '' && (
+              <i className={`${customAmenityObj[amenity]} icon`} />
+            )}
+            {amenity}
+          </label>
+        </div>
+      );
     });
   };
 
@@ -166,25 +182,49 @@ const ListingAmenities = props => {
             <div className="three wide column">{renderAmenities()}</div>
             <div className="three wide column">{renderCustomAmenities()}</div>
             <div className="four wide column">
-              <div>
-                <label>Add your own amenities!</label>
-                <input
-                  value={customAmenity}
-                  onChange={e => setAmenity(e.target.value)}
-                  type="text"
-                />
+              <div
+                style={{ width: '190px', display: 'inline-block' }}
+                class="ui container segment dolly100-background"
+              >
+                <div>
+                  <h5 style={{ width: '160px' }} className="ui dividing header">
+                    Add your own amenities!
+                  </h5>
+                  <label style={{ display: 'block' }}> Amenity Name</label>
+                  <div className="ui mini input">
+                    <input
+                      value={customAmenity}
+                      onChange={e => setAmenity(e.target.value)}
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  <label>Icon Name (Optional) </label>
+                  <a
+                    target="_blank"
+                    href="https://semantic-ui.com/elements/icon.html"
+                  >
+                    {' '}
+                    <i className="question circle outline icon" />
+                  </a>
+                  <div className="ui mini input">
+                    <input
+                      value={customIcon}
+                      onChange={e => setIcon(e.target.value)}
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <button
+                  className="ui button dolly200-background"
+                  type="button"
+                  onClick={onCustomAmenitySubmit}
+                  style={{ width: '150px', marginTop: '15px' }}
+                >
+                  Add Amenity
+                </button>
               </div>
-              <div>
-                <label>Have an icon name for it?</label>
-                <input
-                  value={customIcon}
-                  onChange={e => setIcon(e.target.value)}
-                  type="text"
-                />
-              </div>
-              <button type="button" onClick={onCustomAmenitySubmit}>
-                Submit
-              </button>
             </div>
           </div>
           <h4 className="ui dividing header">
