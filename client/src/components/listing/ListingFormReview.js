@@ -200,8 +200,8 @@ class ListingFormReview extends Component {
               <div
                 style={{
                   right: '0px',
-                  position: 'absolute',
-                  top: '50px'
+                  top: '30px',
+                  position: 'absolute'
                 }}
                 className="column field"
               >
@@ -211,16 +211,14 @@ class ListingFormReview extends Component {
             </div>
           </div>
           <div className="ui two column grid">
-            <div className="row">
-              <div className="column field">
-                <h3 className="ui dividing header">Availability</h3>
-                <DatePicker
-                  inline
-                  readOnly
-                  monthsShown={2}
-                  includeDates={this.removeUnavailableDates()}
-                />
-              </div>
+            <div className="column field">
+              <h3 className="ui dividing header">Availability</h3>
+              <DatePicker
+                inline
+                readOnly
+                monthsShown={2}
+                includeDates={this.removeUnavailableDates()}
+              />
             </div>
           </div>
         </div>
