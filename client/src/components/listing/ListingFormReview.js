@@ -44,21 +44,19 @@ class ListingFormReview extends Component {
     this.pictures = [
       {
         original:
-          'https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/36a9dd8f-9104-404d-8d67-eec890ac8004.jpeg',
+          'https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/a4004453-46e9-49ac-a66e-3ed5510bc104.jpeg',
+        thumbnail: `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/a4004453-46e9-49ac-a66e-3ed5510bc104.jpeg`
+      },
+      {
+        original: `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/9c53ca9c-8af7-4501-9d87-cf417cc78f62.jpeg`,
         thumbnail:
-          'https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/36a9dd8f-9104-404d-8d67-eec890ac8004.jpeg'
+          'https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/9c53ca9c-8af7-4501-9d87-cf417cc78f62.jpeg'
       },
       {
         original:
-          'https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/d63b935f-b114-45b1-b48f-62455920c77f.jpeg',
+          'https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/842b18c7-24a0-4659-8a22-fc6a06efb018.jpeg',
         thumbnail:
-          'https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/d63b935f-b114-45b1-b48f-62455920c77f.jpeg'
-      },
-      {
-        original:
-          'https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/b720a256-b3d6-4f29-8c15-ed44db8bc67c.jpeg',
-        thumbnail:
-          'https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/b720a256-b3d6-4f29-8c15-ed44db8bc67c.jpeg'
+          'https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/5c9ea044e9f71225c96ff4bf/842b18c7-24a0-4659-8a22-fc6a06efb018.jpeg'
       }
     ];
     this.state = {

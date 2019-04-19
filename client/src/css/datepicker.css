@@ -39,3 +39,9 @@
 .react-datepicker__day--highlighted:hover {
   background-color: #ff7777;
 }
+
+.react-datepicker__input-container input {
+  padding: 5px;
+  border: 1px solid #ccc !important;
+  border-radius: 5px;
+}

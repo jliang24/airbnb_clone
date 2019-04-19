@@ -20,6 +20,7 @@ class ListingForm extends Component {
       bedrooms: 0,
       beds: 0,
       baths: 0,
+      minNights: 1,
       startDate: this.todaysDate,
       endDate: this.todaysDate,
       includedDates: [],
@@ -297,11 +298,17 @@ class ListingForm extends Component {
                   />
                 </div>
                 <div className="column field">
-                  <label>Nights</label>
-                  <label>
-                    {this.findDateDifference() -
-                      this.state.unavailableDates.length}
-                  </label>
+                  <Counter
+                    incrementValue={() =>
+                      this.setState({ minNights: this.state.minNights + 1 })
+                    }
+                    decrementValue={() => {
+                      if (this.state.minNights === 1) return;
+                      this.setState({ minNights: this.state.minNights - 1 });
+                    }}
+                    count={this.state.minNights}
+                    detailItem="Minimum Nights"
+                  />
                 </div>
               </div>
               <div>

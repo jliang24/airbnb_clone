@@ -7,28 +7,58 @@ class Scheduler extends Component {
     super(props);
     this.testData = {
       cost: '50',
-      date: []
+      startDates: [],
+      minNights: 2
+    };
+    this.state = {
+      guests: 1,
+      startDate: null,
+      endDate: null,
+      endDates: []
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
-    this.state = {
-      guests: 1
-    };
   }
 
   componentDidMount() {
     for (let i = 0; i < 10; i++) {
-      this.testData.date.push(this.changeDateValue(new Date(), i));
+      this.testData.startDates.push(this.changeDateValue(new Date(), i));
     }
-    console.log(this.testData);
+
+    if (this.state.endDates.length === 0) {
+      const endDates = this.testData.startDates.map(startDate =>
+        this.changeDateValue(startDate, this.testData.minNights)
+      );
+
+      this.setState({ endDates });
+    }
+  }
+
+  openDatePicker() {
+    this.setState({
+      datePickerIsOpen: !this.state.datePickerIsOpen
+    });
   }
 
   handleStartDateChange(date) {
-    console.log(date);
+    this.setState({
+      startDate: date
+    });
+
+    const endDates = [];
+    for (let i = 1; i <= this.testData.minNights; i++) {
+      endDates.push(this.changeDateValue(date, i));
+    }
+    console.log(endDates);
+    this.setState({ endDates });
+    this.openDatePicker();
   }
 
   handleEndDateChange(date) {
-    console.log(date);
+    this.setState({
+      endDate: date
+    });
+    this.openDatePicker();
   }
 
   changeDateValue = (date, num) => {
@@ -51,16 +81,21 @@ class Scheduler extends Component {
             per night
           </div>
         </h1>
-        <h3>Select Dates</h3>
+        <h3>Dates</h3>
         <DatePicker
-          includeDates={this.testData.date}
+          selected={this.state.startDate}
+          includeDates={this.testData.startDates}
           onChange={this.handleStartDateChange}
+          placeholderText="Check In"
         />
         <DatePicker
-          includeDates={this.testData.date}
+          selected={this.state.endDate}
+          includeDates={this.state.endDates}
           onChange={this.handleEndDateChange}
+          placeholderText="Check Out"
+          open={this.state.datePickerIsOpen}
         />
-        <h3>Select Guests</h3>
+        <h3>Guests</h3>
         <Counter
           incrementValue={() =>
             this.setState({ guests: this.state.guests + 1 })
