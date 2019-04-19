@@ -20,7 +20,7 @@ class ListingForm extends Component {
       bedrooms: 0,
       beds: 0,
       baths: 0,
-      minNights: 1,
+      maxNights: 1,
       startDate: this.todaysDate,
       endDate: this.todaysDate,
       includedDates: [],
@@ -254,7 +254,9 @@ class ListingForm extends Component {
             <div className="ui four column grid">
               {this.renderIncrementButtons()}
             </div>
-            <h4 className="ui dividing header">Select available dates</h4>
+            <h4 className="ui dividing header">
+              Select available check in dates
+            </h4>
             <div className="ui five column grid">
               <div className="row">
                 <div className="column field">
@@ -300,14 +302,14 @@ class ListingForm extends Component {
                 <div className="column field">
                   <Counter
                     incrementValue={() =>
-                      this.setState({ minNights: this.state.minNights + 1 })
+                      this.setState({ maxNights: this.state.maxNights + 1 })
                     }
                     decrementValue={() => {
-                      if (this.state.minNights === 1) return;
-                      this.setState({ minNights: this.state.minNights - 1 });
+                      if (this.state.maxNights === 1) return;
+                      this.setState({ maxNights: this.state.maxNights - 1 });
                     }}
-                    count={this.state.minNights}
-                    detailItem="Minimum Nights"
+                    count={this.state.maxNights}
+                    detailItem="Maximum Nights"
                   />
                 </div>
               </div>

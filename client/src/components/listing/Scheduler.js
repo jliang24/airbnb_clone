@@ -8,16 +8,20 @@ class Scheduler extends Component {
     this.testData = {
       cost: '50',
       startDates: [],
-      minNights: 2
+      maxNights: 2,
+      guests: 2
     };
+
     this.state = {
       guests: 1,
       startDate: null,
       endDate: null,
-      endDates: []
+      endDates: [],
+      datePickerIsOpen: false
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
+    this.openDatePicker = this.openDatePicker.bind(this);
   }
 
   componentDidMount() {
@@ -27,7 +31,7 @@ class Scheduler extends Component {
 
     if (this.state.endDates.length === 0) {
       const endDates = this.testData.startDates.map(startDate =>
-        this.changeDateValue(startDate, this.testData.minNights)
+        this.changeDateValue(startDate, this.testData.maxNights)
       );
 
       this.setState({ endDates });
@@ -46,11 +50,20 @@ class Scheduler extends Component {
     });
 
     const endDates = [];
-    for (let i = 1; i <= this.testData.minNights; i++) {
+    for (let i = 1; i <= this.testData.maxNights; i++) {
       endDates.push(this.changeDateValue(date, i));
     }
-    console.log(endDates);
     this.setState({ endDates });
+
+    if (!this.state.endDate) return this.openDatePicker();
+
+    if (
+      endDates.some(
+        endDate => this.state.endDate.getTime() === endDate.getTime()
+      )
+    )
+      return;
+
     this.openDatePicker();
   }
 
@@ -94,12 +107,14 @@ class Scheduler extends Component {
           onChange={this.handleEndDateChange}
           placeholderText="Check Out"
           open={this.state.datePickerIsOpen}
+          onInputClick={this.openDatePicker}
+          onClickOutside={this.openDatePicker}
         />
-        <h3>Guests</h3>
         <Counter
-          incrementValue={() =>
-            this.setState({ guests: this.state.guests + 1 })
-          }
+          incrementValue={() => {
+            if (this.state.guests === this.testData.guests) return;
+            this.setState({ guests: this.state.guests + 1 });
+          }}
           decrementValue={() => {
             if (this.state.guests === 1) return;
             this.setState({ guests: this.state.guests - 1 });
@@ -109,6 +124,9 @@ class Scheduler extends Component {
         />
         <h3>Message the host!</h3>
         <textarea />
+        <div>
+          <button className="ui button">Send</button>
+        </div>
       </div>
     );
   }
