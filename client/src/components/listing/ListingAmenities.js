@@ -184,7 +184,7 @@ const ListingAmenities = props => {
             <div className="four wide column">
               <div
                 style={{ width: '190px', display: 'inline-block' }}
-                class="ui container segment dolly100-background"
+                className="ui container segment dolly100-background"
               >
                 <div>
                   <h5 style={{ width: '160px' }} className="ui dividing header">

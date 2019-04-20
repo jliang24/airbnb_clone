@@ -13,6 +13,7 @@ class ListingForm extends Component {
   constructor(props) {
     super(props);
     this.detailKeys = ['guests', 'bedrooms', 'beds', 'baths'];
+    this.detailIcons = ['user outline', 'cube', 'bed', 'bath'];
     this.todaysDate = new Date();
     this.todaysDate.setHours(0, 0, 0, 0);
     this.state = {
@@ -194,7 +195,11 @@ class ListingForm extends Component {
   handleSubmit = () => {
     if (this.findDateDifference() - this.state.unavailableDates.length === 0)
       return;
-    this.props.addDetails(this.state);
+    const details = {
+      detailKeys: this.detailKeys,
+      detailIcons: this.detailIcons
+    };
+    this.props.addDetails({ ...this.state, ...details });
     this.props.onSubmit();
   };
 

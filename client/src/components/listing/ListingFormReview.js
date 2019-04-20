@@ -16,29 +16,9 @@ class ListingFormReview extends Component {
   constructor(props) {
     super(props);
     //test data
-    this.listing = {
-      address: '4600 Neil Rd',
-      city: 'Reno',
-      cost: '31',
-      state: 'Reno',
-      zip: '89502',
-      title: "Jeff's amazing house!",
-      ...amenities
-    };
     this.name = {
       first: 'John',
       last: 'Doe'
-    };
-
-    this.details = {
-      guests: 1,
-      bedrooms: 2,
-      beds: 8,
-      baths: 5,
-      startDate: new Date(),
-      endDate: new Date(),
-      detailKeys: ['guests', 'bedrooms', 'beds', 'baths'],
-      detailIcons: ['user outline', 'cube', 'bed', 'bath']
     };
 
     this.pictures = [
@@ -62,6 +42,10 @@ class ListingFormReview extends Component {
     this.state = {
       renderCarousel: false
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props);
   }
 
   renderPictures() {
@@ -131,9 +115,9 @@ class ListingFormReview extends Component {
 
     return (
       <div className="ui page grid listing-grid">
-        {this.details.detailKeys.map((detailKey, idx) => {
-          const detailValue = this.details[detailKey];
-          const detailIcon = this.details.detailIcons[idx];
+        {this.props.details.detailKeys.map((detailKey, idx) => {
+          const detailValue = this.props.details[detailKey];
+          const detailIcon = this.props.details.detailIcons[idx];
           return (
             <React.Fragment key={detailIcon}>
               <div className="listing-detail four wide column bottom aligned content">
@@ -156,7 +140,7 @@ class ListingFormReview extends Component {
         {amenities.order.map(amenity => {
           const { icon } = amenities[amenity];
           return (
-            <div className="column">
+            <div key={amenity} className="column">
               <div className="equal width row">
                 <h4>
                   <i className={`${icon} large icon`} />
@@ -170,18 +154,22 @@ class ListingFormReview extends Component {
     );
   }
 
+  onCreateListingClicked() {
+    console.log('hey');
+  }
+
   render() {
     return (
       <div>
         {this.renderPictures()}
         {this.renderPictureButton()}
         <div className="general">
-          <h2 className="ui divided header">{this.listing.title} </h2>
+          <h2 className="ui divided header">{this.props.listing.title} </h2>
           <h5 style={{ marginTop: '0px' }} className="ui sub header dolly600">
             {this.name.first} {this.name.last}
           </h5>
           <h4 style={{ marginTop: '0px' }} className="ui sub header dolly600">
-            {this.listing.city}
+            {this.props.listing.city}
           </h4>
           {this.renderListingDetails()}
           {this.props.details.descriptionText &&
@@ -226,6 +214,7 @@ class ListingFormReview extends Component {
           onDismiss={this.props.previousPage}
           dismiss="Back"
           submit="Create Listing!"
+          onSubmit={this.onCreateListingClicked}
         />
       </div>
     );
@@ -234,7 +223,7 @@ class ListingFormReview extends Component {
 
 const mapStateToProps = state => {
   return {
-    listing: state.form.listing,
+    listing: state.form.listing.values,
     pictures: state.pictures,
     details: state.details
   };

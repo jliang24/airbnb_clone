@@ -1,16 +1,11 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import Counter from '../../utils/Counter';
+import { connect } from 'react-redux';
 
 class Scheduler extends Component {
   constructor(props) {
     super(props);
-    this.testData = {
-      cost: '50',
-      startDates: [],
-      maxNights: 2,
-      guests: 2
-    };
 
     this.state = {
       guests: 1,
@@ -25,13 +20,10 @@ class Scheduler extends Component {
   }
 
   componentDidMount() {
-    for (let i = 0; i < 10; i++) {
-      this.testData.startDates.push(this.changeDateValue(new Date(), i));
-    }
-
     if (this.state.endDates.length === 0) {
-      const endDates = this.testData.startDates.map(startDate =>
-        this.changeDateValue(startDate, this.testData.maxNights)
+      const { includedDates, maxNights } = this.props.details;
+      const endDates = includedDates.map(startDate =>
+        this.changeDateValue(startDate, maxNights)
       );
 
       this.setState({ endDates });
@@ -50,7 +42,7 @@ class Scheduler extends Component {
     });
 
     const endDates = [];
-    for (let i = 1; i <= this.testData.maxNights; i++) {
+    for (let i = 1; i <= this.props.details.maxNights; i++) {
       endDates.push(this.changeDateValue(date, i));
     }
     this.setState({ endDates });
@@ -83,10 +75,12 @@ class Scheduler extends Component {
   };
 
   render() {
+    const { cost } = this.props.listing;
+    const { includedDates, guests } = this.props.details;
     return (
       <div className="ui container segment">
         <h1 style={{ display: 'block' }} className="ui dividing header">
-          ${this.testData.cost}
+          ${cost}
           <div
             style={{ marginLeft: '5px', display: 'inline-block' }}
             className="sub header"
@@ -97,7 +91,7 @@ class Scheduler extends Component {
         <h3>Dates</h3>
         <DatePicker
           selected={this.state.startDate}
-          includeDates={this.testData.startDates}
+          includeDates={includedDates}
           onChange={this.handleStartDateChange}
           placeholderText="Check In"
         />
@@ -115,7 +109,7 @@ class Scheduler extends Component {
         <div className="ui container segment">
           <Counter
             incrementValue={() => {
-              if (this.state.guests === this.testData.guests) return;
+              if (this.state.guests === guests) return;
               this.setState({ guests: this.state.guests + 1 });
             }}
             decrementValue={() => {
@@ -139,5 +133,11 @@ class Scheduler extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    listing: state.form.listing.values,
+    details: state.details
+  };
+};
 
-export default Scheduler;
+export default connect(mapStateToProps)(Scheduler);
