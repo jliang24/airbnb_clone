@@ -107,25 +107,33 @@ class Scheduler extends Component {
           onChange={this.handleEndDateChange}
           placeholderText="Check Out"
           open={this.state.datePickerIsOpen}
-          onInputClick={this.openDatePicker}
+          onInputClick={() =>
+            this.state.datePickerIsOpen ? null : this.openDatePicker()
+          }
           onClickOutside={this.openDatePicker}
         />
-        <Counter
-          incrementValue={() => {
-            if (this.state.guests === this.testData.guests) return;
-            this.setState({ guests: this.state.guests + 1 });
-          }}
-          decrementValue={() => {
-            if (this.state.guests === 1) return;
-            this.setState({ guests: this.state.guests - 1 });
-          }}
-          count={this.state.guests}
-          detailItem={'guests'}
-        />
-        <h3>Message the host!</h3>
-        <textarea />
-        <div>
-          <button className="ui button">Send</button>
+        <div className="ui container segment">
+          <Counter
+            incrementValue={() => {
+              if (this.state.guests === this.testData.guests) return;
+              this.setState({ guests: this.state.guests + 1 });
+            }}
+            decrementValue={() => {
+              if (this.state.guests === 1) return;
+              this.setState({ guests: this.state.guests - 1 });
+            }}
+            count={this.state.guests}
+            detailItem={'guests'}
+          />
+        </div>
+        <div className="ui form">
+          <div className="field">
+            <label>Send a message to the host!</label>
+            <textarea rows="2" />
+            <div style={{ marginTop: '5px', height: '30px' }}>
+              <button className="ui right floated button black ">Send</button>
+            </div>
+          </div>
         </div>
       </div>
     );

@@ -17,11 +17,11 @@ class ListingFormReview extends Component {
     super(props);
     //test data
     this.listing = {
-      address: '1900 lindoo rd',
-      city: 'las vegas',
+      address: '4600 Neil Rd',
+      city: 'Reno',
       cost: '31',
-      state: 'arizona',
-      zip: '89146',
+      state: 'Reno',
+      zip: '89502',
       title: "Jeff's amazing house!",
       ...amenities
     };
@@ -176,10 +176,13 @@ class ListingFormReview extends Component {
         {this.renderPictures()}
         {this.renderPictureButton()}
         <div className="general">
-          <h2>{this.listing.title}</h2>
-          <h2 style={{ marginTop: '0px' }} className="ui sub header dolly600">
+          <h2 className="ui divided header">{this.listing.title} </h2>
+          <h5 style={{ marginTop: '0px' }} className="ui sub header dolly600">
             {this.name.first} {this.name.last}
-          </h2>
+          </h5>
+          <h4 style={{ marginTop: '0px' }} className="ui sub header dolly600">
+            {this.listing.city}
+          </h4>
           {this.renderListingDetails()}
           {this.props.details.descriptionText &&
             (this.props.details.descriptionText !== '' && (
@@ -198,12 +201,11 @@ class ListingFormReview extends Component {
               <div
                 style={{
                   right: '0px',
-                  top: '30px',
+                  top: '40px',
                   position: 'absolute'
                 }}
                 className="column field"
               >
-                // scheduler component
                 <Scheduler />
               </div>
             </div>
