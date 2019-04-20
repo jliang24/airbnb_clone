@@ -73,7 +73,6 @@ const ListingAmenities = props => {
           <div className="ui checkbox">
             <Field type="checkbox" name={amenity} component="input" />
             <label>
-              {' '}
               <i className={`${amenities[amenity].icon} icon`} />
               {amenity}
             </label>
@@ -126,15 +125,6 @@ const ListingAmenities = props => {
     setDescriptionText(text);
   };
 
-  const onFormSubmit = formValues => {
-    if (files) {
-      const image = props.submitListing(files);
-    }
-    props.addDetails({ descriptionText });
-
-    props.onSubmit();
-  };
-
   const onCustomAmenitySubmit = () => {
     if (customAmenityObj.hasOwnProperty(customAmenity) || customAmenity === '')
       return;
@@ -168,6 +158,15 @@ const ListingAmenities = props => {
         </div>
       );
     });
+  };
+
+  const onFormSubmit = formValues => {
+    if (files) {
+      props.submitListing(files);
+    }
+    props.addDetails({ descriptionText });
+
+    props.onSubmit();
   };
 
   return (
@@ -276,7 +275,7 @@ export default compose(
   ),
   reduxForm({
     // initialValues: amenities,
-    form: 'listing',
+    form: 'amenities',
     destroyOnUnmount: false
   })
 )(ListingAmenities);

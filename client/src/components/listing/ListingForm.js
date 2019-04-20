@@ -5,6 +5,7 @@ import { renderField, renderError } from '../../utils/renderField';
 import * as actions from '../../actions';
 import states from '../../utils/states';
 import Counter from '../../utils/Counter';
+import details from '../../utils/details';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.min.css';
 import NavigateButtons from './NavigateButtons';
@@ -12,8 +13,6 @@ import NavigateButtons from './NavigateButtons';
 class ListingForm extends Component {
   constructor(props) {
     super(props);
-    this.detailKeys = ['guests', 'bedrooms', 'beds', 'baths'];
-    this.detailIcons = ['user outline', 'cube', 'bed', 'bath'];
     this.todaysDate = new Date();
     this.todaysDate.setHours(0, 0, 0, 0);
     this.state = {
@@ -178,7 +177,7 @@ class ListingForm extends Component {
   };
 
   renderIncrementButtons = () => {
-    return this.detailKeys.map(detailItem => {
+    return details.keys.map(detailItem => {
       return (
         <React.Fragment key={detailItem}>
           <Counter
@@ -195,11 +194,8 @@ class ListingForm extends Component {
   handleSubmit = () => {
     if (this.findDateDifference() - this.state.unavailableDates.length === 0)
       return;
-    const details = {
-      detailKeys: this.detailKeys,
-      detailIcons: this.detailIcons
-    };
-    this.props.addDetails({ ...this.state, ...details });
+
+    this.props.addDetails(this.state);
     this.props.onSubmit();
   };
 

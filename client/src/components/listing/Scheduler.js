@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import Counter from '../../utils/Counter';
 import { connect } from 'react-redux';
+import { removeUnavailableDates } from '../../utils/dates';
 
 class Scheduler extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       guests: 1,
       startDate: null,
@@ -21,10 +21,11 @@ class Scheduler extends Component {
 
   componentDidMount() {
     if (this.state.endDates.length === 0) {
-      const { includedDates, maxNights } = this.props.details;
-      const endDates = includedDates.map(startDate =>
-        this.changeDateValue(startDate, maxNights)
-      );
+      const { includedDates, unavailableDates, maxNights } = this.props.details;
+      const endDates = removeUnavailableDates(
+        includedDates,
+        unavailableDates
+      ).map(startDate => this.changeDateValue(startDate, maxNights));
 
       this.setState({ endDates });
     }
@@ -76,7 +77,11 @@ class Scheduler extends Component {
 
   render() {
     const { cost } = this.props.listing;
-    const { includedDates, guests } = this.props.details;
+    const { includedDates, unavailableDates, guests } = this.props.details;
+    const datesToInclude = removeUnavailableDates(
+      includedDates,
+      unavailableDates
+    );
     return (
       <div className="ui container segment">
         <h1 style={{ display: 'block' }} className="ui dividing header">
@@ -91,7 +96,7 @@ class Scheduler extends Component {
         <h3>Dates</h3>
         <DatePicker
           selected={this.state.startDate}
-          includeDates={includedDates}
+          includeDates={datesToInclude}
           onChange={this.handleStartDateChange}
           placeholderText="Check In"
         />
