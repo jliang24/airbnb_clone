@@ -46,7 +46,7 @@ export const signout = () => {
   };
 };
 
-export const submitListing = files => async (dispatch, getState) => {
+export const uploadPictures = files => async (dispatch, getState) => {
   const { auth } = getState();
   const uploadURLS = [];
   for (let file of files) {
@@ -63,8 +63,8 @@ export const submitListing = files => async (dispatch, getState) => {
       }
     });
   }
-
   dispatch({ type: UPLOAD_PICTURES, payload: uploadURLS });
+  return uploadURLS;
 };
 
 export const addDetails = formValues => {

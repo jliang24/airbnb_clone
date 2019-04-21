@@ -10,7 +10,19 @@ const NavigateButtons = props => {
         className="ui right floated primary button"
         onClick={props.onSubmit}
       >
-        {props.submit}
+        {props.loading ? (
+          <>
+            <div
+              style={{ height: '15px', marginLeft: '-5px', marginTop: '-10px' }}
+              className="ui small active inline loader"
+            />
+            <div style={{ display: 'inline-block', marginLeft: '15px' }}>
+              Loading
+            </div>
+          </>
+        ) : (
+          props.submit
+        )}
       </button>
     </div>
   );

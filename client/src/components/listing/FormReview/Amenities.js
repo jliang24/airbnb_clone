@@ -4,8 +4,8 @@ import amenityIcons from '../../../utils/amenities';
 import _ from 'lodash';
 
 const Amenities = ({ amenities }) => {
-  if (_.isEmpty(amenities)) return;
-  const arrAmenities = Object.keys(amenities);
+  if (_.isEmpty(amenities)) return null;
+  const arrAmenities = amenityIcons.order.filter(amenity => amenities[amenity]);
 
   return (
     <div className="ui four column grid">

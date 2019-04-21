@@ -58,7 +58,7 @@ class ImageCard extends React.Component {
   };
 
   render() {
-    const { description, original } = this.props.image;
+    const { original } = this.props.image;
     return (
       <div
         style={{

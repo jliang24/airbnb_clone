@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import NavigateButtons from './NavigateButtons';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import _ from 'lodash';
 
 const getColor = props => {
   if (props.isDragAccept) {
@@ -60,10 +61,13 @@ const ListingAmenities = props => {
   const [customAmenity, setAmenity] = useState('');
   const [customIcon, setIcon] = useState('');
   const [customAmenityObj, setCustomAmenity] = useState({ order: [] });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (props.descriptionText) setDescriptionText(props.descriptionText);
-    if (props.files) setFile(props.files);
+    if (props.files) {
+      setFile(props.files);
+    }
   }, []);
 
   const renderAmenities = () => {
@@ -160,11 +164,12 @@ const ListingAmenities = props => {
     });
   };
 
-  const onFormSubmit = formValues => {
+  const onFormSubmit = async formValues => {
+    setLoading(true);
     if (files) {
-      props.submitListing(files);
+      await props.uploadPictures(files);
     }
-    props.addDetails({ descriptionText });
+    props.addDetails({ descriptionText, files });
 
     props.onSubmit();
   };
@@ -256,6 +261,7 @@ const ListingAmenities = props => {
         onDismiss={props.previousPage}
         dismiss="Back"
         submit="Show Preview"
+        loading={loading}
         onSubmit={props.handleSubmit(onFormSubmit)}
       />
     </div>
@@ -264,7 +270,9 @@ const ListingAmenities = props => {
 
 const mapStateToProps = state => {
   return {
-    descriptionText: state.details.descriptionText
+    descriptionText: state.details.descriptionText,
+    files: state.details.files,
+    pictures: state.pictures
   };
 };
 
