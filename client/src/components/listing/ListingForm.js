@@ -191,6 +191,13 @@ class ListingForm extends Component {
     });
   };
 
+  limitMinNum = value => {
+    if (value < 0) {
+      return 0;
+    }
+    return value;
+  };
+
   handleSubmit = () => {
     if (this.findDateDifference() - this.state.unavailableDates.length === 0)
       return;
@@ -296,7 +303,9 @@ class ListingForm extends Component {
                     name="cost"
                     label="Cost Per Night"
                     placeholder="Cost"
-                    type="text"
+                    type="number"
+                    min="1"
+                    normalize={this.limitMinNum}
                     component={renderField}
                   />
                 </div>

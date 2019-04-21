@@ -64,10 +64,12 @@ const ListingAmenities = props => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (props.descriptionText) setDescriptionText(props.descriptionText);
-    if (props.files) {
-      setFile(props.files);
+    const { descriptionText, files, customAmenityObj } = props;
+    if (descriptionText) setDescriptionText(props.descriptionText);
+    if (files) {
+      setFile(files);
     }
+    if (customAmenityObj) setCustomAmenity(customAmenityObj);
   }, []);
 
   const renderAmenities = () => {
@@ -169,7 +171,7 @@ const ListingAmenities = props => {
     if (files) {
       await props.uploadPictures(files);
     }
-    props.addDetails({ descriptionText, files });
+    props.addDetails({ descriptionText, files, customAmenityObj });
 
     props.onSubmit();
   };
@@ -272,7 +274,8 @@ const mapStateToProps = state => {
   return {
     descriptionText: state.details.descriptionText,
     files: state.details.files,
-    pictures: state.pictures
+    pictures: state.pictures,
+    customAmenityObj: state.details.customAmenityObj
   };
 };
 

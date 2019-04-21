@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import 'react-image-gallery/styles/css/image-gallery.css';
 import ReactQuill from 'react-quill';
+import _ from 'lodash';
 import ImageGallery from 'react-image-gallery';
 import DatePicker from 'react-datepicker';
 import ImageList from './Images/ImageList';
 import NavigateButtons from './NavigateButtons';
 import ListingDetails from './FormReview/ListingDetails';
 import Amenities from './FormReview/Amenities';
+import CustomAmenities from './FormReview/CustomAmenities';
 import Scheduler from './Scheduler';
 import { removeUnavailableDates } from '../../utils/dates';
+import 'react-image-gallery/styles/css/image-gallery.css';
 import 'react-quill/dist/quill.bubble.css';
 import '../../css/datepicker.css';
 
@@ -25,10 +27,6 @@ class ListingFormReview extends Component {
     this.state = {
       renderCarousel: false
     };
-  }
-
-  componentDidMount() {
-    console.log(this.props);
   }
 
   renderPictures() {
@@ -73,6 +71,21 @@ class ListingFormReview extends Component {
     );
   }
 
+  renderAmenities() {
+    if (
+      _.values(this.props.amenities).every(value => value === false) ||
+      _.isEmpty(this.props.amenities)
+    )
+      return null;
+    return (
+      <div className="column field">
+        <h3 className="ui dividing header">Amenities</h3>
+        <Amenities />
+        <CustomAmenities />
+      </div>
+    );
+  }
+
   onCreateListingClicked() {
     console.log('hey');
   }
@@ -103,10 +116,7 @@ class ListingFormReview extends Component {
             ))}
           <div className="ui two column grid">
             <div className="row">
-              <div className="column field">
-                <h3 className="ui dividing header">Amenities</h3>
-                <Amenities />
-              </div>
+              {this.renderAmenities()}
               <div
                 style={{
                   right: '0px',
