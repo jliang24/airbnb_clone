@@ -1,7 +1,7 @@
 import {
   AUTH_USER,
   AUTH_ERROR,
-  SUBMIT_LISTING,
+  CREATE_LISTING,
   UPLOAD_PICTURES,
   ADD_DETAILS,
   CLEAR_DETAILS
@@ -79,3 +79,13 @@ export const clearDetails = () => {
     type: CLEAR_DETAILS
   };
 };
+
+// export const createListing = formValues => async (dispatch, getState) => {
+//   const { authenticated } = getState().auth;
+//   const response = await streams.post('/streams', {
+//     ...formValues,
+//     authenticated
+//   });
+//   dispatch({ type: CREATE_LISTING, payload: response.data });
+//   history.push('/');
+// };

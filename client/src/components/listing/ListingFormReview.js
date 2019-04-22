@@ -156,12 +156,14 @@ class ListingFormReview extends Component {
 }
 
 const mapStateToProps = state => {
-  return {
+  const values = {
     listing: state.form.listing.values,
     pictures: state.pictures,
     details: state.details,
     amenities: state.form.amenities.values
   };
+  console.log(values);
+  return values;
 };
 
 export default connect(mapStateToProps)(ListingFormReview);
