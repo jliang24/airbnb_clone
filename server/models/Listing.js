@@ -9,3 +9,12 @@ const listingSchema = new Schema({
 });
 
 mongoose.model('listing', listingSchema);
+
+// HOW TO STRUCTURE THE DATA
+
+// customAmenities: [customAmenitySchema];
+
+// customAmenitySchema = {
+//   name: 'yolo',
+//   url: 'blah'
+// };

@@ -60,16 +60,16 @@ const ListingAmenities = props => {
   const [descriptionText, setDescriptionText] = useState('');
   const [customAmenity, setAmenity] = useState('');
   const [customIcon, setIcon] = useState('');
-  const [customAmenityObj, setCustomAmenity] = useState({ order: [] });
+  const [customAmenityArr, setCustomAmenity] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const { descriptionText, files, customAmenityObj } = props;
+    const { descriptionText, files, customAmenityArr } = props;
     if (descriptionText) setDescriptionText(props.descriptionText);
     if (files) {
       setFile(files);
     }
-    if (customAmenityObj) setCustomAmenity(customAmenityObj);
+    if (customAmenityArr) setCustomAmenity(customAmenityArr);
   }, []);
 
   const renderAmenities = () => {
@@ -132,34 +132,30 @@ const ListingAmenities = props => {
   };
 
   const onCustomAmenitySubmit = () => {
-    if (customAmenityObj.hasOwnProperty(customAmenity) || customAmenity === '')
-      return;
+    if (customAmenityArr.some(({ name }) => name === customAmenity)) return;
+    const amenityObj = {
+      name: customAmenity,
+      icon: customIcon
+    };
 
-    const order = [...customAmenityObj.order, customAmenity];
-    setCustomAmenity({
-      ...customAmenityObj,
-      [customAmenity]: customIcon.toLowerCase(),
-      order: order
-    });
+    setCustomAmenity([...customAmenityArr, amenityObj]);
 
     setAmenity('');
     setIcon('');
   };
 
   const renderCustomAmenities = () => {
-    return customAmenityObj.order.map(amenity => {
+    return customAmenityArr.map(({ name, icon }) => {
       return (
         <div
-          key={amenity}
+          key={name}
           style={{ display: 'block', margin: '2px 0px' }}
           className="ui checkbox"
         >
-          <Field type="checkbox" name={amenity} component="input" />
+          <Field type="checkbox" name={name} component="input" />
           <label>
-            {customAmenityObj[amenity] !== '' && (
-              <i className={`${customAmenityObj[amenity]} icon`} />
-            )}
-            {amenity}
+            {icon !== '' && <i className={`${icon} icon`} />}
+            {name}
           </label>
         </div>
       );
@@ -171,7 +167,7 @@ const ListingAmenities = props => {
     if (files) {
       await props.uploadPictures(files);
     }
-    props.addDetails({ descriptionText, files, customAmenityObj });
+    props.addDetails({ descriptionText, files, customAmenityArr });
 
     props.onSubmit();
   };
@@ -275,7 +271,7 @@ const mapStateToProps = state => {
     descriptionText: state.details.descriptionText,
     files: state.details.files,
     pictures: state.pictures,
-    customAmenityObj: state.details.customAmenityObj
+    customAmenityArr: state.details.customAmenityArr
   };
 };
 
