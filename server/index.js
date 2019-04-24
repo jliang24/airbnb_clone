@@ -12,6 +12,7 @@ app.use(bodyParser.json({ type: '*/*' }));
 require('./models/Listing');
 require('./routes/authRoutes')(app);
 require('./routes/uploadRoutes')(app);
+require('./routes/listingRoutes')(app);
 
 const port = process.env.PORT || 3090;
 const server = http.createServer(app);

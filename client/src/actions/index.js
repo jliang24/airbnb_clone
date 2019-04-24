@@ -80,12 +80,13 @@ export const clearDetails = () => {
   };
 };
 
-// export const createListing = formValues => async (dispatch, getState) => {
-//   const { authenticated } = getState().auth;
-//   const response = await streams.post('/streams', {
-//     ...formValues,
-//     authenticated
-//   });
-//   dispatch({ type: CREATE_LISTING, payload: response.data });
-//   history.push('/');
-// };
+export const createListing = formValues => async (dispatch, getState) => {
+  const { authenticated } = getState().auth;
+  const response = await axios.post(
+    'http://localhost:3090/api/listings',
+    formValues,
+    { headers: { authorization: authenticated } }
+  );
+
+  dispatch({ type: CREATE_LISTING, payload: response.data });
+};

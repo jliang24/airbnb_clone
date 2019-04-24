@@ -11,6 +11,7 @@ import Amenities from './FormReview/Amenities';
 import CustomAmenities from './FormReview/CustomAmenities';
 import Scheduler from './Scheduler';
 import { removeUnavailableDates } from '../../utils/dates';
+import { createListing } from '../../actions';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import 'react-quill/dist/quill.bubble.css';
 import '../../css/datepicker.css';
@@ -86,9 +87,12 @@ class ListingFormReview extends Component {
     );
   }
 
-  onCreateListingClicked() {
-    console.log('hey');
-  }
+  onCreateListingClicked = () => {
+    const { details, amenities, pictures, listing } = this.props;
+    const listingValues = { details, amenities, pictures, listing };
+    console.log(listingValues);
+    this.props.createListing(listingValues);
+  };
 
   render() {
     const { includedDates, unavailableDates } = this.props.details;
@@ -162,8 +166,10 @@ const mapStateToProps = state => {
     details: state.details,
     amenities: state.form.amenities.values
   };
-  console.log(values);
   return values;
 };
 
-export default connect(mapStateToProps)(ListingFormReview);
+export default connect(
+  mapStateToProps,
+  { createListing }
+)(ListingFormReview);
