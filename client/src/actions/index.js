@@ -7,6 +7,7 @@ import {
   CLEAR_DETAILS
 } from './types';
 import axios from 'axios';
+import listingAPI from '../apis/listing';
 
 export const signup = (formProps, callback) => async dispatch => {
   try {
@@ -47,14 +48,16 @@ export const signout = () => {
 };
 
 export const uploadPictures = files => async (dispatch, getState) => {
-  const { auth } = getState();
+  const { authenticated } = getState().auth;
   const uploadURLS = [];
   for (let file of files) {
-    const uploadConfig = await axios.get('http://localhost:3090/api/upload', {
-      headers: {
-        authorization: auth.authenticated
-      }
-    });
+    // const uploadConfig = await axios.get('http://localhost:3090/api/upload', {
+    //   headers: {
+    //     authorization: auth.authenticated
+    //   }
+    // });
+    const uploadConfig = await listingAPI(authenticated).get('/upload');
+
     uploadURLS.push(uploadConfig.data.key);
 
     await axios.put(uploadConfig.data.url, file, {
@@ -82,10 +85,15 @@ export const clearDetails = () => {
 
 export const createListing = formValues => async (dispatch, getState) => {
   const { authenticated } = getState().auth;
-  const response = await axios.post(
-    'http://localhost:3090/api/listings',
-    formValues,
-    { headers: { authorization: authenticated } }
+  // const response = await axios.post(
+  //   'http://localhost:3090/api/listings',
+  //   formValues,
+  //   { headers: { authorization: authenticated } }
+  // );
+
+  const response = await listingAPI(authenticated).post(
+    '/listings',
+    formValues
   );
 
   dispatch({ type: CREATE_LISTING, payload: response.data });
