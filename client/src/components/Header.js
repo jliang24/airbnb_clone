@@ -9,7 +9,7 @@ class Header extends Component {
       return (
         <div>
           <Link to="/signout">Signout</Link>
-          <Link to="/listing/create">Create a new listing!</Link>
+          <Link to="/listings/create">Create a new listing!</Link>
         </div>
       );
     } else {
@@ -25,7 +25,10 @@ class Header extends Component {
   render() {
     return (
       <div className="header">
-        <Link to="/">Home</Link>
+        <div>
+          <Link to="/">Home</Link>
+          <Link to="/listings">View Listings</Link>
+        </div>
         {this.renderLinks()}
       </div>
     );

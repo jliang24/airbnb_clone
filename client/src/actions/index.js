@@ -4,10 +4,12 @@ import {
   CREATE_LISTING,
   UPLOAD_PICTURES,
   ADD_DETAILS,
-  CLEAR_DETAILS
-} from './types';
+  CLEAR_DETAILS,
+  FETCH_LISTING,
+  FETCH_LISTINGS
+} from 'actions/types';
 import axios from 'axios';
-import listingAPI from '../apis/listing';
+import listingAPI from 'apis/listing';
 
 export const signup = (formProps, callback) => async dispatch => {
   try {
@@ -87,4 +89,16 @@ export const createListing = formValues => async (dispatch, getState) => {
   );
 
   dispatch({ type: CREATE_LISTING, payload: response.data });
+};
+
+export const fetchListings = () => async dispatch => {
+  const response = await listingAPI().get('/api/listings');
+
+  dispatch({ type: FETCH_LISTINGS, payload: response.data });
+};
+
+export const fetchListing = id => async dispatch => {
+  const response = await listingAPI().get(`/api/listings/${id}`);
+
+  dispatch({ type: FETCH_LISTING, payload: response.data });
 };

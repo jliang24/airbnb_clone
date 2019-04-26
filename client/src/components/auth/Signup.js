@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
-import * as actions from '../../actions';
+import * as actions from 'actions';
 import { compose } from 'redux';
 
 class Signup extends Component {

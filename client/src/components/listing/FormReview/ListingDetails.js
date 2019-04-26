@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { capitalizeFirstLetter } from '../../../utils/text';
-import detailUtils from '../../../utils/details';
+
+import { capitalizeFirstLetter } from 'utils/text';
+import detailUtils from 'utils/details';
 
 const ListingDetails = ({ details }) => {
   const renderIcons = (num, icon) => {

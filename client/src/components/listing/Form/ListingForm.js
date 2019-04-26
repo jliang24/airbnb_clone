@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
-import { renderField, renderError } from '../../utils/renderField';
-import * as actions from '../../actions';
-import states from '../../utils/states';
-import Counter from '../../utils/Counter';
-import details from '../../utils/details';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.min.css';
-import NavigateButtons from './NavigateButtons';
+
+import { renderField, renderError } from 'utils/renderField';
+import * as actions from 'actions';
+import states from 'utils/states';
+import Counter from 'utils/Counter';
+import details from 'utils/details';
+import NavigateButtons from 'components/NavigateButtons';
 
 class ListingForm extends Component {
   constructor(props) {

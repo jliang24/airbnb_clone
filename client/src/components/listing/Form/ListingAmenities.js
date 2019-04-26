@@ -1,15 +1,16 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import amenities from '../../utils/amenities';
-import * as actions from '../../actions';
+import _ from 'lodash';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
-import NavigateButtons from './NavigateButtons';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import _ from 'lodash';
+
+import NavigateButtons from 'components/NavigateButtons';
+import amenities from 'utils/amenities';
+import * as actions from 'actions';
 
 const getColor = props => {
   if (props.isDragAccept) {

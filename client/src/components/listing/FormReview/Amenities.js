@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import amenityIcons from '../../../utils/amenities';
+import amenityIcons from 'utils/amenities';
 import _ from 'lodash';
 
 const Amenities = ({ amenities }) => {

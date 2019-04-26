@@ -4,17 +4,18 @@ import ReactQuill from 'react-quill';
 import _ from 'lodash';
 import ImageGallery from 'react-image-gallery';
 import DatePicker from 'react-datepicker';
-import ImageList from './Images/ImageList';
-import NavigateButtons from './NavigateButtons';
-import ListingDetails from './FormReview/ListingDetails';
-import Amenities from './FormReview/Amenities';
-import CustomAmenities from './FormReview/CustomAmenities';
-import Scheduler from './Scheduler';
-import { removeUnavailableDates } from '../../utils/dates';
-import { createListing } from '../../actions';
+
+import ImageList from 'components/listing/Images/ImageList';
+import NavigateButtons from 'components/NavigateButtons';
+import ListingDetails from 'components/listing/FormReview/ListingDetails';
+import Amenities from 'components/listing/FormReview/Amenities';
+import CustomAmenities from 'components/listing/FormReview/CustomAmenities';
+import Scheduler from 'components/listing/FormReview/Scheduler';
+import { removeUnavailableDates } from 'utils/dates';
+import { createListing } from 'actions';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import 'react-quill/dist/quill.bubble.css';
-import '../../css/datepicker.css';
+import 'css/datepicker.css';
 
 class ListingFormReview extends Component {
   constructor(props) {

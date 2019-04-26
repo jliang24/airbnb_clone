@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
-import Counter from '../../utils/Counter';
 import { connect } from 'react-redux';
-import { removeUnavailableDates } from '../../utils/dates';
+
+import { removeUnavailableDates } from 'utils/dates';
+import Counter from 'utils/Counter';
 
 class Scheduler extends Component {
   constructor(props) {

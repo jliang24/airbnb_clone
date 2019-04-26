@@ -30,7 +30,7 @@ ReactDOM.render(
         <Route path="/signup" component={Signup} />
         <Route path="/signout" component={Signout} />
         <Route path="/signin" component={Signin} />
-        <Route path="/listing/create" component={ListingCreate} />
+        <Route path="/listings/create" component={ListingCreate} />
       </App>
     </BrowserRouter>
   </Provider>,

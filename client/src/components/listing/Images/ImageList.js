@@ -1,6 +1,7 @@
-import './ImageList.css';
 import React, { useState } from 'react';
-import ImageCard from './ImageCard';
+
+import ImageCard from 'components/listing/Images/ImageCard';
+import 'components/listing/Images/ImageList.css';
 
 const ImageList = props => {
   const [active, setActive] = useState(false);
