@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { capitalizeFirstLetter } from 'utils/text';
+import { capitalizeFirstLetter, pluralization } from 'utils/text';
 import detailUtils from 'utils/details';
 
 const ListingDetails = ({ details }) => {
@@ -27,7 +27,7 @@ const ListingDetails = ({ details }) => {
               <div>
                 <h3>{detailNum}</h3>
               </div>
-              {capitalizeFirstLetter(detailKey)}
+              {pluralization(capitalizeFirstLetter(detailKey), detailNum)}
             </div>
           </React.Fragment>
         );

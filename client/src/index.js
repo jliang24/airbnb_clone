@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
@@ -13,6 +13,7 @@ import Signout from 'components/Auth/Signout';
 import Signin from 'components/Auth/Signin';
 import ListingCreate from 'components/Listing/ListingCreate';
 import ListingView from 'components/Listing/ListingView';
+import ListingFormReview from 'components/Listing/FormReview/ListingFormReview';
 import 'semantic/dist/semantic.min.css';
 import 'css/themes.css';
 
@@ -28,12 +29,15 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <App>
-        <Route path="/" exact component={Welcome} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/signout" component={Signout} />
-        <Route path="/signin" component={Signin} />
-        <Route path="/listings/create" component={ListingCreate} />
-        <Route path="/listings" component={ListingView} exact />
+        <Switch>
+          <Route path="/" exact component={Welcome} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/signout" component={Signout} />
+          <Route path="/signin" component={Signin} />
+          <Route path="/listings/create" exact component={ListingCreate} />
+          <Route path="/listings" component={ListingView} exact />
+          <Route path="/listings/:id" exact component={ListingFormReview} />
+        </Switch>
       </App>
     </BrowserRouter>
   </Provider>,

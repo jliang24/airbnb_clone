@@ -382,6 +382,7 @@ const mapStateToProps = state => {
     details: state.details
   };
 };
+
 ListingForm = connect(
   mapStateToProps,
   actions

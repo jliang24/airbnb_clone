@@ -12,9 +12,10 @@ const detailSchema = new Schema({
   beds: Number,
   guests: Number,
   descriptionText: String,
-  includedDates: String,
-  unavailableDates: String,
-  customAmenityArr: [customAmenitySchema]
+  includedDates: [Date],
+  unavailableDates: [Date],
+  customAmenityArr: [customAmenitySchema],
+  maxNights: Number
 });
 
 module.exports = detailSchema;

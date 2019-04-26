@@ -4,6 +4,7 @@ import ReactQuill from 'react-quill';
 import _ from 'lodash';
 import ImageGallery from 'react-image-gallery';
 import DatePicker from 'react-datepicker';
+import { initialize, reduxForm } from 'redux-form';
 
 import ImageList from 'components/Listing/Images/ImageList';
 import NavigateButtons from 'components/NavigateButtons';
@@ -12,7 +13,7 @@ import Amenities from 'components/Listing/FormReview/Amenities';
 import CustomAmenities from 'components/Listing/FormReview/CustomAmenities';
 import Scheduler from 'components/Listing/FormReview/Scheduler';
 import { removeUnavailableDates } from 'utils/dates';
-import { createListing } from 'actions';
+import { createListing, fetchListing, clearDetails } from 'actions';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import 'react-quill/dist/quill.bubble.css';
 import 'css/datepicker.css';
@@ -29,6 +30,35 @@ class ListingFormReview extends Component {
     this.state = {
       renderCarousel: false
     };
+  }
+
+  componentDidMount() {
+    if (this.props.match) {
+      const { id } = this.props.match.params;
+      this.props.fetchListing(id);
+
+      this.props.dispatch(initialize('listing', {}));
+      this.props.dispatch(initialize('amenities', {}));
+    }
+  }
+
+  componentDidUpdate() {
+    const listingValues = this.props.details ? this.props.details.location : {};
+
+    const amenityValues = this.props.details
+      ? this.props.details.amenitiesObj
+      : {};
+
+    this.props.dispatch(initialize('listing', listingValues));
+    this.props.dispatch(initialize('amenities', amenityValues));
+  }
+
+  componentWillUnmount() {
+    if (this.props.match) {
+      this.props.clearDetails();
+      this.props.dispatch(initialize('listing', {}));
+      this.props.dispatch(initialize('amenities', {}));
+    }
   }
 
   renderPictures() {
@@ -91,11 +121,13 @@ class ListingFormReview extends Component {
   onCreateListingClicked = () => {
     const { details, amenities, pictures, listing } = this.props;
     const listingValues = { details, amenities, pictures, listing };
-    console.log(listingValues);
+
     this.props.createListing(listingValues);
   };
 
   render() {
+    // if no data is present, return
+    if (_.isEmpty(this.props.listing)) return null;
     const { includedDates, unavailableDates } = this.props.details;
 
     return (
@@ -160,7 +192,9 @@ class ListingFormReview extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
+  console.log(state.details);
+  if (!state.form.listing) return {};
   const values = {
     listing: state.form.listing.values,
     pictures: state.pictures,
@@ -170,7 +204,12 @@ const mapStateToProps = state => {
   return values;
 };
 
-export default connect(
+ListingFormReview = connect(
   mapStateToProps,
-  { createListing }
+  { createListing, fetchListing, clearDetails }
 )(ListingFormReview);
+
+export default reduxForm({
+  enableReinitialize: true,
+  form: 'final'
+})(ListingFormReview);

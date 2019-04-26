@@ -15,6 +15,14 @@ module.exports = app => {
     res.send(listing);
   });
 
+  app.get('/api/listings/:id', async (req, res) => {
+    const listing = await Listing.findOne({
+      _id: req.params.id
+    });
+
+    res.send(listing);
+  });
+
   app.post('/api/listings', requireSignin, async (req, res) => {
     const { details, listing, amenities, pictures } = req.body;
     console.log(listing);

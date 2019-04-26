@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import {
   AUTH_USER,
   AUTH_ERROR,
@@ -8,7 +10,6 @@ import {
   FETCH_LISTING,
   FETCH_LISTINGS
 } from 'actions/types';
-import axios from 'axios';
 import listingAPI from 'apis/listing';
 
 export const signup = (formProps, callback) => async dispatch => {
@@ -99,6 +100,23 @@ export const fetchListings = () => async dispatch => {
 
 export const fetchListing = id => async dispatch => {
   const response = await listingAPI().get(`/api/listings/${id}`);
+  const { pictures, location, details, amenities } = response.data;
 
-  dispatch({ type: FETCH_LISTING, payload: response.data });
+  // map amenities to form values that are true
+  const amenitiesObj = amenities
+    ? amenities.reduce((acc, amenity) => {
+        return { ...acc, [amenity]: true };
+      }, 0)
+    : {};
+
+  // data comes back as a string in mongoose. convert back to dates
+  const { includedDates, unavailableDates } = details;
+  details.includedDates = includedDates.map(date => new Date(date));
+  details.unavailableDates = unavailableDates.map(date => new Date(date));
+
+  dispatch({ type: UPLOAD_PICTURES, payload: pictures });
+  dispatch({
+    type: ADD_DETAILS,
+    payload: { ...details, location, amenitiesObj }
+  });
 };

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from 'actions';
 import detailUtils from 'utils/details';
 import { capitalizeFirstLetter, pluralization } from 'utils/text';
+import { Link } from 'react-router-dom';
 
 class ListingCards extends Component {
   componentDidMount() {
@@ -12,7 +13,7 @@ class ListingCards extends Component {
 
   renderList() {
     const domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
-    return this.props.listings.map(({ details, pictures, location }) => {
+    return this.props.listings.map(({ details, pictures, location, _id }) => {
       const renderDetails = () => {
         return detailUtils.keys.map((detail, idx) => {
           const detailValue = details[detail];
@@ -39,7 +40,11 @@ class ListingCards extends Component {
       };
 
       return (
-        <div key={location.title + location.cost} className="card">
+        <Link
+          to={`listings/${_id}`}
+          key={location.title + location.cost}
+          className="card"
+        >
           <div className="image">
             <img src={renderPicture()} />
           </div>
@@ -53,7 +58,7 @@ class ListingCards extends Component {
           <div className="extra content">
             <div className="ui two column grid">{renderDetails()}</div>
           </div>
-        </div>
+        </Link>
       );
     });
   }
