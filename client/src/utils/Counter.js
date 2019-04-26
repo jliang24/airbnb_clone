@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { capitalizeFirstLetter } from '../utils/text';
+
+import { capitalizeFirstLetter } from 'utils/text';
 
 class Counter extends Component {
   render() {

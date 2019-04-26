@@ -1,4 +1,4 @@
-import { UPLOAD_PICTURES } from '../actions/types';
+import { UPLOAD_PICTURES } from 'actions/types';
 
 export default (state = [], action) => {
   switch (action.type) {

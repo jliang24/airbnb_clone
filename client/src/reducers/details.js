@@ -1,4 +1,4 @@
-import { ADD_DETAILS, CLEAR_DETAILS } from '../actions/types';
+import { ADD_DETAILS, CLEAR_DETAILS } from 'actions/types';
 
 export default (state = {}, action) => {
   switch (action.type) {

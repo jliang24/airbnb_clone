@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import './HeaderStyle.css';
+import 'components/HeaderStyle.css';
 
 class Header extends Component {
   renderLinks() {

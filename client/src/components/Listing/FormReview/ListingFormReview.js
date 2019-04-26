@@ -5,12 +5,12 @@ import _ from 'lodash';
 import ImageGallery from 'react-image-gallery';
 import DatePicker from 'react-datepicker';
 
-import ImageList from 'components/listing/Images/ImageList';
+import ImageList from 'components/Listing/Images/ImageList';
 import NavigateButtons from 'components/NavigateButtons';
-import ListingDetails from 'components/listing/FormReview/ListingDetails';
-import Amenities from 'components/listing/FormReview/Amenities';
-import CustomAmenities from 'components/listing/FormReview/CustomAmenities';
-import Scheduler from 'components/listing/FormReview/Scheduler';
+import ListingDetails from 'components/Listing/FormReview/ListingDetails';
+import Amenities from 'components/Listing/FormReview/Amenities';
+import CustomAmenities from 'components/Listing/FormReview/CustomAmenities';
+import Scheduler from 'components/Listing/FormReview/Scheduler';
 import { removeUnavailableDates } from 'utils/dates';
 import { createListing } from 'actions';
 import 'react-image-gallery/styles/css/image-gallery.css';
