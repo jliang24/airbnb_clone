@@ -233,14 +233,18 @@ const ListingAmenities = props => {
           <h4 className="ui dividing header">
             Pictures <div className="ui sub header">Optional</div>
           </h4>
-          <h5>Add some pictures!</h5>
           <div className="container">
             <Container
               {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
             >
               <input {...getInputProps()} />
               <p style={{ color: 'black' }}>
-                Drag 'n' drop some files here, or click to select files.
+                Drag 'n' drop some files here, or click to select files. <br />
+                <br />
+                {<i className="info circle icon" />}The first picture will be
+                the cover thumbnail for this listing. <br />
+                {<i className="info circle icon" />} A randomly generated
+                placeholder image will be provided if no pictures are attached.
               </p>
             </Container>
           </div>
