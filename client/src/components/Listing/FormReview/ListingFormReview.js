@@ -120,6 +120,7 @@ class ListingFormReview extends Component {
 
   onCreateListingClicked = () => {
     const { details, amenities, pictures, listing } = this.props;
+
     const listingValues = { details, amenities, pictures, listing };
 
     this.props.createListing(listingValues);
@@ -193,7 +194,6 @@ class ListingFormReview extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state.details);
   if (!state.form.listing) return {};
   const values = {
     listing: state.form.listing.values,

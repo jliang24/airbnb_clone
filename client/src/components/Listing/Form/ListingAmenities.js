@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, reduxForm, initialize } from 'redux-form';
 import _ from 'lodash';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -134,6 +134,13 @@ const ListingAmenities = props => {
 
   const onCustomAmenitySubmit = () => {
     if (customAmenityArr.some(({ name }) => name === customAmenity)) return;
+    console.log(props.amenities);
+    props.dispatch(
+      initialize('amenities', {
+        ...props.amenities.values,
+        [customAmenity]: true
+      })
+    );
     const amenityObj = {
       name: customAmenity,
       icon: customIcon
@@ -276,7 +283,8 @@ const mapStateToProps = state => {
     descriptionText: state.details.descriptionText,
     files: state.details.files,
     pictures: state.pictures,
-    customAmenityArr: state.details.customAmenityArr
+    customAmenityArr: state.details.customAmenityArr,
+    amenities: state.form.amenities
   };
 };
 
@@ -286,8 +294,8 @@ export default compose(
     actions
   ),
   reduxForm({
-    // initialValues: amenities,
     form: 'amenities',
-    destroyOnUnmount: false
+    destroyOnUnmount: false,
+    enablenReinitialize: true
   })
 )(ListingAmenities);

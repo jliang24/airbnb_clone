@@ -22,7 +22,6 @@ module.exports = app => {
         Key: key
       },
       (err, url) => {
-        console.log({ key, url });
         res.send({ key, url });
       }
     );

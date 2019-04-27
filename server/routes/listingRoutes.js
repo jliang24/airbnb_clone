@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Listing = mongoose.model('listing');
 const passport = require('passport');
+const _ = require('lodash');
 
 const requireSignin = passport.authenticate('jwt', { session: false });
 module.exports = app => {
@@ -25,8 +26,7 @@ module.exports = app => {
 
   app.post('/api/listings', requireSignin, async (req, res) => {
     const { details, listing, amenities, pictures } = req.body;
-    console.log(listing);
-    const amenitiesArr = amenities ? Object.keys(amenities) : null;
+    const amenitiesArr = amenities ? _.keys(_.pickBy(amenities)) : null;
     console.log(req.user);
     const newListing = new Listing({
       details,
