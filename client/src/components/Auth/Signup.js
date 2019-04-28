@@ -3,6 +3,7 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import * as actions from 'actions';
 import { compose } from 'redux';
+import { renderField } from 'utils/renderField';
 
 class Signup extends Component {
   onSubmit = formProps => {
@@ -15,30 +16,54 @@ class Signup extends Component {
     const { handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
-        <fieldset>
-          <label>Email</label>
-          <Field
-            name="email"
-            type="text"
-            component="input"
-            autoComplete="none"
-          />
-        </fieldset>
-        <fieldset>
-          <label>Password</label>
-          <Field
-            name="password"
-            type="password"
-            component="input"
-            autoComplete="none"
-          />
-        </fieldset>
-        <div>{this.props.errorMessage}</div>
-        <button>Sign up!</button>
+        <div className="ui form container segment">
+          <div className="two fields">
+            <div className="field">
+              <label>First name</label>
+              <Field name="first name" type="text" component={renderField} />
+            </div>
+            <div className="field">
+              <label>Last name</label>
+              <Field name="last name" type="text" component={renderField} />
+            </div>
+          </div>
+          <div className="field">
+            <label>Email</label>
+            <Field
+              name="email"
+              type="text"
+              component={renderField}
+              autoComplete="none"
+            />
+          </div>
+          <div className="field">
+            <label>Password</label>
+            <Field
+              name="password"
+              type="password"
+              component={renderField}
+              autoComplete="none"
+            />
+          </div>
+          <button className="ui button">Sign up!</button>
+          {this.props.errorMessage && (
+            <div className="ui red basic label">{this.props.errorMessage}</div>
+          )}
+        </div>
       </form>
     );
   }
 }
+
+const validate = values => {
+  const errors = {};
+  const fields = ['first name', 'last name', 'email', 'password'];
+  fields.forEach(field => {
+    if (!values[field]) errors[field] = `Please enter a ${field}`;
+  });
+
+  return errors;
+};
 
 const mapStateToProps = state => {
   return {
@@ -51,5 +76,5 @@ export default compose(
     mapStateToProps,
     actions
   ),
-  reduxForm({ form: 'signup' })
+  reduxForm({ form: 'signup', validate })
 )(Signup);

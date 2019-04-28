@@ -1,22 +1,63 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import 'components/HeaderStyle.css';
 
 class Header extends Component {
+  state = { home: false, listing: false };
+
+  determineLocation() {
+    if (this.props.location.pathname === '/listings') {
+      this.setState({ listing: true, home: false });
+    } else if (this.props.location.pathname === '/') {
+      this.setState({ home: true, listing: false });
+    } else {
+      this.setState({
+        home: false,
+        listing: false
+      });
+    }
+  }
+
+  componentDidMount() {
+    this.determineLocation();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      this.determineLocation();
+    }
+  }
+
   renderLinks() {
     if (this.props.authenticated) {
       return (
-        <div>
-          <Link to="/signout">Signout</Link>
-          <Link to="/listings/create">Create a new listing!</Link>
+        <div className="right item">
+          <Link className="ui inverted button " to="/signout">
+            Signout
+          </Link>
+          <Link
+            style={{ marginLeft: '5px' }}
+            className="ui inverted button"
+            to="/listings/create"
+          >
+            Create a new listing!
+          </Link>
         </div>
       );
     } else {
       return (
-        <div>
-          <Link to="/signup">Signup</Link>
-          <Link to="/signin">Signin</Link>
+        <div className="right item">
+          <Link className="ui inverted button " to="/signup">
+            Signup
+          </Link>
+          <Link
+            style={{ marginLeft: '5px' }}
+            className="ui inverted button"
+            to="/signin"
+          >
+            Signin
+          </Link>
         </div>
       );
     }
@@ -24,12 +65,26 @@ class Header extends Component {
 
   render() {
     return (
-      <div className="header">
-        <div>
-          <Link to="/">Home</Link>
-          <Link to="/listings">View Listings</Link>
+      <div className="ui inverted vertical masthead center aligned segment">
+        <div className="ui container">
+          <div className="ui large secondary inverted pointing menu">
+            <Link
+              onClick={() => this.setState({ listing: false })}
+              className={this.state.home ? 'active item' : 'item'}
+              to="/"
+            >
+              Home
+            </Link>
+            <Link
+              onClick={() => this.setState({ listing: true })}
+              className={this.state.listing ? 'active item' : 'item'}
+              to="/listings"
+            >
+              View Listings
+            </Link>
+            {this.renderLinks()}
+          </div>
         </div>
-        {this.renderLinks()}
       </div>
     );
   }
@@ -40,4 +95,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps)(withRouter(Header));

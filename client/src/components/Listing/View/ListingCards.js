@@ -64,7 +64,11 @@ class ListingCards extends Component {
   }
 
   render() {
-    return <div className="ui link four cards">{this.renderList()}</div>;
+    return (
+      <div style={{ marginTop: '1px' }} className="ui link four cards">
+        {this.renderList()}
+      </div>
+    );
   }
 }
 
