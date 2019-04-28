@@ -35,10 +35,9 @@ class ListingFormReview extends Component {
   componentDidMount() {
     if (this.props.match) {
       const { id } = this.props.match.params;
-      this.props.fetchListing(id);
-
       this.props.dispatch(initialize('listing', {}));
       this.props.dispatch(initialize('amenities', {}));
+      this.props.fetchListing(id);
     }
   }
 
@@ -92,15 +91,16 @@ class ListingFormReview extends Component {
           Toggle Photo Gallery
         </div>
       );
-    }
-    return (
-      <div
-        onClick={() => this.setState({ renderCarousel: true })}
-        className="ui right floated primary button"
-      >
-        Toggle Carousel
-      </div>
-    );
+    } else if (this.props.pictures.length > 0) {
+      return (
+        <div
+          onClick={() => this.setState({ renderCarousel: true })}
+          className="ui right floated primary button"
+        >
+          Toggle Carousel
+        </div>
+      );
+    } else return null;
   }
 
   renderAmenities() {
@@ -174,6 +174,7 @@ class ListingFormReview extends Component {
                 inline
                 readOnly
                 monthsShown={2}
+                minDate={new Date()}
                 includeDates={removeUnavailableDates(
                   includedDates,
                   unavailableDates
@@ -182,12 +183,14 @@ class ListingFormReview extends Component {
             </div>
           </div>
         </div>
-        <NavigateButtons
-          onDismiss={this.props.previousPage}
-          dismiss="Back"
-          submit="Create Listing!"
-          onSubmit={this.onCreateListingClicked}
-        />
+        {!this.props.match && (
+          <NavigateButtons
+            onDismiss={this.props.previousPage}
+            dismiss="Back"
+            submit="Create Listing!"
+            onSubmit={this.onCreateListingClicked}
+          />
+        )}
       </div>
     );
   }

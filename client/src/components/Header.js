@@ -68,15 +68,10 @@ class Header extends Component {
       <div className="ui inverted vertical masthead center aligned segment">
         <div className="ui container">
           <div className="ui large secondary inverted pointing menu">
-            <Link
-              onClick={() => this.setState({ listing: false })}
-              className={this.state.home ? 'active item' : 'item'}
-              to="/"
-            >
+            <Link className={this.state.home ? 'active item' : 'item'} to="/">
               Home
             </Link>
             <Link
-              onClick={() => this.setState({ listing: true })}
               className={this.state.listing ? 'active item' : 'item'}
               to="/listings"
             >

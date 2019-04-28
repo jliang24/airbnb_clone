@@ -100,12 +100,14 @@ class Scheduler extends Component {
           includeDates={datesToInclude}
           onChange={this.handleStartDateChange}
           placeholderText="Check In"
+          minDate={new Date()}
         />
         <DatePicker
           selected={this.state.endDate}
           includeDates={this.state.endDates}
           onChange={this.handleEndDateChange}
           placeholderText="Check Out"
+          minDate={new Date()}
           open={this.state.datePickerIsOpen}
           onInputClick={() =>
             this.state.datePickerIsOpen ? null : this.openDatePicker()
