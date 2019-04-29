@@ -53,7 +53,11 @@ export const uploadPictures = files => async (dispatch, getState) => {
   const { authenticated } = getState().auth;
   const uploadURLS = [];
   for (let file of files) {
-    const uploadConfig = await listingAPI(authenticated).get('/api/upload');
+    const filetype = file.type.split('/')[1];
+
+    const uploadConfig = await listingAPI(authenticated).get(
+      `/api/upload/${filetype}`
+    );
 
     uploadURLS.push(uploadConfig.data.key);
 
