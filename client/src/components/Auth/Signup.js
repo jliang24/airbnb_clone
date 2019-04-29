@@ -20,11 +20,11 @@ class Signup extends Component {
           <div className="two fields">
             <div className="field">
               <label>First name</label>
-              <Field name="first name" type="text" component={renderField} />
+              <Field name="firstName" type="text" component={renderField} />
             </div>
             <div className="field">
               <label>Last name</label>
-              <Field name="last name" type="text" component={renderField} />
+              <Field name="lastName" type="text" component={renderField} />
             </div>
           </div>
           <div className="field">
@@ -57,7 +57,7 @@ class Signup extends Component {
 
 const validate = values => {
   const errors = {};
-  const fields = ['first name', 'last name', 'email', 'password'];
+  const fields = ['firstName', 'lastName', 'email', 'password'];
   fields.forEach(field => {
     if (!values[field]) errors[field] = `Please enter a ${field}`;
   });

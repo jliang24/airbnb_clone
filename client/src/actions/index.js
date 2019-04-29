@@ -7,7 +7,6 @@ import {
   UPLOAD_PICTURES,
   ADD_DETAILS,
   CLEAR_DETAILS,
-  FETCH_LISTING,
   FETCH_LISTINGS
 } from 'actions/types';
 import listingAPI from 'apis/listing';
@@ -113,6 +112,7 @@ export const fetchListing = id => async dispatch => {
   const { includedDates, unavailableDates } = details;
   details.includedDates = includedDates.map(date => new Date(date));
   details.unavailableDates = unavailableDates.map(date => new Date(date));
+  details['_user'] = response.data._user;
 
   dispatch({ type: UPLOAD_PICTURES, payload: pictures });
   dispatch({

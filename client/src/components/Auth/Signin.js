@@ -35,7 +35,7 @@ class Signin extends Component {
               autoComplete="none"
             />
           </div>
-          <button className="ui button">Sign in!</button>
+          <button className="ui button">Log in</button>
           {this.props.errorMessage && (
             <div className="ui red basic label">{this.props.errorMessage}</div>
           )}

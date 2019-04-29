@@ -5,7 +5,9 @@ export default (state = {}, action) => {
     case ADD_DETAILS:
       return { ...state, ...action.payload };
     case CLEAR_DETAILS:
-      return {};
+      state = {};
+      console.log(state);
+      return state;
     default:
       return state;
   }

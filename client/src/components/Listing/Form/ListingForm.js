@@ -169,6 +169,8 @@ class ListingForm extends Component {
 
   decrementValue = item => {
     if (this.state[item] === 0) return;
+    // make guests always be at least one
+    if (item === 'guests' && this.state['guests'] === 1) return;
     this.setState(prevState => {
       return {
         ...prevState,
@@ -378,6 +380,8 @@ const validate = values => {
 };
 
 const mapStateToProps = state => {
+  if (state.details.hasOwnProperty('_id')) return { details: {} };
+
   return {
     details: state.details
   };

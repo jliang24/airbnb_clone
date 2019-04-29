@@ -2,7 +2,9 @@ import { AUTH_USER, AUTH_ERROR } from 'actions/types';
 
 const INITIAL_STATE = {
   authenticated: '',
-  errorMessage: ''
+  errorMessage: '',
+  firstName: '',
+  lastName: ''
 };
 
 export default (state = INITIAL_STATE, action) => {

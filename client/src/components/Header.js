@@ -56,7 +56,7 @@ class Header extends Component {
             className="ui inverted button"
             to="/signin"
           >
-            Signin
+            Log in
           </Link>
         </div>
       );

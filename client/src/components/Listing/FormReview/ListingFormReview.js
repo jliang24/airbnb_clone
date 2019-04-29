@@ -22,11 +22,6 @@ class ListingFormReview extends Component {
   constructor(props) {
     super(props);
 
-    this.name = {
-      first: 'John',
-      last: 'Doe'
-    };
-
     this.state = {
       renderCarousel: false
     };
@@ -129,7 +124,12 @@ class ListingFormReview extends Component {
   render() {
     // if no data is present, return
     if (_.isEmpty(this.props.listing)) return null;
-    const { includedDates, unavailableDates } = this.props.details;
+    const {
+      includedDates,
+      unavailableDates,
+      descriptionText
+    } = this.props.details;
+    const { firstName, lastName } = this.props.details._user;
 
     return (
       <div>
@@ -138,19 +138,15 @@ class ListingFormReview extends Component {
         <div className="general">
           <h2 className="ui divided header">{this.props.listing.title} </h2>
           <h5 style={{ marginTop: '0px' }} className="ui sub header dolly600">
-            {this.name.first} {this.name.last}
+            {firstName} {lastName}
           </h5>
           <h4 style={{ marginTop: '0px' }} className="ui sub header dolly600">
             {this.props.listing.city}
           </h4>
           <ListingDetails />
-          {this.props.details.descriptionText &&
-            (this.props.details.descriptionText !== '' && (
-              <ReactQuill
-                readOnly
-                value={this.props.details.descriptionText}
-                theme="bubble"
-              />
+          {descriptionText &&
+            (descriptionText !== '' && (
+              <ReactQuill readOnly value={descriptionText} theme="bubble" />
             ))}
           <div className="ui two column grid">
             <div className="row">
@@ -197,7 +193,7 @@ class ListingFormReview extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  if (!state.form.listing) return {};
+  if (!state.form.listing || !state.form.amenities) return {};
   const values = {
     listing: state.form.listing.values,
     pictures: state.pictures,

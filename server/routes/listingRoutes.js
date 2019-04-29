@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Listing = mongoose.model('listing');
+const User = mongoose.model('listing');
 const passport = require('passport');
 const _ = require('lodash');
 
@@ -13,15 +14,24 @@ module.exports = app => {
     const listing = await Listing.find().select(
       `${details} ${location} pictures`
     );
+
     res.send(listing);
   });
 
   app.get('/api/listings/:id', async (req, res) => {
-    const listing = await Listing.findOne({
+    await Listing.findOne({
       _id: req.params.id
-    });
+    })
+      .populate('_user')
+      .exec(function(err, listing) {
+        const { firstName, lastName } = listing._user;
+        listing['_user'] = {
+          firstName,
+          lastName
+        };
 
-    res.send(listing);
+        res.send(listing);
+      });
   });
 
   app.post('/api/listings', requireSignin, async (req, res) => {

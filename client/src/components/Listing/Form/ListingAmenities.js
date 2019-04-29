@@ -170,14 +170,20 @@ const ListingAmenities = props => {
     });
   };
 
-  const onFormSubmit = async formValues => {
+  const onFormSubmit = async () => {
     setLoading(true);
     if (files) {
       await props.uploadPictures(files);
     }
-    props.addDetails({ descriptionText, files, customAmenityArr });
+    const _user = { firstName: '', lastName: '' };
+    props.addDetails({ descriptionText, files, customAmenityArr, _user });
 
     props.onSubmit();
+  };
+
+  const onBack = () => {
+    props.previousPage();
+    props.addDetails({ descriptionText, files, customAmenityArr });
   };
 
   return (
@@ -268,7 +274,7 @@ const ListingAmenities = props => {
         </form>
       </div>
       <NavigateButtons
-        onDismiss={props.previousPage}
+        onDismiss={onBack}
         dismiss="Back"
         submit="Show Preview"
         loading={loading}
@@ -284,7 +290,8 @@ const mapStateToProps = state => {
     files: state.details.files,
     pictures: state.pictures,
     customAmenityArr: state.details.customAmenityArr,
-    amenities: state.form.amenities
+    amenities: state.form.amenities,
+    user: state.auth
   };
 };
 
