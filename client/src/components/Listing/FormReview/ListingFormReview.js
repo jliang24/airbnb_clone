@@ -105,11 +105,11 @@ class ListingFormReview extends Component {
     )
       return null;
     return (
-      <div className="column field">
+      <>
         <h3 className="ui dividing header">Amenities</h3>
         <Amenities />
         <CustomAmenities />
-      </div>
+      </>
     );
   }
 
@@ -150,21 +150,15 @@ class ListingFormReview extends Component {
             ))}
           <div className="ui two column grid">
             <div className="row">
-              {this.renderAmenities()}
-              <div
-                style={{
-                  right: '0px',
-                  top: '40px',
-                  position: 'absolute'
-                }}
-                className="column field"
-              >
-                <Scheduler />
+              <div className="column field">{this.renderAmenities()}</div>
+              <div className="column field">
+                <h4 className="ui dividing header">Location</h4>
+                // Put google maps here
               </div>
             </div>
           </div>
-          <div className="ui two column grid">
-            <div className="column field">
+          <div class="ui two column grid">
+            <div class="column field">
               <h3 className="ui dividing header">Availability</h3>
               <DatePicker
                 inline
@@ -176,6 +170,9 @@ class ListingFormReview extends Component {
                   unavailableDates
                 )}
               />
+            </div>
+            <div className="column field">
+              <Scheduler />
             </div>
           </div>
         </div>
