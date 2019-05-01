@@ -31,6 +31,7 @@ class ListingCards extends Component {
                 )}`}
               </div>
             );
+          return null;
         });
       };
 
@@ -46,7 +47,7 @@ class ListingCards extends Component {
           className="card"
         >
           <div className="image">
-            <img src={renderPicture()} />
+            <img alt={location.title} src={renderPicture()} />
           </div>
           <div className="content">
             <div className="header">{location.title}</div>

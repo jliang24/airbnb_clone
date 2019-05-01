@@ -67,6 +67,7 @@ class ImageCard extends React.Component {
         }}
       >
         <img
+          alt={original}
           onMouseEnter={this.onMouseOver}
           onMouseLeave={this.onMouseLeave}
           onClick={() => this.showModal()}
@@ -78,6 +79,7 @@ class ImageCard extends React.Component {
           <Modal
             content={
               <img
+                alt={original}
                 style={{
                   maxHeight: '80%',
                   maxWidth: '80%',

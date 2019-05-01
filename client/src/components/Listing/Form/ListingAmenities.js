@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { Field, reduxForm, initialize } from 'redux-form';
-import _ from 'lodash';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { compose } from 'redux';
@@ -134,7 +133,6 @@ const ListingAmenities = props => {
 
   const onCustomAmenitySubmit = () => {
     if (customAmenityArr.some(({ name }) => name === customAmenity)) return;
-    console.log(props.amenities);
     props.dispatch(
       initialize('amenities', {
         ...props.amenities.values,
@@ -219,6 +217,7 @@ const ListingAmenities = props => {
                   <label>Icon Name (Optional) </label>
                   <a
                     target="_blank"
+                    rel="noopener noreferrer"
                     href="https://semantic-ui.com/elements/icon.html"
                   >
                     {' '}

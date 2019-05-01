@@ -10,6 +10,7 @@ import states from 'utils/states';
 import Counter from 'utils/Counter';
 import details from 'utils/details';
 import NavigateButtons from 'components/NavigateButtons';
+import history from 'historyObj';
 
 class ListingForm extends Component {
   constructor(props) {
@@ -345,7 +346,7 @@ class ListingForm extends Component {
           </form>
         </div>
         <NavigateButtons
-          onDismiss={this.props.previousPage}
+          onDismiss={() => history.push('/listings')}
           dismiss="Cancel"
           submit="Next"
           onSubmit={this.props.handleSubmit(this.handleSubmit)}

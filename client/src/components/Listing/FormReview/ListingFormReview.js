@@ -5,6 +5,7 @@ import _ from 'lodash';
 import ImageGallery from 'react-image-gallery';
 import DatePicker from 'react-datepicker';
 import { initialize, reduxForm } from 'redux-form';
+import history from 'historyObj';
 
 import ImageList from 'components/Listing/Images/ImageList';
 import NavigateButtons from 'components/NavigateButtons';
@@ -119,6 +120,7 @@ class ListingFormReview extends Component {
     const listingValues = { details, amenities, pictures, listing };
 
     this.props.createListing(listingValues);
+    history.push('/listings');
   };
 
   render() {
@@ -151,14 +153,14 @@ class ListingFormReview extends Component {
           <div className="ui two column grid">
             <div className="row">
               <div className="column field">{this.renderAmenities()}</div>
-              <div className="column field">
-                <h4 className="ui dividing header">Location</h4>
+              {/* <div className="column field">
+                <h3 className="ui dividing header">Location</h3>
                 // Put google maps here
-              </div>
+              </div> */}
             </div>
           </div>
-          <div class="ui two column grid">
-            <div class="column field">
+          <div className="ui two column grid">
+            <div className="column field">
               <h3 className="ui dividing header">Availability</h3>
               <DatePicker
                 inline

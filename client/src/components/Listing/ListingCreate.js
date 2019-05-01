@@ -18,10 +18,6 @@ class ListingCreate extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log('i mounted');
-  }
-
   nextPage() {
     this.setState({ page: this.state.page + 1 });
   }

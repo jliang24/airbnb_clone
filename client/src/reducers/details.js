@@ -6,7 +6,6 @@ export default (state = {}, action) => {
       return { ...state, ...action.payload };
     case CLEAR_DETAILS:
       state = {};
-      console.log(state);
       return state;
     default:
       return state;

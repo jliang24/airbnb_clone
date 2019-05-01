@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 
 import App from 'components/App';
 import reducers from 'reducers';
+import history from 'historyObj';
 import Welcome from 'components/Welcome';
 import Signup from 'components/Auth/Signup';
 import Signout from 'components/Auth/Signout';
@@ -27,7 +28,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <Router history={history}>
       <App>
         <Switch>
           <Route path="/" exact component={Welcome} />
@@ -39,7 +40,7 @@ ReactDOM.render(
           <Route path="/listings/:id" exact component={ListingFormReview} />
         </Switch>
       </App>
-    </BrowserRouter>
+    </Router>
   </Provider>,
   document.querySelector('#root')
 );
