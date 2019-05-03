@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "cd server && npm install && node index.js",
     "client": "cd client && npm start",
     "server": "cd server && npm run dev",
     "mongo": "concurrently \"service mongod start\" \"mongod\"",
-    "dev": "concurrently \"npm run client\" \"npm run mongo\" \"npm run server\""
+    "dev": "concurrently \"npm run client\" \"npm run mongo\" \"npm run server\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",

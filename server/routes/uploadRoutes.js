@@ -1,7 +1,7 @@
 const AWS = require('aws-sdk');
 const passport = require('passport');
 const uuid = require('uuid');
-const keys = require('../config');
+const keys = require('../config/keys');
 
 const requireSignin = passport.authenticate('jwt', { session: false });
 
