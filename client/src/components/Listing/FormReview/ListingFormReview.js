@@ -192,6 +192,7 @@ class ListingFormReview extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(state.details);
   if (!state.form.listing || !state.form.amenities) return {};
   const values = {
     listing: state.form.listing.values,

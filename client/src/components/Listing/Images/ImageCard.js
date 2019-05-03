@@ -55,7 +55,14 @@ class ImageCard extends React.Component {
   };
 
   showModal = () => {
+    window.scrollTo(0, 0);
     this.setState({ showModal: true });
+    document.body.style.overflow = 'hidden';
+  };
+
+  onDismiss = () => {
+    this.setState({ showModal: false });
+    document.body.style.overflow = 'visible';
   };
 
   render() {
@@ -91,7 +98,7 @@ class ImageCard extends React.Component {
                 src={original}
               />
             }
-            onDismiss={() => this.setState({ showModal: false })}
+            onDismiss={this.onDismiss}
           />
         )}
       </div>

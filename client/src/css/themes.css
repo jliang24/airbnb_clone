@@ -7,6 +7,11 @@
   --dolly-20: #f6fa94; /* 20 */
 }
 
+html,
+body {
+  height: 100%;
+}
+
 .general {
   background-color: var(--dolly-20) !important;
   padding: 30px !important;

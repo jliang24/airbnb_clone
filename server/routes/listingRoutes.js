@@ -11,9 +11,12 @@ module.exports = app => {
       'details.guests details.bedrooms details.beds details.baths';
     const location =
       'location.title location.city location.state location.cost';
-    const listing = await Listing.find().select(
-      `${details} ${location} pictures`
-    );
+    var start = new Date();
+    start.setHours(0, 0, 0, 0);
+    const listing = await Listing.find({
+      details: { startDate: { $gte: start } }
+    }).select(`${details} ${location} pictures`);
+    console.log(listing.length);
 
     res.send(listing);
   });
@@ -35,7 +38,7 @@ module.exports = app => {
   });
 
   app.post('/api/listings', requireSignin, async (req, res) => {
-    const { details, listing, amenities, pictures } = req.body;
+    const { details, listing, amenities, pictures, startDate } = req.body;
     const amenitiesArr = amenities ? _.keys(_.pickBy(amenities)) : null;
     console.log(req.user);
     const newListing = new Listing({

@@ -256,7 +256,10 @@ const ListingAmenities = props => {
                 {<i className="info circle icon" />}The first picture will be
                 the cover thumbnail for this listing. <br />
                 {<i className="info circle icon" />} A randomly generated
-                placeholder image will be provided if no pictures are attached.
+                placeholder image will be provided if no pictures are attached.{' '}
+                <br />
+                {<i className="info circle icon" />} PNG files will take longer
+                to upload.
               </p>
             </Container>
           </div>
