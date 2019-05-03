@@ -15,8 +15,7 @@ const detailSchema = new Schema({
   includedDates: [Date],
   unavailableDates: [Date],
   customAmenityArr: [customAmenitySchema],
-  maxNights: Number,
-  startDate: Date
+  maxNights: Number
 });
 
 module.exports = detailSchema;

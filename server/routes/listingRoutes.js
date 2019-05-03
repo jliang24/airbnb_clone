@@ -13,10 +13,10 @@ module.exports = app => {
       'location.title location.city location.state location.cost';
     var start = new Date();
     start.setHours(0, 0, 0, 0);
+    console.log(start);
     const listing = await Listing.find({
-      details: { startDate: { $gte: start } }
+      'details.includedDates': { $gte: start }
     }).select(`${details} ${location} pictures`);
-    console.log(listing.length);
 
     res.send(listing);
   });
@@ -38,9 +38,9 @@ module.exports = app => {
   });
 
   app.post('/api/listings', requireSignin, async (req, res) => {
-    const { details, listing, amenities, pictures, startDate } = req.body;
+    const { details, listing, amenities, pictures } = req.body;
     const amenitiesArr = amenities ? _.keys(_.pickBy(amenities)) : null;
-    console.log(req.user);
+
     const newListing = new Listing({
       details,
       location: listing,
