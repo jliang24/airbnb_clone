@@ -120,7 +120,7 @@ class ListingFormReview extends Component {
     const listingValues = { details, amenities, pictures, listing };
 
     this.props.createListing(listingValues);
-    history.push('/listings');
+    history.push('/home');
   };
 
   render() {

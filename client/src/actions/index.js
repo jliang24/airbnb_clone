@@ -7,7 +7,8 @@ import {
   UPLOAD_PICTURES,
   ADD_DETAILS,
   CLEAR_DETAILS,
-  FETCH_LISTINGS
+  FETCH_LISTINGS,
+  CLEAR_LISTINGS
 } from 'actions/types';
 import listingAPI from 'apis/listing';
 
@@ -89,10 +90,21 @@ export const createListing = formValues => async (dispatch, getState) => {
   dispatch({ type: CREATE_LISTING, payload: response.data });
 };
 
-export const fetchListings = () => async dispatch => {
-  const response = await listingAPI().get('/api/listings');
+export const fetchListings = user => async (dispatch, getState) => {
+  const { authenticated } = getState().auth;
+  // If user is authenticated, make a request to route that has authentication required
+  const response =
+    authenticated && user
+      ? await listingAPI(authenticated).get('/api/listings/user')
+      : await listingAPI().get('/api/listings');
 
   dispatch({ type: FETCH_LISTINGS, payload: response.data });
+};
+
+export const clearListings = () => {
+  return {
+    type: CLEAR_LISTINGS
+  };
 };
 
 export const fetchListing = id => async dispatch => {

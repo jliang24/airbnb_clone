@@ -9,7 +9,7 @@ class Header extends Component {
   determineLocation() {
     if (this.props.location.pathname === '/listings') {
       this.setState({ listing: true, home: false });
-    } else if (this.props.location.pathname === '/') {
+    } else if (this.props.location.pathname === '/home') {
       this.setState({ home: true, listing: false });
     } else {
       this.setState({
@@ -68,7 +68,10 @@ class Header extends Component {
       <div className="ui inverted vertical masthead center aligned segment">
         <div className="ui container">
           <div className="ui large secondary inverted pointing menu">
-            <Link className={this.state.home ? 'active item' : 'item'} to="/">
+            <Link
+              className={this.state.home ? 'active item' : 'item'}
+              to="/home"
+            >
               Home
             </Link>
             <Link

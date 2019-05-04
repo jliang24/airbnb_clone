@@ -5,18 +5,27 @@ const passport = require('passport');
 const _ = require('lodash');
 
 const requireSignin = passport.authenticate('jwt', { session: false });
+
 module.exports = app => {
+  const details = 'details.guests details.bedrooms details.beds details.baths';
+  const location = 'location.title location.city location.state location.cost';
+  const start = new Date();
+  start.setHours(0, 0, 0, 0);
+
   app.get('/api/listings', async (req, res) => {
-    const details =
-      'details.guests details.bedrooms details.beds details.baths';
-    const location =
-      'location.title location.city location.state location.cost';
-    var start = new Date();
-    start.setHours(0, 0, 0, 0);
-    console.log(start);
     const listing = await Listing.find({
       'details.includedDates': { $gte: start }
     }).select(`${details} ${location} pictures`);
+
+    res.send(listing);
+  });
+
+  app.get('/api/listings/user', requireSignin, async (req, res) => {
+    var start = new Date();
+    start.setHours(0, 0, 0, 0);
+    const listing = await Listing.find({ _user: req.user._id }).select(
+      `${details} ${location} pictures`
+    );
 
     res.send(listing);
   });

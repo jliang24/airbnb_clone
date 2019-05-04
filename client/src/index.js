@@ -15,6 +15,7 @@ import Signin from 'components/Auth/Signin';
 import ListingCreate from 'components/Listing/ListingCreate';
 import ListingView from 'components/Listing/ListingView';
 import ListingFormReview from 'components/Listing/FormReview/ListingFormReview';
+import Home from 'components/Home';
 import 'semantic/dist/semantic.min.css';
 import 'css/themes.css';
 
@@ -32,6 +33,7 @@ ReactDOM.render(
       <App>
         <Switch>
           <Route path="/" exact component={Welcome} />
+          <Route path="/home" exact component={Home} />
           <Route path="/signup" component={Signup} />
           <Route path="/signout" component={Signout} />
           <Route path="/signin" component={Signin} />

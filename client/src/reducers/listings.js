@@ -4,7 +4,8 @@ import {
   FETCH_LISTINGS,
   FETCH_LISTING,
   DELETE_LISTING,
-  EDIT_LISTING
+  EDIT_LISTING,
+  CLEAR_LISTINGS
 } from 'actions/types';
 
 export default (state = {}, action) => {
@@ -19,6 +20,8 @@ export default (state = {}, action) => {
       return { ...state, [action.payload._id]: action.payload };
     case DELETE_LISTING:
       return _.omit(state, action.payload);
+    case CLEAR_LISTINGS:
+      return {};
     default:
       return state;
   }

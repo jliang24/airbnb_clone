@@ -8,7 +8,12 @@ import { Link } from 'react-router-dom';
 
 class ListingCards extends Component {
   componentDidMount() {
-    this.props.fetchListings();
+    const user = this.props.user;
+    this.props.fetchListings(user && true);
+  }
+
+  componentWillUnmount() {
+    this.props.clearListings();
   }
 
   renderList() {
