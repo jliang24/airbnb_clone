@@ -1,0 +1,29 @@
+.accord {
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transform: scaleY(1);
+}
+
+.accord:hover {
+  background-color: rgb(240, 239, 239);
+}
+
+.section {
+  overflow: hidden;
+  transition: transform 0.3s ease-out;
+  height: auto;
+  transform: scaleY(1);
+  transform-origin: top;
+}
+
+.collapsed {
+  transform: scaleY(0);
+  transition: transform 0.3s ease-out;
+  transform-origin: top;
+  height: 0px;
+}
