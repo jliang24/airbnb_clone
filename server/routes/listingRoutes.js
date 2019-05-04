@@ -60,4 +60,15 @@ module.exports = app => {
     await newListing.save();
     res.send(newListing);
   });
+
+  app.delete('/api/listings/:id', requireSignin, async (req, res) => {
+    await Listing.findOne({ _id: req.params.id })
+      .populate('_user')
+      .exec(function(err, listing) {
+        if (req.user._id.toString() !== listing._user._id.toString())
+          return res.send('Failed');
+      });
+    await Listing.deleteOne({ _id: req.params.id });
+    res.send('/');
+  });
 };

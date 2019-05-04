@@ -14,7 +14,6 @@
 }
 
 .section {
-  overflow: hidden;
   transition: transform 0.3s ease-out;
   height: auto;
   transform: scaleY(1);

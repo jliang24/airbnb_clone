@@ -15,6 +15,7 @@ import Signin from 'components/Auth/Signin';
 import ListingCreate from 'components/Listing/ListingCreate';
 import ListingView from 'components/Listing/ListingView';
 import ListingFormReview from 'components/Listing/FormReview/ListingFormReview';
+import ListingDelete from 'components/Listing/ListingDelete';
 import Home from 'components/Home';
 import 'semantic/dist/semantic.min.css';
 import 'css/themes.css';
@@ -40,6 +41,7 @@ ReactDOM.render(
           <Route path="/listings/create" exact component={ListingCreate} />
           <Route path="/listings" component={ListingView} exact />
           <Route path="/listings/:id" exact component={ListingFormReview} />
+          <Route path="/listings/delete/:id" exact component={ListingDelete} />
         </Switch>
       </App>
     </Router>

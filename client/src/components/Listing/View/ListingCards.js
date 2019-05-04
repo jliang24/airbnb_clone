@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import * as actions from 'actions';
 import detailUtils from 'utils/details';
 import { capitalizeFirstLetter, pluralization } from 'utils/text';
-import { Link } from 'react-router-dom';
+import AdminButtons from 'components/Listing/View/AdminButtons';
+import history from 'historyObj';
 
 class ListingCards extends Component {
+  state = { title: '', id: '' };
+
   componentDidMount() {
     const user = this.props.user;
     this.props.fetchListings(user && true);
@@ -16,8 +20,18 @@ class ListingCards extends Component {
     this.props.clearListings();
   }
 
+  onDelete(e) {
+    e.preventDefault();
+    history.push(`/listings/delete/${this.deleteId}`);
+  }
+
+  onEdit(e) {
+    console.log('hey');
+  }
+
   renderList() {
     const domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
+
     return this.props.listings.map(({ details, pictures, location, _id }) => {
       const renderDetails = () => {
         return detailUtils.keys.map((detail, idx) => {
@@ -63,6 +77,13 @@ class ListingCards extends Component {
           </div>
           <div className="extra content">
             <div className="ui two column grid">{renderDetails()}</div>
+            {this.props.user && (
+              <AdminButtons
+                onEdit={this.onEdit}
+                deleteId={_id}
+                onDelete={this.onDelete}
+              />
+            )}
           </div>
         </Link>
       );

@@ -4,7 +4,7 @@ import ListingCards from 'components/Listing/View/ListingCards';
 import 'css/accordion.css';
 
 class Home extends Component {
-  state = { listingsCollapsed: false, requestsCollapsed: false };
+  state = { listingsCollapsed: false, requestsCollapsed: true };
 
   render() {
     return (

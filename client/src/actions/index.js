@@ -8,7 +8,8 @@ import {
   ADD_DETAILS,
   CLEAR_DETAILS,
   FETCH_LISTINGS,
-  CLEAR_LISTINGS
+  CLEAR_LISTINGS,
+  DELETE_LISTING
 } from 'actions/types';
 import listingAPI from 'apis/listing';
 
@@ -105,6 +106,14 @@ export const clearListings = () => {
   return {
     type: CLEAR_LISTINGS
   };
+};
+
+export const deleteListing = id => async (dispatch, getState) => {
+  const { authenticated } = getState().auth;
+  console.log('hey?');
+  await listingAPI(authenticated).delete(`/api/listings/${id}`);
+
+  dispatch({ type: DELETE_LISTING, payload: id });
 };
 
 export const fetchListing = id => async dispatch => {
