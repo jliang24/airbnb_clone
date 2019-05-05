@@ -73,3 +73,17 @@ select:focus {
 .ql-editor {
   min-height: 80px;
 }
+
+.image-gallery-slide img {
+  max-width: 100%;
+  max-height: 750px;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+  margin: auto;
+  display: block;
+}
+
+.image-gallery-image {
+  background-color: var(--dolly-900);
+}

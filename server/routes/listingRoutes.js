@@ -13,12 +13,15 @@ module.exports = app => {
   start.setHours(0, 0, 0, 0);
 
   const checkUser = async (listingId, userId) => {
+    let isUser = false;
+    // wait for listing to determine if userId in request is the same as user in listing
     await Listing.findOne({ _id: listingId })
       .populate('_user')
-      .exec(function(err, listing) {
-        if (userId.toString() !== listing._user._id.toString())
-          return res.send('Failed');
+      .exec()
+      .then(listing => {
+        isUser = userId.toString() === listing._user._id.toString();
       });
+    return isUser;
   };
 
   app.get('/api/listings', async (req, res) => {
@@ -73,7 +76,11 @@ module.exports = app => {
   });
 
   app.delete('/api/listings/:id', requireSignin, async (req, res) => {
-    checkUser(req.params.id, req.user._id);
+    const isUser = await checkUser(req.params.id, req.user._id);
+    if (!isUser) {
+      return res.send(401, 'unauthorized');
+    }
+
     await Listing.deleteOne({ _id: req.params.id });
     res.send('/');
   });
@@ -81,7 +88,11 @@ module.exports = app => {
   app.patch('/api/listings/:id', requireSignin, async (req, res) => {
     const { details, listing, amenities, pictures } = req.body;
     const amenitiesArr = amenities ? _.keys(_.pickBy(amenities)) : null;
-    checkUser(req.params.id, req.user._id);
+    const isUser = await checkUser(req.params.id, req.user._id);
+    if (!isUser) {
+      return res.send(401, 'unauthorized');
+    }
+
     const listingFound = await Listing.findOneAndUpdate(
       { _id: req.params.id },
       {

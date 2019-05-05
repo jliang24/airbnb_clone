@@ -14,7 +14,6 @@ import Amenities from 'components/Listing/FormReview/Amenities';
 import CustomAmenities from 'components/Listing/FormReview/CustomAmenities';
 import Scheduler from 'components/Listing/FormReview/Scheduler';
 import { removeUnavailableDates } from 'utils/dates';
-
 import {
   createListing,
   fetchListing,
@@ -22,6 +21,7 @@ import {
   clearPictures,
   editListing
 } from 'actions';
+
 import 'react-image-gallery/styles/css/image-gallery.css';
 import 'react-quill/dist/quill.bubble.css';
 import 'css/datepicker.css';
@@ -80,7 +80,12 @@ class ListingFormReview extends Component {
     if (this.state.renderCarousel) {
       return (
         <div className="dolly800-background">
-          <ImageGallery items={imagePics} swipeThreshold={30} />
+          <ImageGallery
+            showFullscreenButton={false}
+            size={300}
+            items={imagePics}
+            swipeThreshold={30}
+          />
         </div>
       );
     }
