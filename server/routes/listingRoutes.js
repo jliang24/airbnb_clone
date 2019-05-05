@@ -12,6 +12,15 @@ module.exports = app => {
   const start = new Date();
   start.setHours(0, 0, 0, 0);
 
+  const checkUser = async (listingId, userId) => {
+    await Listing.findOne({ _id: listingId })
+      .populate('_user')
+      .exec(function(err, listing) {
+        if (userId.toString() !== listing._user._id.toString())
+          return res.send('Failed');
+      });
+  };
+
   app.get('/api/listings', async (req, res) => {
     const listing = await Listing.find({
       'details.includedDates': { $gte: start }
@@ -55,20 +64,36 @@ module.exports = app => {
       location: listing,
       amenities: amenitiesArr,
       pictures,
-      _user: req.user._id
+      _user: req.user._id,
+      listingCreated: new Date()
     });
+
     await newListing.save();
     res.send(newListing);
   });
 
   app.delete('/api/listings/:id', requireSignin, async (req, res) => {
-    await Listing.findOne({ _id: req.params.id })
-      .populate('_user')
-      .exec(function(err, listing) {
-        if (req.user._id.toString() !== listing._user._id.toString())
-          return res.send('Failed');
-      });
+    checkUser(req.params.id, req.user._id);
     await Listing.deleteOne({ _id: req.params.id });
     res.send('/');
+  });
+
+  app.patch('/api/listings/:id', requireSignin, async (req, res) => {
+    const { details, listing, amenities, pictures } = req.body;
+    const amenitiesArr = amenities ? _.keys(_.pickBy(amenities)) : null;
+    checkUser(req.params.id, req.user._id);
+    const listingFound = await Listing.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          details,
+          location: listing,
+          amenities: amenitiesArr,
+          pictures
+        }
+      }
+    ).exec();
+
+    res.send(listingFound);
   });
 };

@@ -3,6 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import 'components/HeaderStyle.css';
 
+import * as actions from 'actions';
+
 class Header extends Component {
   state = { home: false, listing: false };
 
@@ -29,6 +31,11 @@ class Header extends Component {
     }
   }
 
+  clearInfo = () => {
+    this.props.clearDetails();
+    this.props.clearPictures();
+  };
+
   renderLinks() {
     if (this.props.authenticated) {
       return (
@@ -36,13 +43,16 @@ class Header extends Component {
           <Link className="ui inverted button " to="/signout">
             Signout
           </Link>
-          <Link
-            style={{ marginLeft: '5px' }}
-            className="ui inverted button"
-            to="/listings/create"
-          >
-            Create a new listing!
-          </Link>
+          {this.props.location.pathname.indexOf('edit') < 0 && (
+            <Link
+              style={{ marginLeft: '5px' }}
+              className="ui inverted button"
+              to="/listings/create"
+              onClick={this.clearInfo}
+            >
+              Create a new listing!
+            </Link>
+          )}
         </div>
       );
     } else {
@@ -89,8 +99,12 @@ class Header extends Component {
 }
 const mapStateToProps = state => {
   return {
-    authenticated: state.auth.authenticated
+    authenticated: state.auth.authenticated,
+    details: state.details
   };
 };
 
-export default connect(mapStateToProps)(withRouter(Header));
+export default connect(
+  mapStateToProps,
+  actions
+)(withRouter(Header));

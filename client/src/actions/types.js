@@ -9,3 +9,4 @@ export const FETCH_LISTING = 'fetch_listing';
 export const DELETE_LISTING = 'delete_listing';
 export const EDIT_LISTING = 'edit_listing';
 export const CLEAR_LISTINGS = 'clear_listings';
+export const CLEAR_PICTURES = 'clear_pictures';

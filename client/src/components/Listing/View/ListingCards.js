@@ -22,11 +22,12 @@ class ListingCards extends Component {
 
   onDelete(e) {
     e.preventDefault();
-    history.push(`/listings/delete/${this.deleteId}`);
+    history.push(`/listings/delete/${this.Id}`);
   }
 
   onEdit(e) {
-    console.log('hey');
+    e.preventDefault();
+    history.push(`/listings/edit/${this.Id}`);
   }
 
   renderList() {
@@ -80,7 +81,7 @@ class ListingCards extends Component {
             {this.props.user && (
               <AdminButtons
                 onEdit={this.onEdit}
-                deleteId={_id}
+                Id={_id}
                 onDelete={this.onDelete}
               />
             )}

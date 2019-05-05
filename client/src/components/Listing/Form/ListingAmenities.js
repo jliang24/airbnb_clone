@@ -170,7 +170,7 @@ const ListingAmenities = props => {
 
   const onFormSubmit = async () => {
     setLoading(true);
-    if (files) {
+    if (files.length > 0) {
       await props.uploadPictures(files);
     }
     const _user = { firstName: '', lastName: '' };
@@ -182,6 +182,36 @@ const ListingAmenities = props => {
   const onBack = () => {
     props.previousPage();
     props.addDetails({ descriptionText, files, customAmenityArr });
+  };
+
+  const renderPictures = () => {
+    if (!props.pictures || props.pictures.length === 0) return null;
+    const domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
+    const picContainer = props.pictures.map(picURL => (
+      <img
+        key={picURL}
+        alt={picURL}
+        style={{ maxHeight: '200px' }}
+        className="card"
+        src={domainURL + picURL}
+      />
+    ));
+    return (
+      <>
+        <h4 className="ui divided header">
+          Uploaded Pictures{' '}
+          <button onClick={props.clearPictures} className="ui button">
+            {' '}
+            Clear Pictures
+          </button>
+        </h4>
+        <div className="ui four cards">{picContainer}</div>
+        <div>
+          <i className="exclamation circle icon" />
+          Adding new files will erase currently uploaded pictures!
+        </div>
+      </>
+    );
   };
 
   return (
@@ -265,6 +295,7 @@ const ListingAmenities = props => {
           </div>
           {files.length > 0 && <h5>Files</h5>}
           <ul>{dropFiles}</ul>
+          {renderPictures()}
           <h4 className="ui dividing header">
             Listing Details <div className="ui sub header">Optional</div>
           </h4>

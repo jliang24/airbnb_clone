@@ -3,6 +3,7 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.min.css';
+import _ from 'lodash';
 
 import { renderField, renderError } from 'utils/renderField';
 import * as actions from 'actions';
@@ -41,7 +42,24 @@ class ListingForm extends Component {
     }
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps, prevState) {
+    // Check if in edit component, then check if id exists
+    if (
+      window.location.href.indexOf('edit') > -1 &&
+      !prevState.hasOwnProperty('_id') &&
+      !_.isEmpty(this.props.details)
+    ) {
+      const endDate = this.props.details.includedDates[
+        this.props.details.includedDates.length - 1
+      ];
+      const startDate = this.props.details.includedDates[0];
+      this.setState({
+        endDate,
+        startDate,
+        ...this.props.details
+      });
+    }
+
     if (
       this.state.includedDates.length !== this.findDateDifference() ||
       this.state.forward
@@ -64,10 +82,12 @@ class ListingForm extends Component {
     let endDate = this.state.endDate;
     currentDate.setHours(0, 0, 0, 0);
     endDate.setHours(0, 0, 0, 0);
+
     while (currentDate.getTime() <= endDate.getTime()) {
       dateArr.push(currentDate);
       currentDate = this.changeDateValue(currentDate, 1);
     }
+
     return dateArr;
   }
 
@@ -346,7 +366,7 @@ class ListingForm extends Component {
           </form>
         </div>
         <NavigateButtons
-          onDismiss={() => history.push('/listings')}
+          onDismiss={() => history.push('/home')}
           dismiss="Cancel"
           submit="Next"
           onSubmit={this.props.handleSubmit(this.handleSubmit)}
@@ -381,8 +401,6 @@ const validate = values => {
 };
 
 const mapStateToProps = state => {
-  if (state.details.hasOwnProperty('_id')) return { details: {} };
-
   return {
     details: state.details
   };

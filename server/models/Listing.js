@@ -9,7 +9,7 @@ const listingSchema = new Schema({
   amenities: [String],
   location: locationSchema,
   _user: { type: Schema.Types.ObjectId, ref: 'user' },
-  listingCreatedDate: Date
+  listingCreated: Date
 });
 
 mongoose.model('listing', listingSchema);

@@ -42,6 +42,7 @@ ReactDOM.render(
           <Route path="/listings" component={ListingView} exact />
           <Route path="/listings/:id" exact component={ListingFormReview} />
           <Route path="/listings/delete/:id" exact component={ListingDelete} />
+          <Route path="/listings/edit/:id" exact component={ListingCreate} />
         </Switch>
       </App>
     </Router>

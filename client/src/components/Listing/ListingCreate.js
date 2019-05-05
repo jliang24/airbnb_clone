@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm } from 'redux-form';
+import { reduxForm, initialize } from 'redux-form';
 import { connect } from 'react-redux';
 
 import requireAuth from 'components/requireAuth';
@@ -18,6 +18,17 @@ class ListingCreate extends Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    const initializeListing = () => {
+      this.props.fetchListing(this.props.match.params.id);
+      this.props.dispatch(initialize('listing', this.props.listing));
+      this.props.dispatch(initialize('amenities', this.props.amenities));
+    };
+    if (this.props.match.params.hasOwnProperty('id') && !prevProps.listing) {
+      initializeListing();
+    }
+  }
+
   nextPage() {
     this.setState({ page: this.state.page + 1 });
   }
@@ -28,6 +39,8 @@ class ListingCreate extends Component {
 
   componentWillUnmount() {
     this.props.clearDetails();
+    this.props.dispatch(initialize('listing', {}));
+    this.props.dispatch(initialize('amenities', {}));
   }
 
   render() {
@@ -47,8 +60,15 @@ class ListingCreate extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    listing: state.details.location,
+    amenities: state.details.amenitiesObj
+  };
+};
+
 ListingCreate = connect(
-  null,
+  mapStateToProps,
   actions
 )(ListingCreate);
 

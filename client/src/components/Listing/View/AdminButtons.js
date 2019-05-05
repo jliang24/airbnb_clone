@@ -8,7 +8,7 @@ class AdminButtons extends Component {
           <button
             style={{ borderWidth: '0px !important', marginRight: '0px ' }}
             className="ui basic fluid button column"
-            onClick={e => this.props.onEdit}
+            onClick={e => this.props.onEdit(e)}
           >
             Edit
           </button>

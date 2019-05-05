@@ -9,7 +9,9 @@ import {
   CLEAR_DETAILS,
   FETCH_LISTINGS,
   CLEAR_LISTINGS,
-  DELETE_LISTING
+  DELETE_LISTING,
+  CLEAR_PICTURES,
+  EDIT_LISTING
 } from 'actions/types';
 import listingAPI from 'apis/listing';
 
@@ -67,6 +69,12 @@ export const uploadPictures = files => async (dispatch, getState) => {
   return uploadURLS;
 };
 
+export const clearPictures = () => {
+  return {
+    type: CLEAR_PICTURES
+  };
+};
+
 export const addDetails = formValues => {
   return {
     type: ADD_DETAILS,
@@ -110,7 +118,6 @@ export const clearListings = () => {
 
 export const deleteListing = id => async (dispatch, getState) => {
   const { authenticated } = getState().auth;
-  console.log('hey?');
   await listingAPI(authenticated).delete(`/api/listings/${id}`);
 
   dispatch({ type: DELETE_LISTING, payload: id });
@@ -138,4 +145,13 @@ export const fetchListing = id => async dispatch => {
     type: ADD_DETAILS,
     payload: { ...details, location, amenitiesObj }
   });
+};
+
+export const editListing = (id, formValues) => async (dispatch, getState) => {
+  const { authenticated } = getState().auth;
+  const response = await listingAPI(authenticated).patch(
+    `/api/listings/${id}`,
+    formValues
+  );
+  dispatch({ type: EDIT_LISTING, payload: response.data });
 };

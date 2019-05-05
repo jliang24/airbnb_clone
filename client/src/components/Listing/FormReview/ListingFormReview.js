@@ -14,7 +14,14 @@ import Amenities from 'components/Listing/FormReview/Amenities';
 import CustomAmenities from 'components/Listing/FormReview/CustomAmenities';
 import Scheduler from 'components/Listing/FormReview/Scheduler';
 import { removeUnavailableDates } from 'utils/dates';
-import { createListing, fetchListing, clearDetails } from 'actions';
+
+import {
+  createListing,
+  fetchListing,
+  clearDetails,
+  clearPictures,
+  editListing
+} from 'actions';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import 'react-quill/dist/quill.bubble.css';
 import 'css/datepicker.css';
@@ -22,7 +29,7 @@ import 'css/datepicker.css';
 class ListingFormReview extends Component {
   constructor(props) {
     super(props);
-
+    this.editMode = window.location.href.indexOf('edit') > -1 ? true : false;
     this.state = {
       renderCarousel: false
     };
@@ -31,8 +38,7 @@ class ListingFormReview extends Component {
   componentDidMount() {
     if (this.props.match) {
       const { id } = this.props.match.params;
-      this.props.dispatch(initialize('listing', {}));
-      this.props.dispatch(initialize('amenities', {}));
+      this.cleanUp();
       this.props.fetchListing(id);
     }
   }
@@ -51,9 +57,13 @@ class ListingFormReview extends Component {
   componentWillUnmount() {
     if (this.props.match) {
       this.props.clearDetails();
-      this.props.dispatch(initialize('listing', {}));
-      this.props.dispatch(initialize('amenities', {}));
+      this.cleanUp();
     }
+  }
+
+  cleanUp() {
+    this.props.dispatch(initialize('listing', {}));
+    this.props.dispatch(initialize('amenities', {}));
   }
 
   renderPictures() {
@@ -118,8 +128,12 @@ class ListingFormReview extends Component {
     const { details, amenities, pictures, listing } = this.props;
 
     const listingValues = { details, amenities, pictures, listing };
-
-    this.props.createListing(listingValues);
+    this.editMode
+      ? this.props.editListing(
+          window.location.href.split('/').pop(),
+          listingValues
+        )
+      : this.props.createListing(listingValues);
     history.push('/home');
   };
 
@@ -182,7 +196,7 @@ class ListingFormReview extends Component {
           <NavigateButtons
             onDismiss={this.props.previousPage}
             dismiss="Back"
-            submit="Create Listing!"
+            submit={this.editMode ? 'Update Listing' : 'Create Listing!'}
             onSubmit={this.onCreateListingClicked}
           />
         )}
@@ -192,7 +206,6 @@ class ListingFormReview extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state.details);
   if (!state.form.listing || !state.form.amenities) return {};
   const values = {
     listing: state.form.listing.values,
@@ -205,7 +218,7 @@ const mapStateToProps = (state, ownProps) => {
 
 ListingFormReview = connect(
   mapStateToProps,
-  { createListing, fetchListing, clearDetails }
+  { createListing, fetchListing, clearDetails, clearPictures, editListing }
 )(ListingFormReview);
 
 export default reduxForm({
