@@ -5,8 +5,10 @@ import _ from 'lodash';
 import ImageGallery from 'react-image-gallery';
 import DatePicker from 'react-datepicker';
 import { initialize, reduxForm } from 'redux-form';
-import history from 'historyObj';
+import GoogleMapReact from 'google-map-react';
 
+import keys from 'config/keys';
+import history from 'historyObj';
 import ImageList from 'components/Listing/Images/ImageList';
 import NavigateButtons from 'components/NavigateButtons';
 import ListingDetails from 'components/Listing/FormReview/ListingDetails';
@@ -30,6 +32,13 @@ class ListingFormReview extends Component {
   constructor(props) {
     super(props);
     this.editMode = window.location.href.indexOf('edit') > -1 ? true : false;
+    this.defaultProps = {
+      center: {
+        lat: 39.529,
+        lng: -119.813
+      },
+      zoom: 13
+    };
     this.state = {
       renderCarousel: false
     };
@@ -172,10 +181,16 @@ class ListingFormReview extends Component {
           <div className="ui two column grid">
             <div className="row">
               <div className="column field">{this.renderAmenities()}</div>
-              {/* <div className="column field">
+              <div className="column field">
                 <h3 className="ui dividing header">Location</h3>
-                // Put google maps here
-              </div> */}
+                <div style={{ height: '200px', width: '100%' }}>
+                  <GoogleMapReact
+                    bootstrapURLKeys={{ key: keys.mapsAPIKey }}
+                    defaultCenter={this.defaultProps.center}
+                    defaultZoom={this.defaultProps.zoom}
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div className="ui two column grid">
