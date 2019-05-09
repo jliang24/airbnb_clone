@@ -32,12 +32,12 @@ class ListingFormReview extends Component {
   constructor(props) {
     super(props);
     this.editMode = window.location.href.indexOf('edit') > -1 ? true : false;
-    this.defaultProps = {
+    this.defaultMap = {
       center: {
         lat: 39.529,
         lng: -119.813
       },
-      zoom: 13
+      zoom: 12
     };
     this.state = {
       renderCarousel: false
@@ -151,6 +151,51 @@ class ListingFormReview extends Component {
     history.push('/home');
   };
 
+  handleApiLoaded = (map, maps) => {
+    const geocoder = new maps.Geocoder();
+    const circleConfig = (map, center, city = false) => {
+      return {
+        map,
+        center,
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+        radius: city ? 3000 : 1000
+      };
+    };
+
+    //Find location by address, if that fails, find location by city
+
+    geocoder.geocode(
+      {
+        address: this.props.listing.address
+      },
+      (results, status) => {
+        if (status === 'OK') {
+          new maps.Circle(circleConfig(map, results[0].geometry.location));
+          map.setCenter(results[0].geometry.location);
+        } else {
+          geocoder.geocode(
+            {
+              address: this.props.listing.city
+            },
+            (results, status) => {
+              if (status === 'OK') {
+                new maps.Circle(
+                  circleConfig(map, results[0].geometry.location, true)
+                );
+              } else {
+                alert('could not find location');
+              }
+            }
+          );
+        }
+      }
+    );
+  };
+
   render() {
     // if no data is present, return
     if (_.isEmpty(this.props.listing)) return null;
@@ -178,16 +223,24 @@ class ListingFormReview extends Component {
             (descriptionText !== '' && (
               <ReactQuill readOnly value={descriptionText} theme="bubble" />
             ))}
-          <div className="ui two column grid">
+          <div
+            className={`ui ${
+              this.renderAmenities() === null ? 'one' : 'two'
+            } column grid`}
+          >
             <div className="row">
               <div className="column field">{this.renderAmenities()}</div>
               <div className="column field">
                 <h3 className="ui dividing header">Location</h3>
                 <div style={{ height: '200px', width: '100%' }}>
                   <GoogleMapReact
+                    yesIWantToUseGoogleMapApiInternals
                     bootstrapURLKeys={{ key: keys.mapsAPIKey }}
-                    defaultCenter={this.defaultProps.center}
-                    defaultZoom={this.defaultProps.zoom}
+                    defaultCenter={this.defaultMap.center}
+                    defaultZoom={this.defaultMap.zoom}
+                    onGoogleApiLoaded={({ maps, map }) =>
+                      this.handleApiLoaded(map, maps)
+                    }
                   />
                 </div>
               </div>
