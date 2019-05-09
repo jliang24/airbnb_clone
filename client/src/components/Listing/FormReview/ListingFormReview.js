@@ -7,7 +7,6 @@ import DatePicker from 'react-datepicker';
 import { initialize, reduxForm } from 'redux-form';
 import GoogleMapReact from 'google-map-react';
 
-import keys from 'config/keys';
 import history from 'historyObj';
 import ImageList from 'components/Listing/Images/ImageList';
 import NavigateButtons from 'components/NavigateButtons';
@@ -235,7 +234,9 @@ class ListingFormReview extends Component {
                 <div style={{ height: '200px', width: '100%' }}>
                   <GoogleMapReact
                     yesIWantToUseGoogleMapApiInternals
-                    bootstrapURLKeys={{ key: keys.mapsAPIKey }}
+                    bootstrapURLKeys={{
+                      key: 'AIzaSyDDpvoLFlIg5Xn15LQvWAm3bvOOGNLVxXk'
+                    }}
                     defaultCenter={this.defaultMap.center}
                     defaultZoom={this.defaultMap.zoom}
                     onGoogleApiLoaded={({ maps, map }) =>
