@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import { connect } from 'react-redux';
+import { Field } from 'redux-form';
 
 import { removeUnavailableDates } from 'utils/dates';
 import Counter from 'utils/Counter';
+import * as actions from 'actions';
 
 class Scheduler extends Component {
   constructor(props) {
@@ -13,7 +15,8 @@ class Scheduler extends Component {
       startDate: null,
       endDate: null,
       endDates: [],
-      datePickerIsOpen: false
+      datePickerIsOpen: false,
+      message: ''
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
@@ -76,6 +79,12 @@ class Scheduler extends Component {
     return new Date(copiedDate);
   };
 
+  onSendClick = () => {
+    this.props.createMessage({
+      message: this.state.message
+    });
+  };
+
   render() {
     const { cost } = this.props.listing;
     const { includedDates, unavailableDates, guests } = this.props.details;
@@ -131,9 +140,18 @@ class Scheduler extends Component {
         <div className="ui form">
           <div className="field">
             <label>Send a message to the host!</label>
-            <textarea rows="2" />
+            <textarea
+              onChange={e => this.setState({ message: e.target.value })}
+              rows={2}
+              value={this.state.message}
+            />
             <div style={{ marginTop: '5px', height: '30px' }}>
-              <button className="ui right floated button black ">Send</button>
+              <button
+                onClick={this.onSendClick}
+                className="ui right floated button black "
+              >
+                Send
+              </button>
             </div>
           </div>
         </div>
@@ -148,4 +166,7 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Scheduler);
+export default connect(
+  mapStateToProps,
+  actions
+)(Scheduler);

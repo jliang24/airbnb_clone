@@ -10,3 +10,4 @@ export const DELETE_LISTING = 'delete_listing';
 export const EDIT_LISTING = 'edit_listing';
 export const CLEAR_LISTINGS = 'clear_listings';
 export const CLEAR_PICTURES = 'clear_pictures';
+export const CREATE_MESSAGE = 'create_message';

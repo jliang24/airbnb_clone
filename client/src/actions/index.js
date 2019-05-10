@@ -11,7 +11,8 @@ import {
   CLEAR_LISTINGS,
   DELETE_LISTING,
   CLEAR_PICTURES,
-  EDIT_LISTING
+  EDIT_LISTING,
+  CREATE_MESSAGE
 } from 'actions/types';
 import listingAPI from 'apis/listing';
 
@@ -154,4 +155,14 @@ export const editListing = (id, formValues) => async (dispatch, getState) => {
     formValues
   );
   dispatch({ type: EDIT_LISTING, payload: response.data });
+};
+
+export const createMessage = formValues => async (dispatch, getState) => {
+  const { authenticated } = getState().auth;
+  const response = await listingAPI(authenticated).post(
+    '/api/messages',
+    formValues
+  );
+
+  dispatch({ type: CREATE_MESSAGE, payload: response.data });
 };

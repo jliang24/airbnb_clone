@@ -11,9 +11,11 @@ app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json({ type: '*/*' }));
 require('./models/Listing');
+require('./models/Message');
 require('./routes/authRoutes')(app);
 require('./routes/uploadRoutes')(app);
 require('./routes/listingRoutes')(app);
+require('./routes/messageRoutes')(app);
 
 const port = process.env.PORT || 3090;
 const server = http.createServer(app);
