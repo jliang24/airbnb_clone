@@ -262,7 +262,7 @@ class ListingFormReview extends Component {
               />
             </div>
             <div className="column field">
-              <Scheduler />
+              <Scheduler listingId={this.props.match.params.id} />
             </div>
           </div>
         </div>

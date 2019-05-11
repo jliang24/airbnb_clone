@@ -81,7 +81,11 @@ class Scheduler extends Component {
 
   onSendClick = () => {
     this.props.createMessage({
-      message: this.state.message
+      message: this.state.message,
+      startDate: this.state.startDate,
+      endDate: this.state.endDate,
+      guests: this.state.guests,
+      listingId: this.props.listingId
     });
   };
 

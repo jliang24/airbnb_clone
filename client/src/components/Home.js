@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+
+import Messages from 'components/Messages';
 import requireAuth from 'components/requireAuth';
 import ListingCards from 'components/Listing/View/ListingCards';
 import 'css/accordion.css';
@@ -41,7 +43,7 @@ class Home extends Component {
           <i className="dropdown icon" />
         </h2>
         <div className={this.state.requestsCollapsed ? 'collapsed' : 'section'}>
-          <div>In progress...</div>
+          <Messages />
         </div>
       </div>
     );
