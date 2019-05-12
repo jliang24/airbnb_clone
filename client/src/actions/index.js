@@ -168,9 +168,12 @@ export const createMessage = formValues => async (dispatch, getState) => {
   dispatch({ type: CREATE_MESSAGE, payload: response.data });
 };
 
-export const fetchMessages = () => async (dispatch, getState) => {
+export const fetchMessages = callback => async (dispatch, getState) => {
   const { authenticated } = getState().auth;
   const response = await listingAPI(authenticated).get('/api/messages');
 
-  dispatch({ type: FETCH_MESSAGES, payload: response.data });
+  await dispatch({ type: FETCH_MESSAGES, payload: response.data });
+
+  //call the callback if it is a function
+  typeof callback === 'function' && callback();
 };

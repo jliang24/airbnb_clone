@@ -40,6 +40,7 @@ module.exports = app => {
       .then(message => {
         const modifiedMessage = message.map(messageInfo => {
           const listingTitle = messageInfo._listing.location.title;
+          const listingId = messageInfo._listing._id;
           const picture = messageInfo._listing.pictures[0];
           const messageObject = messageInfo.toObject();
           messageObject.messageHost =
@@ -47,7 +48,7 @@ module.exports = app => {
               ? true
               : false;
           delete messageObject._listing;
-          return { picture, listingTitle, ...messageObject };
+          return { listingId, picture, listingTitle, ...messageObject };
         });
         res.send(modifiedMessage);
       });

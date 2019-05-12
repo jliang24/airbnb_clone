@@ -24,7 +24,10 @@ const Amenities = ({ customAmenities, customAmenityValues }) => {
             <div key={name} className="column">
               <div className="equal width row">
                 <h4>
-                  <i className={`${icon} large icon`} />
+                  <i
+                    style={{ color: 'black' }}
+                    className={`${icon} large icon`}
+                  />
                   {name}
                 </h4>
               </div>

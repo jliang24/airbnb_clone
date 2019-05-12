@@ -92,3 +92,39 @@ select:focus {
   flex-grow: 1;
   width: 0;
 }
+
+.accept {
+  background-position: center !important;
+  transition: background 0.8s !important;
+  background-color: #9aff9f !important;
+}
+
+.accept:hover {
+  cursor: pointer;
+  background: #60fc60 radial-gradient(circle, transparent 1%, #60fc60 1%)
+    center/15000% !important;
+}
+
+.accept:active {
+  background-color: #6de07c !important;
+  background-size: 100% !important;
+  transition: background 0s !important;
+}
+
+.reject {
+  background-position: center !important;
+  transition: background 0.8s !important;
+  background-color: #ff9d9a !important;
+}
+
+.reject:hover {
+  cursor: pointer;
+  background: #f76969 radial-gradient(circle, transparent 1%, #f76969 1%)
+    center/15000% !important;
+}
+
+.reject:active {
+  background-color: #fa3f39 !important;
+  background-size: 100% !important;
+  transition: background 0s !important;
+}

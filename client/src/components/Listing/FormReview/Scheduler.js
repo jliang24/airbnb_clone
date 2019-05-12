@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import { connect } from 'react-redux';
-import { Field } from 'redux-form';
 
 import { removeUnavailableDates } from 'utils/dates';
 import Counter from 'utils/Counter';
@@ -150,12 +149,14 @@ class Scheduler extends Component {
               value={this.state.message}
             />
             <div style={{ marginTop: '5px', height: '30px' }}>
-              <button
-                onClick={this.onSendClick}
-                className="ui right floated button black "
-              >
-                Send
-              </button>
+              {this.props.listingId && (
+                <button
+                  onClick={this.onSendClick}
+                  className="ui right floated button black "
+                >
+                  Send
+                </button>
+              )}
             </div>
           </div>
         </div>

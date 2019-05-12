@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import * as actions from 'actions';
@@ -7,16 +8,26 @@ import { formatDate } from 'utils/dates';
 class Messages extends Component {
   constructor(props) {
     super(props);
-
-    this.columnRef = React.createRef();
+    this.columnHeights = [];
+    this.state = { columnHeights: [] };
   }
 
   componentDidMount() {
-    this.props.fetchMessages();
+    // Set the height of pictures to always match the height of a message div
+    this.props.fetchMessages(() => {
+      const columnHeights = [];
+      for (let column of this.columnHeights) {
+        if (column.current === null) continue;
+        columnHeights.push(column.current.clientHeight);
+      }
+      this.setState({ columnHeights: columnHeights });
+    });
   }
 
   renderMessages() {
-    return this.props.messages.map(message => {
+    return this.props.messages.map((message, idx) => {
+      this.messageRef = React.createRef();
+      this.columnHeights.push(this.messageRef);
       const {
         checkIn,
         checkOut,
@@ -25,30 +36,53 @@ class Messages extends Component {
         listingTitle,
         messageHost,
         name,
-        picture
+        picture,
+        listingId,
+        dateSent
       } = message;
 
       const domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
 
+      const checkHeight = idx => {
+        if (this.state.columnHeights.length > 0) {
+          return this.state.columnHeights[idx];
+        }
+        return '200px';
+      };
+
       return (
-        <div>
+        <div key={guestMessage}>
           <div className="ui equal width grid">
-            <div style={{ height: '275px' }} className="equal width row">
+            <div
+              style={{
+                border: '1px solid #55574e',
+                padding: '0px',
+                paddingRight: '1px'
+              }}
+              ref={this.messageRef}
+              className="equal width row"
+            >
               <img
                 className="column"
                 style={{
+                  height: checkHeight(idx),
                   maxWidth: '300px',
                   objectFit: 'cover',
-                  paddingRight: '0px'
+                  padding: '0px'
                 }}
                 src={domainURL + picture}
               />
-              <div ref={this.columnRef} className="column">
-                <table className="ui attached grey table">
+              <div style={{ padding: '0px' }} className="column">
+                <table className="ui attached  table">
                   <tbody>
                     <tr>
                       <td className="ui segments">
-                        <h2 className="ui segment">{name}</h2>
+                        <div className="ui segment header">
+                          {name}
+                          <div className="ui sub header right floated">
+                            {formatDate(new Date(dateSent))}
+                          </div>
+                        </div>
                         <div className="ui horizontal segments equal width">
                           <h3 className="ui segment">Listing</h3>
                           <h3 className="ui segment">Check In</h3>
@@ -56,7 +90,12 @@ class Messages extends Component {
                           <h3 className="ui segment">Guests</h3>
                         </div>
                         <div className="ui horizontal segments equal width">
-                          <div className="ui segment">{listingTitle}</div>
+                          <Link
+                            to={`/listings/${listingId}`}
+                            className="ui segment"
+                          >
+                            {listingTitle}
+                          </Link>
                           <div className="ui segment">
                             {formatDate(new Date(checkIn))}
                           </div>
@@ -74,8 +113,8 @@ class Messages extends Component {
                   {guestMessage}
                 </div>
                 <div className="ui bottom attached two item menu">
-                  <a className="item">Accept</a>
-                  <a className="item">Reject</a>
+                  <div className="item accept">Accept</div>
+                  <div className="item reject">Reject</div>
                 </div>
               </div>
             </div>
@@ -87,7 +126,7 @@ class Messages extends Component {
   }
 
   render() {
-    return <div>{this.renderMessages()}</div>;
+    return <div style={{ marginTop: '30px' }}>{this.renderMessages()}</div>;
   }
 }
 

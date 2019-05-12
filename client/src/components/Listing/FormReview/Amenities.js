@@ -15,7 +15,10 @@ const Amenities = ({ amenities }) => {
           <div key={amenity} className="column">
             <div className="equal width row">
               <h4>
-                <i className={`${icon} large icon`} />
+                <i
+                  style={{ color: 'black' }}
+                  className={`${icon} large icon`}
+                />
                 {amenity}
               </h4>
             </div>
