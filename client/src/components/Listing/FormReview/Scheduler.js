@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import { connect } from 'react-redux';
 
+import history from 'historyObj';
 import { removeUnavailableDates } from 'utils/dates';
 import Counter from 'utils/Counter';
 import * as actions from 'actions';
@@ -15,7 +16,8 @@ class Scheduler extends Component {
       endDate: null,
       endDates: [],
       datePickerIsOpen: false,
-      message: ''
+      message: '',
+      errorShown: false
     };
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
@@ -79,6 +81,8 @@ class Scheduler extends Component {
   };
 
   onSendClick = () => {
+    if (!this.state.startDate || !this.state.endDate)
+      return this.setState({ errorShown: true });
     this.props.createMessage({
       message: this.state.message,
       startDate: this.state.startDate,
@@ -86,6 +90,7 @@ class Scheduler extends Component {
       guests: this.state.guests,
       listingId: this.props.listingId
     });
+    history.push('/home');
   };
 
   render() {
@@ -148,7 +153,18 @@ class Scheduler extends Component {
               rows={2}
               value={this.state.message}
             />
-            <div style={{ marginTop: '5px', height: '30px' }}>
+            <div style={{ marginTop: '10px', height: '40px' }}>
+              {this.state.errorShown && (
+                <div className="ui compact negative message">
+                  <i
+                    onClick={() => this.setState({ errorShown: false })}
+                    className="close icon"
+                  />
+                  <div className="tiny">
+                    Please make sure check in or check out is filled out!
+                  </div>
+                </div>
+              )}
               {this.props.listingId && (
                 <button
                   onClick={this.onSendClick}

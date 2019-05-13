@@ -12,3 +12,5 @@ export const CLEAR_LISTINGS = 'clear_listings';
 export const CLEAR_PICTURES = 'clear_pictures';
 export const CREATE_MESSAGE = 'create_message';
 export const FETCH_MESSAGES = 'fetch_messages';
+export const CHANGE_RESPONSE = 'change_response';
+export const CLEAR_MESSAGES = 'clear_messages';

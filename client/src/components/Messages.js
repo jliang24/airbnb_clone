@@ -24,6 +24,10 @@ class Messages extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.props.clearMessages();
+  }
+
   renderMessages() {
     return this.props.messages.map((message, idx) => {
       this.messageRef = React.createRef();
@@ -34,11 +38,14 @@ class Messages extends Component {
         guestMessage,
         guests,
         listingTitle,
-        messageHost,
+        messageOwner,
         name,
         picture,
         listingId,
-        dateSent
+        dateSent,
+        hostResponse,
+        response,
+        _id
       } = message;
 
       const domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
@@ -48,6 +55,54 @@ class Messages extends Component {
           return this.state.columnHeights[idx];
         }
         return '200px';
+      };
+
+      const renderOwner = () => {
+        const onAccept = () => {
+          this.props.changeResponse({ reply: true }, _id);
+        };
+
+        const onReject = () => {
+          this.props.changeResponse({ reply: false }, _id);
+        };
+
+        if (messageOwner && response === undefined)
+          return (
+            <div className="ui bottom attached two item menu">
+              <div onClick={onAccept} className="item accept">
+                Accept
+              </div>
+              <div onClick={onReject} className="item reject">
+                Reject
+              </div>
+            </div>
+          );
+
+        const responseContainer = {
+          true: {
+            color: '#6de07c ',
+            text: 'Approved!'
+          },
+          false: {
+            color: '#ff9d9a',
+            text: 'Rejected'
+          },
+          undefined: {
+            color: '',
+            text: 'Pending response from host...'
+          }
+        };
+
+        const { color, text } = responseContainer[response];
+
+        return (
+          <div
+            style={{ backgroundColor: color }}
+            className="ui bottom attached block header"
+          >
+            Status: {text}
+          </div>
+        );
       };
 
       return (
@@ -70,7 +125,11 @@ class Messages extends Component {
                   objectFit: 'cover',
                   padding: '0px'
                 }}
-                src={domainURL + picture}
+                src={
+                  picture
+                    ? domainURL + picture
+                    : 'https://loremflickr.com/2000/2000 '
+                }
               />
               <div style={{ padding: '0px' }} className="column">
                 <table className="ui attached  table">
@@ -112,10 +171,7 @@ class Messages extends Component {
                   <i className="user circle icon" />
                   {guestMessage}
                 </div>
-                <div className="ui bottom attached two item menu">
-                  <div className="item accept">Accept</div>
-                  <div className="item reject">Reject</div>
-                </div>
+                {renderOwner()}
               </div>
             </div>
           </div>

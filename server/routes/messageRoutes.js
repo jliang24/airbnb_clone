@@ -43,7 +43,7 @@ module.exports = app => {
           const listingId = messageInfo._listing._id;
           const picture = messageInfo._listing.pictures[0];
           const messageObject = messageInfo.toObject();
-          messageObject.messageHost =
+          messageObject.messageOwner =
             messageInfo._hostUser.toString() === userId.toString()
               ? true
               : false;
@@ -52,5 +52,17 @@ module.exports = app => {
         });
         res.send(modifiedMessage);
       });
+  });
+
+  app.patch('/api/messages/:id', requireSignin, (req, res) => {
+    const { reply } = req.body;
+    Message.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: { response: reply } },
+      { new: true },
+      (err, updatedMessage) => {
+        res.send(updatedMessage);
+      }
+    );
   });
 };
