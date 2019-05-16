@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Listing = mongoose.model('listing');
 const User = mongoose.model('listing');
+const Messages = mongoose.model('messages');
 const passport = require('passport');
 const _ = require('lodash');
 
@@ -82,6 +83,7 @@ module.exports = app => {
     }
 
     await Listing.deleteOne({ _id: req.params.id });
+    await Messages.remove({ _listing: req.params.id });
     res.send('/');
   });
 

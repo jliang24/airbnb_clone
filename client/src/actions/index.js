@@ -125,6 +125,7 @@ export const deleteListing = id => async (dispatch, getState) => {
   await listingAPI(authenticated).delete(`/api/listings/${id}`);
 
   dispatch({ type: DELETE_LISTING, payload: id });
+  dispatch({ type: CLEAR_MESSAGES });
 };
 
 export const fetchListing = id => async dispatch => {
