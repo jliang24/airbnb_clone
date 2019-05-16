@@ -140,11 +140,22 @@ class ListingForm extends Component {
 
   findDateDifference() {
     if (!this.state.endDate || !this.state.startDate) return;
-    const timeDiff = Math.abs(
-      this.state.endDate.getTime() - this.state.startDate.getTime()
+
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    const { startDate, endDate } = this.state;
+
+    const utc1 = Date.UTC(
+      startDate.getFullYear(),
+      startDate.getMonth(),
+      startDate.getDate()
     );
-    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    return diffDays + 1;
+    const utc2 = Date.UTC(
+      endDate.getFullYear(),
+      endDate.getMonth(),
+      endDate.getDate()
+    );
+
+    return Math.floor((utc2 - utc1) / _MS_PER_DAY) + 1;
   }
 
   renderDateError() {
