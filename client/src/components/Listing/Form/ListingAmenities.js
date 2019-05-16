@@ -62,6 +62,7 @@ const ListingAmenities = props => {
   const [customIcon, setIcon] = useState('');
   const [customAmenityArr, setCustomAmenity] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [fileLimitError, setFileError] = useState('');
 
   useEffect(() => {
     const { descriptionText, files, customAmenityArr } = props;
@@ -169,6 +170,7 @@ const ListingAmenities = props => {
   };
 
   const onFormSubmit = async () => {
+    if (files.length > 9) return setFileError('Max upload limit is 9');
     setLoading(true);
     if (files.length > 0) {
       await props.uploadPictures(files);
@@ -293,6 +295,9 @@ const ListingAmenities = props => {
               </p>
             </Container>
           </div>
+          {fileLimitError && (
+            <div className="ui red basic label">{fileLimitError}</div>
+          )}
           {files.length > 0 && <h5>Files</h5>}
           <ul>{dropFiles}</ul>
           {renderPictures()}
