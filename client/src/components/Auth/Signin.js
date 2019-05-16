@@ -19,21 +19,11 @@ class Signin extends Component {
         <div className="ui form container segment">
           <div className="field">
             <label>Email</label>
-            <Field
-              name="email"
-              type="text"
-              component={renderField}
-              autoComplete="none"
-            />
+            <Field name="email" type="text" component={renderField} />
           </div>
           <div className="field">
             <label>Password</label>
-            <Field
-              name="password"
-              type="password"
-              component={renderField}
-              autoComplete="none"
-            />
+            <Field name="password" type="password" component={renderField} />
           </div>
           <button className="ui button">Log in</button>
           {this.props.errorMessage && (

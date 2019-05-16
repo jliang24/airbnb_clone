@@ -8,7 +8,7 @@ import { renderField } from 'utils/renderField';
 class Signup extends Component {
   onSubmit = formProps => {
     this.props.signup(formProps, () => {
-      this.props.history.push('/feature');
+      this.props.history.push('/listings');
     });
   };
 
@@ -58,8 +58,19 @@ class Signup extends Component {
 const validate = values => {
   const errors = {};
   const fields = ['firstName', 'lastName', 'email', 'password'];
+
+  const changeFieldNames = field => {
+    switch (field) {
+      case 'firstName':
+        return 'first name';
+      case 'lastName':
+        return 'last name';
+    }
+    return field;
+  };
   fields.forEach(field => {
-    if (!values[field]) errors[field] = `Please enter a ${field}`;
+    if (!values[field])
+      errors[field] = `Please enter a ${changeFieldNames(field)}`;
   });
 
   return errors;

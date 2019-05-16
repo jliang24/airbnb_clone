@@ -165,7 +165,7 @@ class Scheduler extends Component {
                   </div>
                 </div>
               )}
-              {this.props.listingId && (
+              {this.props.listingId && this.props.auth && (
                 <button
                   onClick={this.onSendClick}
                   className="ui right floated button black "
@@ -183,7 +183,8 @@ class Scheduler extends Component {
 const mapStateToProps = state => {
   return {
     listing: state.form.listing.values,
-    details: state.details
+    details: state.details,
+    auth: state.auth.authenticated
   };
 };
 

@@ -16,6 +16,7 @@ export const renderField = ({ placeholder, input, label, type, meta }) => (
     <div>
       <input
         {...input}
+        autoComplete="off"
         placeholder={placeholder ? placeholder : label}
         type={type}
       />
