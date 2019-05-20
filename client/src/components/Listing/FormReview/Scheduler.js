@@ -80,10 +80,10 @@ class Scheduler extends Component {
     return new Date(copiedDate);
   };
 
-  onSendClick = () => {
+  onSendClick = async () => {
     if (!this.state.startDate || !this.state.endDate)
       return this.setState({ errorShown: true });
-    this.props.createMessage({
+    await this.props.createMessage({
       message: this.state.message,
       startDate: this.state.startDate,
       endDate: this.state.endDate,
