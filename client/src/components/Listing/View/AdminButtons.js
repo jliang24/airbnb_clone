@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class AdminButtons extends Component {
   render() {
     return (
-      <div className="ui two column grid">
+      <div style={{ padding: '2px 15px' }} className="ui two column grid">
         <div style={{ padding: '2px 0px' }} className="ui two column row">
           <button
             style={{ borderWidth: '0px !important', marginRight: '0px ' }}
