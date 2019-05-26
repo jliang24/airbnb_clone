@@ -131,23 +131,27 @@ class Scheduler extends Component {
           }
           onClickOutside={this.openDatePicker}
         />
-        <div className="ui container segment">
-          <Counter
-            incrementValue={() => {
-              if (this.state.guests === guests) return;
-              this.setState({ guests: this.state.guests + 1 });
-            }}
-            decrementValue={() => {
-              if (this.state.guests === 1) return;
-              this.setState({ guests: this.state.guests - 1 });
-            }}
-            count={this.state.guests}
-            detailItem={'guests'}
-          />
-        </div>
+        {guests > 1 && (
+          <div className="ui container segment">
+            <Counter
+              incrementValue={() => {
+                if (this.state.guests === guests) return;
+                this.setState({ guests: this.state.guests + 1 });
+              }}
+              decrementValue={() => {
+                if (this.state.guests === 1) return;
+                this.setState({ guests: this.state.guests - 1 });
+              }}
+              count={this.state.guests}
+              detailItem={'guests'}
+            />
+          </div>
+        )}
         <div className="ui form">
           <div className="field">
-            <label>Send a message to the host!</label>
+            <label style={{ marginTop: '10px' }}>
+              Send a message to the host!
+            </label>
             <textarea
               onChange={e => this.setState({ message: e.target.value })}
               rows={2}

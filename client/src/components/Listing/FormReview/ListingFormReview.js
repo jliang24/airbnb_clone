@@ -31,6 +31,8 @@ class ListingFormReview extends Component {
   constructor(props) {
     super(props);
     this.editMode = window.location.href.indexOf('edit') > -1 ? true : false;
+    this.createMode =
+      window.location.href.indexOf('create') > -1 ? true : false;
     this.defaultMap = {
       center: {
         lat: 39.529,
@@ -85,6 +87,7 @@ class ListingFormReview extends Component {
         };
       });
     }
+
     if (this.state.renderCarousel) {
       return (
         <div className="dolly800-background">
@@ -110,7 +113,7 @@ class ListingFormReview extends Component {
           Toggle Photo Gallery
         </div>
       );
-    } else if (this.props.pictures.length > 0) {
+    } else if (this.props.pictures.length > 0 && !this.createMode) {
       return (
         <div
           onClick={() => this.setState({ renderCarousel: true })}
@@ -157,8 +160,8 @@ class ListingFormReview extends Component {
         map,
         center,
         strokeColor: '#FF0000',
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
+        strokeOpacity: 1,
+        strokeWeight: 1,
         fillColor: '#FF0000',
         fillOpacity: 0.35,
         radius: city ? 3000 : 1000

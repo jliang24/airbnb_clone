@@ -4,7 +4,7 @@
   --dolly-600: #4f502c; /* 600 */
   --dolly-200: #9a9d57; /* 200 */
   --dolly-100: #d1d673; /* 100 */
-  --dolly-20: #f6fa94; /* 20 */
+  --dolly-20: #f5fa60; /* 20 */
 }
 
 html,
@@ -127,4 +127,8 @@ select:focus {
   background-color: #fa3f39 !important;
   background-size: 100% !important;
   transition: background 0s !important;
+}
+
+a.card:hover {
+  box-shadow: 5px 5px 8px #888888 !important;
 }

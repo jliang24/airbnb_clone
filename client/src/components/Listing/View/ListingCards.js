@@ -76,8 +76,16 @@ class ListingCards extends Component {
               <h4 className="right floated">${location.cost}</h4>
             </div>
           </div>
-          <div className="extra content">
-            <div className="ui two column grid">{renderDetails()}</div>
+          <div
+            style={{ margin: '10px 0px', paddingTop: '2px' }}
+            className="extra content"
+          >
+            <div
+              style={{ marginLeft: '3px', marginTop: '2px' }}
+              className="ui two column grid"
+            >
+              {renderDetails()}
+            </div>
             {this.props.user && (
               <AdminButtons
                 onEdit={this.onEdit}
