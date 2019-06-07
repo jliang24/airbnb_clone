@@ -8,6 +8,8 @@ import { capitalizeFirstLetter, pluralization } from 'utils/text';
 import AdminButtons from 'components/Listing/View/AdminButtons';
 import history from 'historyObj';
 
+import 'css/listingcards.css';
+
 class ListingCards extends Component {
   state = { title: '', id: '' };
 
@@ -99,9 +101,25 @@ class ListingCards extends Component {
     });
   }
 
+  determineColumnCount() {
+    const clientWidth = document.body.clientWidth;
+    switch (true) {
+      case clientWidth <= 425:
+        return 'one';
+      case clientWidth <= 980:
+        return 'two';
+      default:
+        return 'four';
+    }
+  }
+
   render() {
     return (
-      <div style={{ marginTop: '1px' }} className="ui link four cards">
+      <div
+        id="cardlist"
+        style={{ marginTop: '1px' }}
+        className={`ui link ${this.determineColumnCount()} cards`}
+      >
         {this.renderList()}
       </div>
     );

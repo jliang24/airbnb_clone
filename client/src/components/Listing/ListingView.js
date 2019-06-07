@@ -5,7 +5,7 @@ import ListingCards from 'components/Listing/View/ListingCards';
 class ListingView extends Component {
   render() {
     return (
-      <div>
+      <div className="ui container">
         <ListingCards />
       </div>
     );
