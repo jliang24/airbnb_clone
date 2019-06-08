@@ -20,7 +20,7 @@ nav .button {
   }
 
   div.right.item {
-    margin-top: 4vh !important;
+    margin-top: 2vh !important;
     display: flex !important;
     flex-direction: column;
   }
