@@ -14,3 +14,5 @@ export const CREATE_MESSAGE = 'create_message';
 export const FETCH_MESSAGES = 'fetch_messages';
 export const CHANGE_RESPONSE = 'change_response';
 export const CLEAR_MESSAGES = 'clear_messages';
+export const UPDATE_WIDTH = 'update_width';
+export const UPDATE_HEIGHT = 'update_height';

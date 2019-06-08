@@ -5,6 +5,7 @@ import pictures from 'reducers/pictures';
 import details from 'reducers/details';
 import listings from 'reducers/listings';
 import messages from 'reducers/messages';
+import deviceDims from 'reducers/deviceDims';
 
 export default combineReducers({
   auth,
@@ -12,5 +13,6 @@ export default combineReducers({
   details,
   messages,
   listings,
+  deviceDims,
   form: formReducer
 });

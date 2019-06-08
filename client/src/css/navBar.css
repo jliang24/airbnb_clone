@@ -1,0 +1,27 @@
+nav .button {
+  margin-right: 10px !important;
+}
+
+@media (max-width: 425px) {
+  nav .button {
+    margin-top: 5px !important;
+  }
+
+  div.ui.container {
+    margin: auto !important;
+  }
+
+  nav.ui.inverted.pointing.menu {
+    width: 100%;
+  }
+
+  a.active.item {
+    margin-right: 20px !important;
+  }
+
+  div.right.item {
+    margin-top: 4vh !important;
+    display: flex !important;
+    flex-direction: column;
+  }
+}

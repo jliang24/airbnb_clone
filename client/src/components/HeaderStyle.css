@@ -1,9 +1,0 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0px;
-}
-
-.header a {
-  margin: 0px 10px;
-}

@@ -1,12 +1,9 @@
-@media (max-width: 425px) {
-  /* #cardlist {
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    padding-right: 20px;
-  }
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+}
 
-  .card {
-    width: 100% !important;
-  } */
+.header a {
+  margin: 0px 10px;
 }

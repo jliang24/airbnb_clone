@@ -18,6 +18,7 @@ import {
   CLEAR_MESSAGES
 } from 'actions/types';
 import listingAPI from 'apis/listing';
+export * from './deviceActions';
 
 export const signup = (formProps, callback) => async dispatch => {
   try {
