@@ -10,7 +10,7 @@ import * as actions from 'actions';
 import states from 'utils/states';
 import Counter from 'utils/Counter';
 import details from 'utils/details';
-import NavigateButtons from 'components/NavigateButtons';
+import NavigateButtons from 'components/Listing/NavigateButtons';
 import history from 'historyObj';
 
 class ListingForm extends Component {

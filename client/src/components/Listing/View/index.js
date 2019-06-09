@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import ListingCards from 'components/Listing/View/ListingCards';
+import ListingCards from './Cards';
 
 class ListingView extends Component {
   render() {

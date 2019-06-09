@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { reduxForm, initialize } from 'redux-form';
 import { connect } from 'react-redux';
 
-import requireAuth from 'components/requireAuth';
-import ListingForm from 'components/Listing/Form/ListingForm';
-import ListingAmenities from 'components/Listing/Form/ListingAmenities';
-import ListingFormReview from 'components/Listing/FormReview/ListingFormReview';
+import requireAuth from 'components/Util/requireAuth';
+import ListingForm from './Form';
+import ListingAmenities from './Form/Amenities';
+import ListingFormReview from './FormReview';
 import * as actions from 'actions';
 
 class ListingCreate extends Component {

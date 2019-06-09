@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchListings, deleteListing } from 'actions';
 
-import Modal from 'components/Modal';
-import requireAuth from 'components/requireAuth';
+import Modal from 'components/Util/Modal';
+import requireAuth from 'components/Util/requireAuth';
 
 class ListingDelete extends Component {
   componentDidMount() {

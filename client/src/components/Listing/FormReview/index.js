@@ -9,11 +9,11 @@ import GoogleMapReact from 'google-map-react';
 
 import history from 'historyObj';
 import ImageList from 'components/Listing/Images/ImageList';
-import NavigateButtons from 'components/NavigateButtons';
-import ListingDetails from 'components/Listing/FormReview/ListingDetails';
-import Amenities from 'components/Listing/FormReview/Amenities';
-import CustomAmenities from 'components/Listing/FormReview/CustomAmenities';
-import Scheduler from 'components/Listing/FormReview/Scheduler';
+import NavigateButtons from 'components/Listing/NavigateButtons';
+import ListingDetails from './Details';
+import ListingAmenities from './Amenities';
+import CustomAmenities from './CustomAmenities';
+import Scheduler from './Scheduler';
 import { removeUnavailableDates } from 'utils/dates';
 import {
   createListing,
@@ -134,7 +134,7 @@ class ListingFormReview extends Component {
     return (
       <>
         <h3 className="ui dividing header">Amenities</h3>
-        <Amenities />
+        <ListingAmenities />
         <CustomAmenities />
       </>
     );

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { useDropzone } from 'react-dropzone';
 import styled from 'styled-components';
 
-import NavigateButtons from 'components/NavigateButtons';
+import NavigateButtons from 'components/Listing/NavigateButtons';
 import amenities from 'utils/amenities';
 import * as actions from 'actions';
 

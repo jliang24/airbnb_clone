@@ -12,7 +12,10 @@ nav .button {
   }
 
   nav.ui.inverted.pointing.menu {
+    min-height: 0;
     width: 100%;
+    margin: 0px;
+    overflow: hidden;
   }
 
   a.active.item {

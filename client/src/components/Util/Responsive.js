@@ -1,5 +1,3 @@
-import { connect } from 'react-redux';
-
 export const ResponsiveWrapper = ({
   deviceWidth,
   mobileBreakpoint,

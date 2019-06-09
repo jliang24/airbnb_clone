@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import Messages from 'components/Messages';
-import requireAuth from 'components/requireAuth';
-import ListingCards from 'components/Listing/View/ListingCards';
+import Messages from './Messages';
+import requireAuth from 'components/Util/requireAuth';
+import ListingCards from 'components/Listing/View/Cards';
 import 'css/accordion.css';
 
 class Home extends Component {

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import * as actions from 'actions';
 import detailUtils from 'utils/details';
 import { capitalizeFirstLetter, pluralization } from 'utils/text';
-import AdminButtons from 'components/Listing/View/AdminButtons';
+import AdminButtons from './AdminButtons';
 import history from 'historyObj';
 
 import 'css/listingcards.css';

@@ -1,7 +1,8 @@
 import React from 'react';
+
 import Header from 'components/Header';
 
-export default ({ children }) => {
+const App = ({ children }) => {
   return (
     <div className="ui container">
       <Header />
@@ -9,3 +10,5 @@ export default ({ children }) => {
     </div>
   );
 };
+
+export default App;

@@ -4,20 +4,30 @@ import { connect } from 'react-redux';
 import 'css/navBar.css';
 
 import * as actions from 'actions';
-import { mobileClass } from 'components/Responsive';
+import { mobileClass } from 'components/Util/Responsive';
 
 class Header extends Component {
-  state = { home: false, listing: false };
+  state = { home: false, listing: false, visible: true };
 
   updateWindowDimensions = () => {
     this.props.updateWidth(document.body.clientWidth);
     this.props.updateHeight(document.body.clientHeight);
+
+    //Toggle the menu if in mobile view
+    if (document.body.clientWidth < 425 && this.state.visible) {
+      this.setState({ visible: false });
+    } else if (document.body.clientWidth > 425 && !this.state.visible) {
+      this.setState({ visible: true });
+    }
   };
 
   componentDidMount() {
     this.determineLocation();
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
+    if (document.body.clientWidth < 425) {
+      this.toggleMenu();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -72,11 +82,7 @@ class Header extends Component {
           <Link className="ui inverted button " to="/signup">
             Signup
           </Link>
-          <Link
-            style={{ marginLeft: '5px' }}
-            className="ui inverted button"
-            to="/signin"
-          >
+          <Link className="ui inverted button" to="/signin">
             Log in
           </Link>
         </div>
@@ -92,29 +98,57 @@ class Header extends Component {
     };
   }
 
+  mobileButton() {
+    if (this.props.deviceWidth > 425) {
+      return;
+    }
+
+    return (
+      <div style={{ marginLeft: '15px' }} onClick={this.toggleMenu}>
+        <i style={{ fontSize: '25px' }} className="angle double right icon" />
+      </div>
+    );
+  }
+
+  toggleMenu = () => {
+    this.setState({
+      visible: !this.state.visible
+    });
+  };
+
   render() {
     const { header, nav } = this.mobileClasses();
+    const { deviceWidth } = this.props;
 
     return (
       <header
         className={`ui inverted vertical masthead aligned segment ${header}`}
       >
         <div className="ui container">
-          <nav className={`ui large secondary inverted pointing menu ${nav}`}>
-            <Link
-              className={this.state.home ? 'active item' : 'item'}
-              to="/home"
+          {this.mobileButton()}
+          {
+            <nav
+              style={{
+                transition: 'all 0.5s',
+                height: this.state.visible && deviceWidth < 425 ? 200 : 0
+              }}
+              className={`ui large secondary inverted pointing menu ${nav}`}
             >
-              Home
-            </Link>
-            <Link
-              className={this.state.listing ? 'active item' : 'item'}
-              to="/listings"
-            >
-              View Listings
-            </Link>
-            {this.renderLinks()}
-          </nav>
+              <Link
+                className={this.state.home ? 'active item' : 'item'}
+                to="/home"
+              >
+                Home
+              </Link>
+              <Link
+                className={this.state.listing ? 'active item' : 'item'}
+                to="/listings"
+              >
+                View Listings
+              </Link>
+              {this.renderLinks()}
+            </nav>
+          }
         </div>
       </header>
     );

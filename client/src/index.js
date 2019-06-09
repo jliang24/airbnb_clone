@@ -8,15 +8,15 @@ import reduxThunk from 'redux-thunk';
 import App from 'components/App';
 import reducers from 'reducers';
 import history from 'historyObj';
-import Welcome from 'components/Welcome';
+import Landing from 'components/Landing';
 import Signup from 'components/Auth/Signup';
 import Signout from 'components/Auth/Signout';
 import Signin from 'components/Auth/Signin';
-import ListingCreate from 'components/Listing/ListingCreate';
-import ListingView from 'components/Listing/ListingView';
-import ListingFormReview from 'components/Listing/FormReview/ListingFormReview';
-import ListingDelete from 'components/Listing/ListingDelete';
-import Home from 'components/Home';
+import ListingCreate from 'components/Listing/Create';
+import ListingDelete from 'components/Listing/Delete';
+import ListingView from 'components/Listing/View';
+import ListingFormReview from 'components/Listing/FormReview';
+import Home from 'components/Home/index';
 import 'semantic/dist/semantic.min.css';
 import 'css/themes.css';
 
@@ -33,7 +33,7 @@ ReactDOM.render(
     <Router history={history}>
       <App>
         <Switch>
-          <Route path="/" exact component={Welcome} />
+          <Route path="/" exact component={Landing} />
           <Route path="/home" exact component={Home} />
           <Route path="/signup" component={Signup} />
           <Route path="/signout" component={Signout} />
