@@ -7,8 +7,10 @@ const Amenities = ({ customAmenities, customAmenityValues }) => {
     customAmenities.length === 0 ||
     _.isEmpty(customAmenityValues) ||
     _.values(customAmenityValues).every(value => value === false)
-  )
+  ) {
     return null;
+  }
+
   //Check if custom amenity is true inside forms
   const arrCustomAmenities = customAmenities.filter(
     ({ name }) =>

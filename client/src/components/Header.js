@@ -1,25 +1,15 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import 'css/navBar.css';
 
 import * as actions from 'actions';
 import { mobileClass } from 'components/Util/Responsive';
+import OutsideAlerter from 'components/Util/OutsideAlerter';
 
 class Header extends Component {
   state = { home: false, listing: false, visible: true };
-
-  updateWindowDimensions = () => {
-    this.props.updateWidth(document.body.clientWidth);
-    this.props.updateHeight(document.body.clientHeight);
-
-    //Toggle the menu if in mobile view
-    if (document.body.clientWidth < 425 && this.state.visible) {
-      this.setState({ visible: false });
-    } else if (document.body.clientWidth > 425 && !this.state.visible) {
-      this.setState({ visible: true });
-    }
-  };
 
   componentDidMount() {
     this.determineLocation();
@@ -34,11 +24,28 @@ class Header extends Component {
     if (prevProps.location.pathname !== this.props.location.pathname) {
       this.determineLocation();
     }
+
+    if (this.state.visible && this.props.clickedOutside) {
+      this.setState({ visible: false });
+      this.props.resetState();
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateWindowDimensions);
   }
+
+  updateWindowDimensions = () => {
+    this.props.updateWidth(document.body.clientWidth);
+    this.props.updateHeight(document.body.clientHeight);
+
+    //Toggle the menu if in mobile view
+    if (document.body.clientWidth < 425 && this.state.visible) {
+      this.setState({ visible: false });
+    } else if (document.body.clientWidth > 425 && !this.state.visible) {
+      this.setState({ visible: true });
+    }
+  };
 
   determineLocation() {
     if (this.props.location.pathname === '/listings') {
@@ -114,6 +121,7 @@ class Header extends Component {
     this.setState({
       visible: !this.state.visible
     });
+    console.log('toggled');
   };
 
   render() {
@@ -126,29 +134,27 @@ class Header extends Component {
       >
         <div className="ui container">
           {this.mobileButton()}
-          {
-            <nav
-              style={{
-                transition: 'all 0.5s',
-                height: this.state.visible && deviceWidth < 425 ? 200 : 0
-              }}
-              className={`ui large secondary inverted pointing menu ${nav}`}
+          <nav
+            style={{
+              transition: 'all 0.5s',
+              height: this.state.visible && deviceWidth < 425 ? 200 : 0
+            }}
+            className={`ui large secondary inverted pointing menu ${nav}`}
+          >
+            <Link
+              className={this.state.home ? 'active item' : 'item'}
+              to="/home"
             >
-              <Link
-                className={this.state.home ? 'active item' : 'item'}
-                to="/home"
-              >
-                Home
-              </Link>
-              <Link
-                className={this.state.listing ? 'active item' : 'item'}
-                to="/listings"
-              >
-                View Listings
-              </Link>
-              {this.renderLinks()}
-            </nav>
-          }
+              Home
+            </Link>
+            <Link
+              className={this.state.listing ? 'active item' : 'item'}
+              to="/listings"
+            >
+              View Listings
+            </Link>
+            {this.renderLinks()}
+          </nav>
         </div>
       </header>
     );
@@ -162,7 +168,11 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  actions
-)(withRouter(Header));
+export default compose(
+  connect(
+    mapStateToProps,
+    actions
+  ),
+  withRouter,
+  OutsideAlerter
+)(Header);

@@ -12,6 +12,17 @@ import {
 
 import listingAPI from 'apis/listing';
 
+export const createListing = formValues => async (dispatch, getState) => {
+  const { authenticated } = getState().auth;
+
+  const response = await listingAPI(authenticated).post(
+    '/api/listings',
+    formValues
+  );
+
+  dispatch({ type: CREATE_LISTING, payload: response.data });
+};
+
 export const addDetails = formValues => {
   return {
     type: ADD_DETAILS,
@@ -23,17 +34,6 @@ export const clearDetails = () => {
   return {
     type: CLEAR_DETAILS
   };
-};
-
-export const createListing = formValues => async (dispatch, getState) => {
-  const { authenticated } = getState().auth;
-
-  const response = await listingAPI(authenticated).post(
-    '/api/listings',
-    formValues
-  );
-
-  dispatch({ type: CREATE_LISTING, payload: response.data });
 };
 
 export const fetchListings = user => async (dispatch, getState) => {
