@@ -1,0 +1,31 @@
+@media (max-width: 425px) {
+  .column.field {
+    width: 50% !important;
+    margin: 8px 0px !important;
+  }
+
+  div.datepicker.container {
+    width: 100%;
+  }
+
+  div.datewrapper {
+    left: 5vw;
+  }
+
+  div.ui.left.pointing.red.basic {
+    width: 18% !important;
+  }
+
+  #amenities {
+    width: 40% !important;
+  }
+
+  #custom-amenties {
+    width: 50% !important;
+  }
+
+  #custom-amenities-form {
+    width: 55% !important;
+    margin: 0 auto;
+  }
+}

@@ -225,9 +225,13 @@ const ListingAmenities = props => {
             <div className="ui sub header">Optional</div>
           </h4>
           <div className="ui grid">
-            <div className="three wide column">{renderAmenities()}</div>
-            <div className="three wide column">{renderCustomAmenities()}</div>
-            <div className="four wide column">
+            <div id="amenities" className="three wide column">
+              {renderAmenities()}
+            </div>
+            <div id="custom-amenities" className="three wide column">
+              {renderCustomAmenities()}
+            </div>
+            <div id="custom-amenities-form" className="four wide column">
               <div
                 style={{ width: '190px', display: 'inline-block' }}
                 className="ui container segment dolly100-background"
@@ -329,7 +333,8 @@ const mapStateToProps = state => {
     pictures: state.pictures,
     customAmenityArr: state.details.customAmenityArr,
     amenities: state.form.amenities,
-    user: state.auth
+    user: state.auth,
+    deviceWidth: state.deviceDims.width
   };
 };
 

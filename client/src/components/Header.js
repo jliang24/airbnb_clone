@@ -48,6 +48,8 @@ class Header extends Component {
   };
 
   determineLocation() {
+    setTimeout(() => this.toggleMenu(), 500);
+
     if (this.props.location.pathname === '/listings') {
       this.setState({ listing: true, home: false });
     } else if (this.props.location.pathname === '/home') {
@@ -121,7 +123,6 @@ class Header extends Component {
     this.setState({
       visible: !this.state.visible
     });
-    console.log('toggled');
   };
 
   render() {

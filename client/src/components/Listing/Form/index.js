@@ -13,6 +13,8 @@ import details from 'utils/details';
 import NavigateButtons from 'components/Listing/NavigateButtons';
 import history from 'historyObj';
 
+import 'css/listingform.css';
+
 class ListingForm extends Component {
   constructor(props) {
     super(props);
@@ -358,12 +360,12 @@ class ListingForm extends Component {
                   />
                 </div>
               </div>
-              <div>
+              <div className="datepicker container">
                 <h4 className="ui dividing header">Select unavailable dates</h4>
-                <div style={{ position: 'relative' }}>
+                <div className="datewrapper" style={{ position: 'relative' }}>
                   <DatePicker
                     inline
-                    monthsShown={2}
+                    monthsShown={this.props.deviceWidth > 425 ? 2 : 1}
                     includeDates={this.state.includedDates}
                     onChange={this.handleUnavailableDate}
                     highlightDates={this.state.unavailableDates}
@@ -413,7 +415,8 @@ const validate = values => {
 
 const mapStateToProps = state => {
   return {
-    details: state.details
+    details: state.details,
+    deviceWidth: state.deviceDims.width
   };
 };
 
