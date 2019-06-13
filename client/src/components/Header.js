@@ -15,9 +15,6 @@ class Header extends Component {
     this.determineLocation();
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
-    if (document.body.clientWidth < 425) {
-      this.toggleMenu();
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -40,9 +37,9 @@ class Header extends Component {
     this.props.updateHeight(document.body.clientHeight);
 
     //Toggle the menu if in mobile view
-    if (document.body.clientWidth < 425 && this.state.visible) {
+    if (document.body.clientWidth < 685 && this.state.visible) {
       this.setState({ visible: false });
-    } else if (document.body.clientWidth > 425 && !this.state.visible) {
+    } else if (document.body.clientWidth > 685 && !this.state.visible) {
       this.setState({ visible: true });
     }
   };
@@ -102,13 +99,13 @@ class Header extends Component {
   mobileClasses() {
     const { deviceWidth } = this.props;
     return {
-      header: mobileClass(deviceWidth, 425, '', 'center'),
-      nav: mobileClass(deviceWidth, 425, 'vertical', '')
+      header: mobileClass(deviceWidth, 685, '', 'center'),
+      nav: mobileClass(deviceWidth, 685, 'vertical', '')
     };
   }
 
   mobileButton() {
-    if (this.props.deviceWidth > 425) {
+    if (this.props.deviceWidth > 685) {
       return;
     }
 
@@ -138,7 +135,7 @@ class Header extends Component {
           <nav
             style={{
               transition: 'all 0.5s',
-              height: this.state.visible && deviceWidth < 425 ? 200 : 0
+              height: this.state.visible && deviceWidth < 685 ? 200 : 0
             }}
             className={`ui large secondary inverted pointing menu ${nav}`}
           >

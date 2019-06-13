@@ -365,7 +365,7 @@ class ListingForm extends Component {
                 <div className="datewrapper" style={{ position: 'relative' }}>
                   <DatePicker
                     inline
-                    monthsShown={this.props.deviceWidth > 425 ? 2 : 1}
+                    monthsShown={this.props.deviceWidth > 627 ? 2 : 1}
                     includeDates={this.state.includedDates}
                     onChange={this.handleUnavailableDate}
                     highlightDates={this.state.unavailableDates}

@@ -1,4 +1,4 @@
-@media (max-width: 425px) {
+@media (max-width: 627px) {
   .column.field {
     width: 50% !important;
     margin: 8px 0px !important;
@@ -27,5 +27,11 @@
   #custom-amenities-form {
     width: 55% !important;
     margin: 0 auto;
+  }
+
+  #scheduler,
+  #form-amenities,
+  #location {
+    width: 100% !important;
   }
 }

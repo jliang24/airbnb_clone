@@ -231,9 +231,13 @@ class ListingFormReview extends Component {
             } column grid`}
           >
             <div className="row">
-              <div className="column field">{this.renderAmenities()}</div>
+              <div id="form-amenities" className="column field">
+                {this.renderAmenities()}
+              </div>
               <div className="column field">
-                <h3 className="ui dividing header">Location</h3>
+                <h3 id="location" className="ui dividing header">
+                  Location
+                </h3>
                 <div style={{ height: '200px', width: '100%' }}>
                   <GoogleMapReact
                     yesIWantToUseGoogleMapApiInternals
@@ -256,7 +260,7 @@ class ListingFormReview extends Component {
               <DatePicker
                 inline
                 readOnly
-                monthsShown={2}
+                monthsShown={this.props.deviceWidth > 627 ? 2 : 1}
                 minDate={new Date()}
                 includeDates={removeUnavailableDates(
                   includedDates,
@@ -264,7 +268,7 @@ class ListingFormReview extends Component {
                 )}
               />
             </div>
-            <div className="column field">
+            <div id="scheduler" className="column field">
               <Scheduler
                 listingId={this.props.match ? this.props.match.params.id : null}
               />
@@ -290,7 +294,8 @@ const mapStateToProps = (state, ownProps) => {
     listing: state.form.listing.values,
     pictures: state.pictures,
     details: state.details,
-    amenities: state.form.amenities.values
+    amenities: state.form.amenities.values,
+    deviceWidth: state.deviceDims.width
   };
   return values;
 };

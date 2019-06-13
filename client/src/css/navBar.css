@@ -2,7 +2,7 @@ nav .button {
   margin-right: 10px !important;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 685px) {
   nav .button {
     margin-top: 5px !important;
   }

@@ -182,7 +182,11 @@ class Messages extends Component {
   }
 
   render() {
-    return <div style={{ marginTop: '30px' }}>{this.renderMessages()}</div>;
+    return (
+      <div className="ui container" style={{ marginTop: '30px' }}>
+        {this.renderMessages()}
+      </div>
+    );
   }
 }
 
