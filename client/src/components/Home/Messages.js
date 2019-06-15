@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import * as actions from 'actions';
 import { formatDate } from 'utils/dates';
+import { mobileClass } from 'components/Util/Responsive';
 
 class Messages extends Component {
   constructor(props) {
@@ -105,6 +106,8 @@ class Messages extends Component {
         );
       };
 
+      const { deviceWidth } = this.props;
+
       return (
         <div key={guestMessage}>
           <div className="ui equal width grid">
@@ -115,13 +118,20 @@ class Messages extends Component {
                 paddingRight: '1px'
               }}
               ref={this.messageRef}
-              className="equal width row"
+              className={`${mobileClass(
+                deviceWidth,
+                700,
+                '',
+                'equal width row'
+              )} message`}
             >
               <img
+                id="message-img"
                 className="column"
                 style={{
                   height: checkHeight(idx),
                   maxWidth: '300px',
+                  maxHeight: '40vh',
                   objectFit: 'cover',
                   padding: '0px'
                 }}
@@ -192,7 +202,8 @@ class Messages extends Component {
 
 const mapStateToProps = state => {
   return {
-    messages: Object.values(state.messages)
+    messages: Object.values(state.messages),
+    deviceWidth: state.deviceDims.width
   };
 };
 

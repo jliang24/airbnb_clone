@@ -79,6 +79,7 @@ class ListingFormReview extends Component {
   renderPictures() {
     const domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
     let imagePics;
+
     if (this.props.pictures) {
       imagePics = this.props.pictures.map(picture => {
         return {
@@ -129,8 +130,10 @@ class ListingFormReview extends Component {
     if (
       _.values(this.props.amenities).every(value => value === false) ||
       _.isEmpty(this.props.amenities)
-    )
+    ) {
       return null;
+    }
+
     return (
       <>
         <h3 className="ui dividing header">Amenities</h3>
@@ -170,6 +173,23 @@ class ListingFormReview extends Component {
 
     //Find location by address, if that fails, find location by city
 
+    const handleFailure = () => {
+      geocoder.geocode(
+        {
+          address: this.props.listing.city
+        },
+        (results, status) => {
+          if (status === 'OK') {
+            new maps.Circle(
+              circleConfig(map, results[0].geometry.location, true)
+            );
+          } else {
+            alert('could not find location');
+          }
+        }
+      );
+    };
+
     geocoder.geocode(
       {
         address: this.props.listing.address
@@ -179,20 +199,7 @@ class ListingFormReview extends Component {
           new maps.Circle(circleConfig(map, results[0].geometry.location));
           map.setCenter(results[0].geometry.location);
         } else {
-          geocoder.geocode(
-            {
-              address: this.props.listing.city
-            },
-            (results, status) => {
-              if (status === 'OK') {
-                new maps.Circle(
-                  circleConfig(map, results[0].geometry.location, true)
-                );
-              } else {
-                alert('could not find location');
-              }
-            }
-          );
+          handleFailure();
         }
       }
     );
@@ -201,11 +208,13 @@ class ListingFormReview extends Component {
   render() {
     // if no data is present, return
     if (_.isEmpty(this.props.listing)) return null;
+
     const {
       includedDates,
       unavailableDates,
       descriptionText
     } = this.props.details;
+
     const { firstName, lastName } = this.props.details._user;
 
     return (
@@ -234,10 +243,8 @@ class ListingFormReview extends Component {
               <div id="form-amenities" className="column field">
                 {this.renderAmenities()}
               </div>
-              <div className="column field">
-                <h3 id="location" className="ui dividing header">
-                  Location
-                </h3>
+              <div id="location" className="column field">
+                <h3 className="ui dividing header">Location</h3>
                 <div style={{ height: '200px', width: '100%' }}>
                   <GoogleMapReact
                     yesIWantToUseGoogleMapApiInternals

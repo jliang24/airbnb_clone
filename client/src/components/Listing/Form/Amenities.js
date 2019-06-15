@@ -66,11 +66,18 @@ const ListingAmenities = props => {
 
   useEffect(() => {
     const { descriptionText, files, customAmenityArr } = props;
-    if (descriptionText) setDescriptionText(props.descriptionText);
+
+    if (descriptionText) {
+      setDescriptionText(props.descriptionText);
+    }
+
     if (files) {
       setFile(files);
     }
-    if (customAmenityArr) setCustomAmenity(customAmenityArr);
+
+    if (customAmenityArr) {
+      setCustomAmenity(customAmenityArr);
+    }
   }, []);
 
   const renderAmenities = () => {

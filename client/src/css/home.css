@@ -22,7 +22,26 @@
 
 .collapsed {
   transform: scaleY(0);
-  transition: transform 0.3s ease-out;
   transform-origin: top;
   height: 0px;
+}
+
+@media (max-width: 700px) {
+  .message {
+    width: 100%;
+    margin: 0 10vw;
+    border: none !important;
+  }
+
+  #message-img {
+    height: 40vh !important;
+    margin: 20px auto;
+    display: block;
+    border: 1px solid black !important;
+  }
+  h2.ui.dividing.header {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

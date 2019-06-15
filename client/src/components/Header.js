@@ -134,7 +134,7 @@ class Header extends Component {
           {this.mobileButton()}
           <nav
             style={{
-              transition: 'all 0.5s',
+              transition: deviceWidth > 685 ? '' : 'all 0.5s',
               height: this.state.visible && deviceWidth < 685 ? 200 : 0
             }}
             className={`ui large secondary inverted pointing menu ${nav}`}

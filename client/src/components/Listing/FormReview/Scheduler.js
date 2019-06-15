@@ -83,6 +83,7 @@ class Scheduler extends Component {
   onSendClick = async () => {
     if (!this.state.startDate || !this.state.endDate)
       return this.setState({ errorShown: true });
+
     await this.props.createMessage({
       message: this.state.message,
       startDate: this.state.startDate,
@@ -90,6 +91,7 @@ class Scheduler extends Component {
       guests: this.state.guests,
       listingId: this.props.listingId
     });
+
     history.push('/home');
   };
 
@@ -100,6 +102,7 @@ class Scheduler extends Component {
       includedDates,
       unavailableDates
     );
+
     return (
       <div className="ui container segment">
         <h1 style={{ display: 'block' }} className="ui dividing header">

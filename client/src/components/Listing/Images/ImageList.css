@@ -11,3 +11,9 @@
   max-width: 375px;
   border: 1px solid var(--dolly-800);
 }
+
+@media (max-width: 640px) {
+  .image-list {
+    text-align: center;
+  }
+}

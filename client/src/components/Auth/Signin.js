@@ -14,6 +14,7 @@ class Signin extends Component {
 
   render() {
     const { handleSubmit } = this.props;
+
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
         <div className="ui form container segment">

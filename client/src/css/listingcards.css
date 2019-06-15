@@ -7,3 +7,9 @@
 .header a {
   margin: 0px 10px;
 }
+
+@media (max-width: 678px) {
+  #cardlist {
+    margin: 0px 30px;
+  }
+}
