@@ -1,0 +1,11 @@
+div.ui.icon.input {
+  width: 60%;
+  margin-top: 15px;
+}
+
+@media (max-width: 682px) {
+  div.ui.icon.input {
+    width: 80vw;
+    margin-left: 30px;
+  }
+}
