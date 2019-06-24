@@ -36,13 +36,16 @@ export const clearDetails = () => {
   };
 };
 
-export const fetchListings = user => async (dispatch, getState) => {
+export const fetchListings = (user, configs = {}) => async (
+  dispatch,
+  getState
+) => {
   const { authenticated } = getState().auth;
   // If user is authenticated, make a request to route that has authentication required
   const response =
     authenticated && user
       ? await listingAPI(authenticated).get('/api/listings/user')
-      : await listingAPI().get('/api/listings');
+      : await listingAPI().get('/api/listings', { params: configs });
 
   dispatch({ type: FETCH_LISTINGS, payload: response.data });
 };

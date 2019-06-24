@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm, change } from 'redux-form';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import cityInfo from 'utils/cities';
@@ -7,11 +8,14 @@ import states from 'utils/states';
 import zipcodeToState from 'utils/zipcode';
 import { capitalizeFirstLetter, hasNumbers } from 'utils/text';
 import SearchResults from './SearchResults';
+import { fetchListings } from 'actions';
 
 import 'css/searchbar.css';
 
+const initialState = { results: {} };
+
 class SearchBar extends Component {
-  state = { results: {} };
+  state = initialState;
 
   handleSearchChange = (e, newValue) => {
     const filteredResults = newValue ? this.filterByStateAndCity(newValue) : [];
@@ -20,8 +24,12 @@ class SearchBar extends Component {
     this.setState({ results: propertyResults });
   };
 
-  handleResultSelected = () => {
-    this.props.dispatch(change('searchbar', 'search', 'this is jeff'));
+  handleResultSelected = itemConfigs => {
+    const { display } = itemConfigs;
+
+    this.props.dispatch(change('searchbar', 'search', display));
+    this.props.fetchListings(null, itemConfigs);
+    this.setState(initialState);
   };
 
   filterByStateAndCity = newValue => {
@@ -78,7 +86,6 @@ class SearchBar extends Component {
 
   organizeByProperty = results => {
     const properties = {};
-    const pullTopResults = results.slice(0, 5);
 
     const splitByPropertyValue = result => {
       const indexOfSpace = result.indexOf(' ');
@@ -88,6 +95,7 @@ class SearchBar extends Component {
       return [property, value];
     };
 
+    const pullTopResults = results.slice(0, 5);
     pullTopResults.forEach(result => {
       const [property, value] = splitByPropertyValue(result);
 
@@ -104,18 +112,26 @@ class SearchBar extends Component {
 
   renderInput = field => {
     return (
-      <div className="ui category search">
-        <div className="ui icon input">
-          <input
-            {...field.input}
-            className="prompt"
-            type="text"
-            placeholder="Search by State or City..."
-            autoComplete="off"
-          />
-          <i className="search icon" />
+      <>
+        <div className="ui category search">
+          <div className="ui icon input">
+            <input
+              {...field.input}
+              className="prompt"
+              type="text"
+              placeholder="Search by State or City..."
+              autoComplete="off"
+            />
+            <i className="search icon" />
+          </div>
         </div>
-      </div>
+        {field.input.value && (
+          <i
+            onClick={() => this.handleResultSelected({ display: '' })}
+            className="close icon"
+          />
+        )}
+      </>
     );
   };
 
@@ -127,12 +143,20 @@ class SearchBar extends Component {
           name="search"
           component={this.renderInput}
         />
-        <SearchResults results={this.state.results} />
+        <SearchResults
+          results={this.state.results}
+          handleResultSelected={this.handleResultSelected}
+        />
       </>
     );
   }
 }
 
-export default reduxForm({
+SearchBar = reduxForm({
   form: 'searchbar'
 })(SearchBar);
+
+export default connect(
+  null,
+  { fetchListings }
+)(SearchBar);

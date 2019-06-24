@@ -15,7 +15,7 @@ export default (state = {}, action) => {
     case FETCH_LISTING:
       return { ...state, [action.payload._id]: action.payload };
     case FETCH_LISTINGS:
-      return { ...state, ..._.mapKeys(action.payload, '_id') };
+      return _.mapKeys(action.payload, '_id');
     case EDIT_LISTING:
       return { ...state, [action.payload._id]: action.payload };
     case DELETE_LISTING:
