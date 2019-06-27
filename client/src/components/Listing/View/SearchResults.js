@@ -10,7 +10,7 @@ const SearchResults = props => {
 
   const addStateToCity = city => {
     const cityContainer = cityInfo[city];
-    return `${city}, ${cityContainer.state}`;
+    return `${cityContainer.city}, ${cityContainer.state}`;
   };
 
   const renderTableDivs = (category, items) => {
@@ -24,7 +24,7 @@ const SearchResults = props => {
       };
 
       return (
-        <tr onClick={() => handleResultSelected(itemConfigs)} key={item}>
+        <tr onMouseDown={() => handleResultSelected(itemConfigs)} key={item}>
           <td className="result">{itemString}</td>
         </tr>
       );
@@ -50,9 +50,11 @@ const SearchResults = props => {
 
   const renderResults = () => {
     return (
-      <table style={{ width: '50%' }} className="ui celled structured table">
-        <tbody>{createCategory(results)}</tbody>
-      </table>
+      props.searchBarActive && (
+        <table style={{ width: '50%' }} className="ui celled structured table">
+          <tbody>{createCategory(results)}</tbody>
+        </table>
+      )
     );
   };
 

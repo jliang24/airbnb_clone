@@ -12,7 +12,7 @@ import { fetchListings } from 'actions';
 
 import 'css/searchbar.css';
 
-const initialState = { results: {} };
+const initialState = { results: {}, active: false };
 
 class SearchBar extends Component {
   state = initialState;
@@ -26,7 +26,6 @@ class SearchBar extends Component {
 
   handleResultSelected = itemConfigs => {
     const { display } = itemConfigs;
-
     this.props.dispatch(change('searchbar', 'search', display));
     this.props.fetchListings(null, itemConfigs);
     this.setState(initialState);
@@ -119,7 +118,7 @@ class SearchBar extends Component {
               {...field.input}
               className="prompt"
               type="text"
-              placeholder="Search by State or City..."
+              placeholder="Search by State, City, or Zip Code..."
               autoComplete="off"
             />
             <i className="search icon" />
@@ -142,10 +141,13 @@ class SearchBar extends Component {
           onChange={(e, newValue) => this.handleSearchChange(e, newValue)}
           name="search"
           component={this.renderInput}
+          onFocus={e => this.setState({ active: true })}
+          onBlur={e => this.setState({ active: false })}
         />
         <SearchResults
           results={this.state.results}
           handleResultSelected={this.handleResultSelected}
+          searchBarActive={this.state.active}
         />
       </>
     );

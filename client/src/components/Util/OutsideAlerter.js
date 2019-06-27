@@ -1,6 +1,6 @@
 /*
   The outside alerter is a higher order component that gives a component the ability to check if a 
-  click was outside of it's div. You can also reset it's state using the function resetState. 
+  click was outside of it's div through a prop called "clickedOutside". You can also reset it's state using the function resetState. 
 */
 
 import React, { Component } from 'react';
