@@ -246,6 +246,7 @@ class ListingFormReview extends Component {
               <div id="location" className="column field">
                 <h3 className="ui dividing header">Location</h3>
                 <div style={{ height: '200px', width: '100%' }}>
+                  {/* The key is restricted to only be used on my Domain */}
                   <GoogleMapReact
                     yesIWantToUseGoogleMapApiInternals
                     bootstrapURLKeys={{

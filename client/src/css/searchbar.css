@@ -1,0 +1,30 @@
+div.ui.icon.input {
+  width: 100%;
+  margin-top: 15px;
+}
+
+div.ui.category.search {
+  display: inline-block;
+  width: 50%;
+}
+
+i.close.icon {
+  position: absolute;
+  margin-left: -50px;
+  margin-top: 25px;
+}
+
+i.close.icon:hover {
+  cursor: pointer;
+}
+
+@media (max-width: 682px) {
+  div.ui.icon.input {
+    width: 80vw;
+    margin-left: 30px;
+  }
+
+  i.close.icon {
+    right: 20%;
+  }
+}

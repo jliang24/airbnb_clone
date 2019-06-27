@@ -26,8 +26,12 @@ module.exports = app => {
   };
 
   app.get('/api/listings', async (req, res) => {
+    const { category, value } = req.query;
+    const query = `location.${category}`;
+    const queryObj = { [query]: value };
+
     const listing = await Listing.find({
-      'details.includedDates': { $gte: start }
+      $and: [{ 'details.includedDates': { $gte: start } }, queryObj]
     }).select(`${details} ${location} pictures`);
 
     res.send(listing);
