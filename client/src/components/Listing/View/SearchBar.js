@@ -26,6 +26,7 @@ class SearchBar extends Component {
 
   handleResultSelected = itemConfigs => {
     const { display } = itemConfigs;
+    console.log(itemConfigs);
     this.props.dispatch(change('searchbar', 'search', display));
     this.props.fetchListings(null, itemConfigs);
     this.setState(initialState);

@@ -16,10 +16,11 @@ const SearchResults = props => {
   const renderTableDivs = (category, items) => {
     return items.map(item => {
       const itemString = category === 'city' ? addStateToCity(item) : item;
+      const { city } = cityInfo[item] || item;
 
       const itemConfigs = {
         category,
-        value: item,
+        value: city || item,
         display: itemString
       };
 
