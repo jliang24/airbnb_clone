@@ -8,6 +8,11 @@
   margin: 0px 10px;
 }
 
+.error-card {
+  margin: 20px;
+  font-weight: 1000;
+}
+
 @media (max-width: 678px) {
   #cardlist {
     margin: 0px 30px;

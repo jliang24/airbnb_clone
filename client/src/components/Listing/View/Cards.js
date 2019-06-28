@@ -113,14 +113,21 @@ class ListingCards extends Component {
     }
   }
 
+  renderEmptyList() {
+    return this.props.listings.length > 0 ? null : (
+      <div className="error-card">No results found. Please try again.</div>
+    );
+  }
+
   render() {
+    //this render function determines if the list is empty. If it is not, short circuits to rendering the list.
     return (
       <div
         id="cardlist"
         style={{ marginTop: '1px' }}
         className={`ui link ${this.determineColumnCount()} cards`}
       >
-        {this.renderList()}
+        {this.renderEmptyList() || this.renderList()}
       </div>
     );
   }
