@@ -26,7 +26,8 @@ module.exports = app => {
   };
 
   app.get('/api/listings', async (req, res) => {
-    const { category, value } = req.query;
+    const { searchConfigs } = req.query;
+    const { category, value } = JSON.parse(searchConfigs);
     const query = `location.${category}`;
     const queryObj = { [query]: value };
 

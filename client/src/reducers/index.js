@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import auth from 'reducers/auth';
-import pictures from 'reducers/pictures';
-import details from 'reducers/details';
-import listings from 'reducers/listings';
-import messages from 'reducers/messages';
-import deviceDims from 'reducers/deviceDims';
+import auth from './auth';
+import pictures from './pictures';
+import details from './details';
+import listings from './listings';
+import messages from './messages';
+import deviceDims from './deviceDims';
+import searchQuery from './searchQuery';
 
 export default combineReducers({
   auth,
@@ -14,5 +15,6 @@ export default combineReducers({
   messages,
   listings,
   deviceDims,
+  searchQuery,
   form: formReducer
 });

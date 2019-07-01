@@ -28,7 +28,12 @@ class Home extends Component {
           <i className="dropdown icon" />
         </h2>
         <div className={this.state.listingsCollapsed ? 'collapsed' : 'section'}>
-          <ListingCards user />
+          <ListingCards
+            user
+            errorMessage={
+              'No listings found. Please create a new listing on the top right.'
+            }
+          />
         </div>
         <h2
           onClick={() => {

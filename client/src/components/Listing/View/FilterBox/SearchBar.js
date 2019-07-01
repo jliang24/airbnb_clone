@@ -8,7 +8,7 @@ import states from 'utils/states';
 import zipcodeToState from 'utils/zipcode';
 import { capitalizeFirstLetter, hasNumbers } from 'utils/text';
 import SearchResults from './SearchResults';
-import { fetchListings } from 'actions';
+import { fetchListings, modifySearch } from 'actions';
 
 import 'css/searchbar.css';
 
@@ -27,7 +27,8 @@ class SearchBar extends Component {
   handleResultSelected = itemConfigs => {
     const { display } = itemConfigs;
     this.props.dispatch(change('searchbar', 'search', display));
-    this.props.fetchListings(null, itemConfigs);
+    this.props.modifySearch(itemConfigs);
+    this.props.fetchListings();
     this.setState(initialState);
   };
 
@@ -134,16 +135,22 @@ class SearchBar extends Component {
     );
   };
 
+  handleSearchSubmit = () => {
+    console.log(this.state.results);
+  };
+
   render() {
     return (
       <>
-        <Field
-          onChange={(e, newValue) => this.handleSearchChange(e, newValue)}
-          name="search"
-          component={this.renderInput}
-          onFocus={e => this.setState({ active: true })}
-          onBlur={e => this.setState({ active: false })}
-        />
+        <form onSubmit={this.props.handleSubmit(this.handleSearchSubmit)}>
+          <Field
+            onChange={(e, newValue) => this.handleSearchChange(e, newValue)}
+            name="search"
+            component={this.renderInput}
+            onFocus={e => this.setState({ active: true })}
+            onBlur={e => this.setState({ active: false })}
+          />
+        </form>
         <SearchResults
           results={this.state.results}
           handleResultSelected={this.handleResultSelected}
@@ -160,5 +167,5 @@ SearchBar = reduxForm({
 
 export default connect(
   null,
-  { fetchListings }
+  { fetchListings, modifySearch }
 )(SearchBar);
