@@ -10,6 +10,7 @@ import * as actions from 'actions';
 import states from 'utils/states';
 import Counter from 'utils/Counter';
 import details from 'utils/details';
+import { handleStartDateChange, handleEndDateChange } from 'utils/dates';
 import NavigateButtons from 'components/Listing/NavigateButtons';
 import history from 'historyObj';
 
@@ -33,8 +34,8 @@ class ListingForm extends Component {
       dateError: false,
       forward: false
     };
-    this.handleStartDateChange = this.handleStartDateChange.bind(this);
-    this.handleEndDateChange = this.handleEndDateChange.bind(this);
+    this.handleStartDateChange = handleStartDateChange.bind(this);
+    this.handleEndDateChange = handleEndDateChange.bind(this);
     this.handleUnavailableDate = this.handleUnavailableDate.bind(this);
   }
 
@@ -46,11 +47,7 @@ class ListingForm extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     // Check if in edit component, then check if id exists
-    if (
-      window.location.href.indexOf('edit') > -1 &&
-      !prevState.hasOwnProperty('_id') &&
-      !_.isEmpty(this.props.details)
-    ) {
+    if (this.isEditMode(prevState)) {
       const endDate = this.props.details.includedDates[
         this.props.details.includedDates.length - 1
       ];
@@ -62,10 +59,7 @@ class ListingForm extends Component {
       });
     }
 
-    if (
-      this.state.includedDates.length !== this.findDateDifference() ||
-      this.state.forward
-    ) {
+    if (this.isStateDates()) {
       const includedDatesArr = this.dateDiffArr();
       this.setState({ includedDates: includedDatesArr });
       const unavailableDates = this.state.unavailableDates.filter(date => {
@@ -76,6 +70,21 @@ class ListingForm extends Component {
 
       this.setState({ unavailableDates, forward: false });
     }
+  }
+
+  isEditMode(prevState) {
+    return (
+      window.location.href.indexOf('edit') > -1 &&
+      !prevState.hasOwnProperty('_id') &&
+      !_.isEmpty(this.props.details)
+    );
+  }
+
+  isStateDates() {
+    return (
+      this.state.includedDates.length !== this.findDateDifference() ||
+      this.state.forward
+    );
   }
 
   dateDiffArr() {
@@ -100,31 +109,6 @@ class ListingForm extends Component {
 
     return new Date(copiedDate);
   };
-
-  handleStartDateChange(date) {
-    if (this.state.endDate < date) {
-      this.setState({
-        endDate: date,
-        forward: true
-      });
-    }
-
-    this.setState({
-      startDate: date
-    });
-  }
-
-  handleEndDateChange(date) {
-    if (date < this.state.startDate) {
-      return this.setState({
-        endDate: this.state.startDate
-      });
-    }
-
-    this.setState({
-      endDate: date
-    });
-  }
 
   handleUnavailableDate(date) {
     if (

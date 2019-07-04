@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import SearchBar from './SearchBar';
 import DatesFilter from './Dates';
 import GuestsFilter from './Guests';
+import CostFilter from './Cost';
 import { fetchListings } from 'actions';
 
 class FilterBox extends Component {
@@ -17,6 +18,7 @@ class FilterBox extends Component {
         <SearchBar />
         <DatesFilter />
         <GuestsFilter />
+        <CostFilter />
       </div>
     );
   }

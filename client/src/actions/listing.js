@@ -39,6 +39,7 @@ export const clearDetails = () => {
 export const fetchListings = user => async (dispatch, getState) => {
   const { authenticated } = getState().auth;
   const { searchQuery } = getState();
+  console.log(searchQuery);
   // If user is authenticated, make a request to route that has authentication required
   const response =
     authenticated && user

@@ -23,3 +23,28 @@ export const formatDate = date => {
 
   return month + '/' + day + '/' + year;
 };
+
+export function handleStartDateChange(date) {
+  if (this.state.endDate < date) {
+    this.setState({
+      endDate: date,
+      forward: true
+    });
+  }
+
+  this.setState({
+    startDate: date
+  });
+}
+
+export function handleEndDateChange(date) {
+  if (date < this.state.startDate) {
+    return this.setState({
+      endDate: this.state.startDate
+    });
+  }
+
+  this.setState({
+    endDate: date
+  });
+}

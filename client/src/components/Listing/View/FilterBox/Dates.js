@@ -13,7 +13,13 @@ class CustomInputComponent extends Component {
 
 class DatesFilter extends Component {
   render() {
-    return <DatePicker customInput={<CustomInputComponent />} />;
+    return (
+      <DatePicker
+        minDate={new Date()}
+        customInput={<CustomInputComponent />}
+        monthsShown={2}
+      />
+    );
   }
 }
 
