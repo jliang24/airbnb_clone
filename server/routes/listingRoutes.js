@@ -27,14 +27,16 @@ module.exports = app => {
   };
 
   app.get('/api/listings', async (req, res) => {
-    const { searchConfigs } = req.query;
+    const { searchConfigs, dates } = req.query;
+
     const searchQueryObj = new QueryBuilder()
       .search(searchConfigs)
+      .dates(dates)
       .guests(1)
       .build();
 
     const listing = await Listing.find({
-      $and: [{ 'details.includedDates': { $gte: start } }, searchQueryObj]
+      $and: [{ 'details.startDate': { $gte: start } }, searchQueryObj]
     }).select(`${details} ${location} pictures`);
 
     res.send(listing);

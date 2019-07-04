@@ -143,19 +143,6 @@ class ListingFormReview extends Component {
     );
   }
 
-  onCreateListingClicked = async () => {
-    const { details, amenities, pictures, listing } = this.props;
-
-    const listingValues = { details, amenities, pictures, listing };
-    this.editMode
-      ? await this.props.editListing(
-          window.location.href.split('/').pop(),
-          listingValues
-        )
-      : await this.props.createListing(listingValues);
-    history.push('/home');
-  };
-
   handleApiLoaded = (map, maps) => {
     const geocoder = new maps.Geocoder();
     const circleConfig = (map, center, city = false) => {
@@ -203,6 +190,19 @@ class ListingFormReview extends Component {
         }
       }
     );
+  };
+
+  onCreateListingClicked = async () => {
+    const { details, amenities, pictures, listing } = this.props;
+    const listingValues = { details, amenities, pictures, listing };
+
+    this.editMode
+      ? await this.props.editListing(
+          window.location.href.split('/').pop(),
+          listingValues
+        )
+      : await this.props.createListing(listingValues);
+    history.push('/home');
   };
 
   render() {

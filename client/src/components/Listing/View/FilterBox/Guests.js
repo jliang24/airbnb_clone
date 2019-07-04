@@ -17,9 +17,10 @@ class GuestsFilter extends Component {
 
   render() {
     const { toggleActive, active } = this.props;
+
     return (
       <div>
-        <button onClick={toggleActive} className="ui button danger">
+        <button onMouseDown={toggleActive} className="ui button danger">
           Guests
         </button>
         {active && (

@@ -39,7 +39,7 @@ export const clearDetails = () => {
 export const fetchListings = user => async (dispatch, getState) => {
   const { authenticated } = getState().auth;
   const { searchQuery } = getState();
-  console.log(searchQuery);
+
   // If user is authenticated, make a request to route that has authentication required
   const response =
     authenticated && user
@@ -77,9 +77,11 @@ export const fetchListing = id => async dispatch => {
     : {};
 
   // data comes back as a string in mongoose. convert back to dates
-  const { includedDates, unavailableDates } = details;
+  const { includedDates, unavailableDates, startDate, endDate } = details;
   details.includedDates = includedDates.map(date => new Date(date));
   details.unavailableDates = unavailableDates.map(date => new Date(date));
+  details.startDate = new Date(startDate);
+  details.endDate = new Date(endDate);
   details['_user'] = response.data._user;
 
   dispatch({ type: UPLOAD_PICTURES, payload: pictures });
