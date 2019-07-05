@@ -17,24 +17,20 @@ class QueryBuilder {
   guests(numGuests) {
     if (!numGuests) return this;
     const query = 'details.guests';
-    this.guestsQuery = { [query]: numGuests };
+    this.guestsQuery = { [query]: { $gte: numGuests } };
     return this;
   }
 
   dates(dates) {
     if (!dates) return this;
     const { startDate, endDate } = JSON.parse(dates);
-    console.log(startDate);
-    console.log(dates);
-    const startDateQuery = 'details.includedDates';
-    const endDateQuery = 'details.endDate';
+    const dateQuery = 'details.includedDates';
     this.datesQuery = {
       $and: [
-        { [startDateQuery]: { $gte: startDate } },
-        { [startDateQuery]: { $gte: endDate } }
+        { [dateQuery]: { $gte: startDate } },
+        { [dateQuery]: { $gte: endDate } }
       ]
     };
-    console.log(this.datesQuery);
     return this;
   }
 

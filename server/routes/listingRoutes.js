@@ -27,12 +27,12 @@ module.exports = app => {
   };
 
   app.get('/api/listings', async (req, res) => {
-    const { searchConfigs, dates } = req.query;
+    const { searchConfigs, dates, guests } = req.query;
 
     const searchQueryObj = new QueryBuilder()
       .search(searchConfigs)
       .dates(dates)
-      .guests(1)
+      .guests(guests)
       .build();
 
     const listing = await Listing.find({

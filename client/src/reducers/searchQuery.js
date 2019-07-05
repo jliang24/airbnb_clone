@@ -3,7 +3,7 @@ import { MODIFY_SEARCH, MODIFY_DATES, MODIFY_GUESTS } from 'actions/types';
 const initialState = {
   searchConfigs: null,
   dates: null,
-  guests: 0
+  guests: 1
 };
 
 export default (state = initialState, action) => {
