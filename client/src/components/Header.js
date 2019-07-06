@@ -2,18 +2,21 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import 'css/navBar.css';
 
 import * as actions from 'actions';
 import { mobileClass } from 'components/Util/Responsive';
 import OutsideAlerter from 'components/Util/OutsideAlerter';
 
+import 'css/navBar.css';
+
+const initialState = { home: false, listing: false, map: false, visible: true };
+
 class Header extends Component {
-  state = { home: false, listing: false, visible: true };
+  state = { ...initialState };
 
   componentDidMount() {
-    this.determineLocation();
     this.updateWindowDimensions();
+    this.determineLocation();
     window.addEventListener('resize', this.updateWindowDimensions);
   }
 
@@ -47,15 +50,15 @@ class Header extends Component {
   determineLocation() {
     setTimeout(() => this.toggleMenu(), 500);
 
-    if (this.props.location.pathname === '/listings') {
-      this.setState({ listing: true, home: false });
-    } else if (this.props.location.pathname === '/home') {
-      this.setState({ home: true, listing: false });
-    } else {
-      this.setState({
-        home: false,
-        listing: false
-      });
+    switch (this.props.location.pathname) {
+      case '/listings':
+        return this.setState({ ...initialState, listing: true });
+      case '/home':
+        return this.setState({ ...initialState, home: true });
+      case '/listings/map':
+        return this.setState({ ...initialState, map: true });
+      default:
+        return this.setState(initialState);
     }
   }
 
@@ -105,14 +108,12 @@ class Header extends Component {
   }
 
   mobileButton() {
-    if (this.props.deviceWidth > 685) {
-      return;
-    }
-
     return (
-      <div style={{ marginLeft: '15px' }} onClick={this.toggleMenu}>
-        <i style={{ fontSize: '25px' }} className="angle double right icon" />
-      </div>
+      this.props.deviceWidth > 685 || (
+        <div style={{ marginLeft: '15px' }} onClick={this.toggleMenu}>
+          <i style={{ fontSize: '25px' }} className="angle double right icon" />
+        </div>
+      )
     );
   }
 
@@ -121,6 +122,10 @@ class Header extends Component {
       visible: !this.state.visible
     });
   };
+
+  isActiveClass(item) {
+    return this.state[item] ? 'active item' : 'item';
+  }
 
   render() {
     const { header, nav } = this.mobileClasses();
@@ -139,17 +144,14 @@ class Header extends Component {
             }}
             className={`ui large secondary inverted pointing menu ${nav}`}
           >
-            <Link
-              className={this.state.home ? 'active item' : 'item'}
-              to="/home"
-            >
+            <Link className={this.isActiveClass('home')} to="/home">
               Home
             </Link>
-            <Link
-              className={this.state.listing ? 'active item' : 'item'}
-              to="/listings"
-            >
+            <Link className={this.isActiveClass('listing')} to="/listings">
               View Listings
+            </Link>
+            <Link className={this.isActiveClass('map')} to="/listings/map">
+              Map Mode
             </Link>
             {this.renderLinks()}
           </nav>

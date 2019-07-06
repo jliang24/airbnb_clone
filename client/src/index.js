@@ -15,6 +15,7 @@ import Signin from 'components/Auth/Signin';
 import ListingCreate from 'components/Listing/Create';
 import ListingDelete from 'components/Listing/Delete';
 import ListingView from 'components/Listing/View';
+import ListingMap from 'components/Listing/MapMode';
 import ListingFormReview from 'components/Listing/FormReview';
 import Home from 'components/Home/index';
 
@@ -41,6 +42,7 @@ ReactDOM.render(
           <Route path="/signin" component={Signin} />
           <Route path="/listings/create" exact component={ListingCreate} />
           <Route path="/listings" component={ListingView} exact />
+          <Route path="/listings/map" component={ListingMap} exact />
           <Route path="/listings/:id" exact component={ListingFormReview} />
           <Route path="/listings/delete/:id" exact component={ListingDelete} />
           <Route path="/listings/edit/:id" exact component={ListingCreate} />

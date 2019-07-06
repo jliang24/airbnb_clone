@@ -32,11 +32,9 @@ module.exports = app => {
     const searchQueryObj = new QueryBuilder()
       .search(searchConfigs)
       .dates(dates)
-      .cost(cost)
+      .cost(parseInt(cost, 10))
       .guests(guests)
       .build();
-
-    console.log(searchQueryObj);
 
     const listing = await Listing.find({
       $and: [{ 'details.includedDates': { $gte: start } }, searchQueryObj]
