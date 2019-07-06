@@ -10,7 +10,7 @@ import { fetchListings } from 'actions/listing';
 const initialState = { guests: 1, filterApplied: false };
 
 class GuestsFilter extends Component {
-  state = initialState;
+  state = { ...initialState };
 
   incrementValue = () => {
     return this.setState({ guests: (this.state.guests += 1) });
@@ -29,7 +29,7 @@ class GuestsFilter extends Component {
   };
 
   onClearSelected = () => {
-    this.setState({ guests: 1, filterApplied: false });
+    this.setState(initialState);
     this.props.modifyGuests(1);
     this.props.fetchListings();
     this.props.toggleActive();

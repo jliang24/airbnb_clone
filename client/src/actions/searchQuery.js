@@ -1,4 +1,9 @@
-import { MODIFY_SEARCH, MODIFY_DATES, MODIFY_GUESTS } from 'actions/types';
+import {
+  MODIFY_SEARCH,
+  MODIFY_DATES,
+  MODIFY_GUESTS,
+  MODIFY_COST
+} from 'actions/types';
 
 export const modifySearch = searchConfigs => {
   return {
@@ -18,5 +23,12 @@ export const modifyGuests = numGuests => {
   return {
     type: MODIFY_GUESTS,
     payload: numGuests
+  };
+};
+
+export const modifyCost = numCost => {
+  return {
+    type: MODIFY_COST,
+    payload: numCost
   };
 };

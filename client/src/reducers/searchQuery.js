@@ -1,9 +1,15 @@
-import { MODIFY_SEARCH, MODIFY_DATES, MODIFY_GUESTS } from 'actions/types';
+import {
+  MODIFY_SEARCH,
+  MODIFY_DATES,
+  MODIFY_GUESTS,
+  MODIFY_COST
+} from 'actions/types';
 
 const initialState = {
   searchConfigs: null,
   dates: null,
-  guests: 1
+  guests: null,
+  cost: null
 };
 
 export default (state = initialState, action) => {
@@ -14,6 +20,8 @@ export default (state = initialState, action) => {
       return { ...state, dates: action.payload };
     case MODIFY_GUESTS:
       return { ...state, guests: action.payload };
+    case MODIFY_COST:
+      return { ...state, cost: action.payload };
     default:
       return state;
   }

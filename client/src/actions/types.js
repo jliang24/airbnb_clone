@@ -30,3 +30,4 @@ export const UPDATE_HEIGHT = 'update_height';
 export const MODIFY_SEARCH = 'modify_search';
 export const MODIFY_DATES = 'modify_dates';
 export const MODIFY_GUESTS = 'modify_guests';
+export const MODIFY_COST = 'modify_cost';

@@ -1,3 +1,18 @@
+i.circle.icon.increment,
+i.circle.icon.decrement {
+  font-size: 25px;
+  opacity: 0.85;
+}
+
+i.circle.icon:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+
+div.counters {
+  margin-top: 10px;
+}
+
 @media (max-width: 627px) {
   .column.field {
     width: 50% !important;

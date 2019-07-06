@@ -13,7 +13,7 @@ import { modifyDates } from 'actions/searchQuery';
 import { fetchListings } from 'actions/listing';
 
 const initialState = {
-  startDate: new Date(),
+  startDate: null,
   endDate: null,
   filterApplied: false
 };

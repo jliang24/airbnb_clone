@@ -3,6 +3,7 @@ class QueryBuilder {
     this.searchQuery = {};
     this.datesQuery = {};
     this.guestsQuery = {};
+    this.costQuery = {};
   }
 
   search(searchConfigs) {
@@ -21,6 +22,13 @@ class QueryBuilder {
     return this;
   }
 
+  cost(numCost) {
+    if (!numCost) return this;
+    const query = 'location.cost';
+    this.costQuery = { [query]: { $lte: numCost } };
+    return this;
+  }
+
   dates(dates) {
     if (!dates) return this;
     const { startDate, endDate } = JSON.parse(dates);
@@ -35,7 +43,12 @@ class QueryBuilder {
   }
 
   build() {
-    return { ...this.searchQuery, ...this.guestsQuery, ...this.datesQuery };
+    return {
+      ...this.searchQuery,
+      ...this.guestsQuery,
+      ...this.datesQuery,
+      ...this.costQuery
+    };
   }
 }
 
