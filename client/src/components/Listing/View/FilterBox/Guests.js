@@ -36,7 +36,7 @@ class GuestsFilter extends Component {
   };
 
   modifyDisplay() {
-    return this.state.filterApplied ? `: ${this.state.guests}` : null;
+    return this.state.filterApplied ? `: ${this.props.guestFilter}` : null;
   }
 
   render() {
@@ -44,22 +44,31 @@ class GuestsFilter extends Component {
 
     return (
       <div>
-        <button onMouseDown={toggleActive} className="ui button danger">
+        <button
+          onMouseDown={toggleActive}
+          className="ui button secondary basic button"
+        >
           Guests {this.modifyDisplay()}
         </button>
         {active && (
-          <div>
+          <div className="ui container segment popout">
             <GuestsCounter
               detailItem="Guests"
               count={this.state.guests}
               incrementValue={this.incrementValue}
               decrementValue={this.decrementValue}
             />
-            <button className="ui button" onClick={this.onApplySelected}>
-              Apply
-            </button>
-            <button className="ui button" onClick={this.onClearSelected}>
+            <button
+              className="ui secondary basic button"
+              onClick={this.onClearSelected}
+            >
               Clear
+            </button>
+            <button
+              className="ui secondary right floated basic button"
+              onClick={this.onApplySelected}
+            >
+              Apply
             </button>
           </div>
         )}
@@ -68,10 +77,16 @@ class GuestsFilter extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    guestFilter: state.searchQuery.guests
+  };
+};
+
 export default compose(
   OutsideAlerter,
   connect(
-    null,
+    mapStateToProps,
     { modifyGuests, fetchListings }
   )
 )(GuestsFilter);

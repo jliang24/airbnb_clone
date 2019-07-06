@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { Field, reduxForm } from 'redux-form';
-
-import { renderField } from 'utils/renderField';
+import { Field, reduxForm, change } from 'redux-form';
 import OutsideAlerter from 'components/Util/OutsideAlerter';
 import { modifyCost } from 'actions/searchQuery';
 import { fetchListings } from 'actions/listing';
@@ -14,7 +12,9 @@ class CostFilter extends Component {
   state = { ...initialState };
 
   onApplySelected = () => {
-    const { maxCost } = this.props.cost.values;
+    const { values } = this.props.cost;
+    if (!values) return;
+    const { maxCost } = values;
     this.setState({ filterApplied: true });
     this.props.modifyCost(maxCost);
     this.props.fetchListings();
@@ -23,15 +23,14 @@ class CostFilter extends Component {
 
   onClearSelected = () => {
     this.setState(initialState);
+    this.props.dispatch(change('cost', 'maxCost', null));
     this.props.modifyCost(null);
     this.props.fetchListings();
     this.props.toggleActive();
   };
 
   modifyDisplay() {
-    return this.state.filterApplied
-      ? `< $${this.props.cost.values.maxCost}`
-      : null;
+    return this.state.filterApplied ? `< $${this.props.costFilter}` : null;
   }
 
   limitMinNum = value => {
@@ -41,29 +40,54 @@ class CostFilter extends Component {
     return value;
   };
 
+  renderField = ({ placeholder, input, label, type }) => (
+    <>
+      <label>{label}</label>
+      <div className="ui input">
+        <input
+          {...input}
+          autoComplete="off"
+          placeholder={placeholder ? placeholder : label}
+          type={type}
+        />
+      </div>
+    </>
+  );
+
   render() {
     const { toggleActive, active } = this.props;
 
     return (
       <div>
-        <button onMouseDown={toggleActive} className="ui button danger">
+        <button
+          onMouseDown={toggleActive}
+          className="ui secondary basic button danger"
+        >
           Cost {this.modifyDisplay()}
         </button>
         {active && (
-          <div>
+          <div className="ui container segment popout cost">
             <Field
               name="maxCost"
-              label="Max Cost"
               type="number"
+              placeholder="Max Cost"
               normalize={this.limitMinNum}
-              component={renderField}
+              component={this.renderField}
             />
-            <button className="ui button" onClick={this.onApplySelected}>
-              Apply
-            </button>
-            <button className="ui button" onClick={this.onClearSelected}>
-              Clear
-            </button>
+            <div>
+              <button
+                className="ui secondary basic button"
+                onClick={this.onClearSelected}
+              >
+                Clear
+              </button>
+              <button
+                className="ui secondary basic right floated button"
+                onClick={this.onApplySelected}
+              >
+                Apply
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -73,7 +97,8 @@ class CostFilter extends Component {
 
 const mapStateToProps = state => {
   return {
-    cost: state.form.cost
+    cost: state.form.cost,
+    costFilter: state.searchQuery.cost
   };
 };
 

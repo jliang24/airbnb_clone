@@ -70,11 +70,14 @@ class DatesFilter extends Component {
 
     return (
       <div>
-        <button onMouseDown={toggleActive} className="ui button">
+        <button
+          onMouseDown={toggleActive}
+          className="ui secondary basic button"
+        >
           {this.modifyDisplay()}
         </button>
         {active && (
-          <div>
+          <div className="ui container segment popout">
             <DatePicker
               selected={this.state.startDate}
               onChange={this.handleStartDateChange}
@@ -87,18 +90,20 @@ class DatesFilter extends Component {
               minDate={new Date()}
               placeholderText="Check Out"
             />
-            <button
-              onClick={this.onClearSelected}
-              className="ui button success"
-            >
-              Clear
-            </button>
-            <button
-              onClick={this.onApplySelected}
-              className="ui button success"
-            >
-              Apply
-            </button>
+            <div>
+              <button
+                onClick={this.onClearSelected}
+                className="ui secondary basic button"
+              >
+                Clear
+              </button>
+              <button
+                onClick={this.onApplySelected}
+                className="ui secondary basic right floated button"
+              >
+                Apply
+              </button>
+            </div>
           </div>
         )}
       </div>

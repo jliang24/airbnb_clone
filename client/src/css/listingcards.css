@@ -13,8 +13,41 @@
   font-weight: 1000;
 }
 
+div.filterbox {
+  margin: 10px 0px !important;
+}
+
+.filterbox button.basic {
+  padding: 10px 8px !important;
+}
+
+.popout {
+  position: absolute !important;
+  z-index: 9999;
+  width: 15% !important;
+  min-width: 200px;
+}
+
+.popout button.basic {
+  margin-top: 15px !important;
+}
+
 @media (max-width: 678px) {
   #cardlist {
     margin: 0px 30px;
+  }
+}
+
+@media (max-width: 425px) {
+  .popout {
+    margin-right: 20px !important;
+  }
+
+  .popout .cost {
+    right: 30px !important;
+  }
+
+  .ui.grid > * {
+    padding: 0px 6px;
   }
 }

@@ -10,9 +10,11 @@ class FilterBox extends Component {
     return (
       <div>
         <SearchBar />
-        <DatesFilter />
-        <GuestsFilter />
-        <CostFilter />
+        <div className="filterbox ui three column grid">
+          <DatesFilter />
+          <GuestsFilter />
+          <CostFilter />
+        </div>
       </div>
     );
   }
