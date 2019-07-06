@@ -25,3 +25,9 @@ export const CLEAR_MESSAGES = 'clear_messages';
 //Device actions
 export const UPDATE_WIDTH = 'update_width';
 export const UPDATE_HEIGHT = 'update_height';
+
+//Search actions
+export const MODIFY_SEARCH = 'modify_search';
+export const MODIFY_DATES = 'modify_dates';
+export const MODIFY_GUESTS = 'modify_guests';
+export const MODIFY_COST = 'modify_cost';

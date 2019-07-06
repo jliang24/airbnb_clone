@@ -6,6 +6,7 @@ import history from 'historyObj';
 import { removeUnavailableDates } from 'utils/dates';
 import Counter from 'utils/Counter';
 import * as actions from 'actions';
+import { handleStartDateChange, handleEndDateChange } from 'utils/dates';
 
 class Scheduler extends Component {
   constructor(props) {
@@ -22,6 +23,8 @@ class Scheduler extends Component {
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
     this.openDatePicker = this.openDatePicker.bind(this);
+    this.handleStartDateUtil = handleStartDateChange.bind(this);
+    this.handleEndDateUtil = handleEndDateChange.bind(this);
   }
 
   componentDidMount() {
@@ -43,9 +46,7 @@ class Scheduler extends Component {
   }
 
   handleStartDateChange(date) {
-    this.setState({
-      startDate: date
-    });
+    this.handleStartDateUtil(date);
 
     const endDates = [];
     for (let i = 1; i <= this.props.details.maxNights; i++) {
@@ -66,9 +67,8 @@ class Scheduler extends Component {
   }
 
   handleEndDateChange(date) {
-    this.setState({
-      endDate: date
-    });
+    this.handleEndDateUtil(date);
+
     this.openDatePicker();
   }
 
@@ -121,8 +121,10 @@ class Scheduler extends Component {
           onChange={this.handleStartDateChange}
           placeholderText="Check In"
           minDate={new Date()}
+          highlightDates={[this.state.endDate || new Date()]}
         />
         <DatePicker
+          highlightDates={[this.state.startDate || new Date()]}
           selected={this.state.endDate}
           includeDates={this.state.endDates}
           onChange={this.handleEndDateChange}

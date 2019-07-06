@@ -36,16 +36,17 @@ export const clearDetails = () => {
   };
 };
 
-export const fetchListings = (user, configs = {}) => async (
-  dispatch,
-  getState
-) => {
+export const fetchListings = user => async (dispatch, getState) => {
   const { authenticated } = getState().auth;
+  const { searchQuery } = getState();
+
   // If user is authenticated, make a request to route that has authentication required
   const response =
     authenticated && user
       ? await listingAPI(authenticated).get('/api/listings/user')
-      : await listingAPI().get('/api/listings', { params: configs });
+      : await listingAPI().get('/api/listings', {
+          params: searchQuery
+        });
 
   dispatch({ type: FETCH_LISTINGS, payload: response.data });
 };
@@ -76,9 +77,11 @@ export const fetchListing = id => async dispatch => {
     : {};
 
   // data comes back as a string in mongoose. convert back to dates
-  const { includedDates, unavailableDates } = details;
+  const { includedDates, unavailableDates, startDate, endDate } = details;
   details.includedDates = includedDates.map(date => new Date(date));
   details.unavailableDates = unavailableDates.map(date => new Date(date));
+  details.startDate = new Date(startDate);
+  details.endDate = new Date(endDate);
   details['_user'] = response.data._user;
 
   dispatch({ type: UPLOAD_PICTURES, payload: pictures });

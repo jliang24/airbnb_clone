@@ -115,7 +115,7 @@ class ListingCards extends Component {
 
   renderEmptyList() {
     return this.props.listings.length > 0 ? null : (
-      <div className="error-card">No results found. Please try again.</div>
+      <div className="error-card"> {this.props.errorMessage} </div>
     );
   }
 

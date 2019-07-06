@@ -13,19 +13,15 @@ class Counter extends Component {
           </label>
         </div>
         <div className="column">
-          <div className="ui icon buttons">
-            <div
+          <div className="counters">
+            <i
               onClick={this.props.decrementValue}
-              className="decrement ui basic red button icon"
-            >
-              <i className="minus icon" />
-            </div>
-            <div
+              className="decrement minus circle icon"
+            />
+            <i
               onClick={this.props.incrementValue}
-              className="increment ui basic green button icon"
-            >
-              <i className="plus icon" />
-            </div>
+              className="increment plus circle icon"
+            />
           </div>
         </div>
       </>

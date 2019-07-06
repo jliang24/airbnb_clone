@@ -10,12 +10,20 @@ const OutsideAlerter = WrappedComponent => {
     constructor(props) {
       super(props);
       this.state = {
-        clickedOutside: false
+        clickedOutside: false,
+        active: false
       };
     }
 
     componentDidMount() {
       document.addEventListener('mousedown', this.onOutsideClick);
+    }
+
+    componentDidUpdate() {
+      if (this.state.clickedOutside) {
+        this.setState({ active: false });
+        this.resetState();
+      }
     }
 
     componentWillUnmount() {
@@ -33,10 +41,16 @@ const OutsideAlerter = WrappedComponent => {
       this.setState({ clickedOutside: false });
     };
 
+    toggleActive = () => {
+      this.setState({ active: !this.state.active });
+    };
+
     render() {
       return (
         <div ref={node => (this.node = node)}>
           <WrappedComponent
+            active={this.state.active}
+            toggleActive={this.toggleActive}
             clickedOutside={this.state.clickedOutside}
             resetState={() => this.resetState()}
             {...this.props}
