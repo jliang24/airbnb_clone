@@ -36,8 +36,10 @@ module.exports = app => {
       .guests(guests)
       .build();
 
+    console.log(searchQueryObj);
+
     const listing = await Listing.find({
-      $and: [{ 'details.startDate': { $gte: start } }, searchQueryObj]
+      $and: [{ 'details.includedDates': { $gte: start } }, searchQueryObj]
     }).select(`${details} ${location} pictures`);
 
     res.send(listing);
