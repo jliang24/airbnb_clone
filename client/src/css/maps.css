@@ -1,0 +1,7 @@
+.detail-marker:hover {
+  cursor: default;
+}
+
+.detail-close:hover {
+  cursor: pointer;
+}

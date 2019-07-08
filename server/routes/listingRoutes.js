@@ -75,9 +75,9 @@ module.exports = app => {
 
     const newListing = new Listing({
       details,
+      pictures,
       location: listing,
       amenities: amenitiesArr,
-      pictures,
       _user: req.user._id,
       listingCreated: new Date()
     });
