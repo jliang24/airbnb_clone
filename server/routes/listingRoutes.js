@@ -5,6 +5,7 @@ const Messages = mongoose.model('messages');
 const passport = require('passport');
 const _ = require('lodash');
 const QueryBuilder = require('../services/QueryBuilder');
+const fakeGen = require('../services/fakeGen');
 
 const requireSignin = passport.authenticate('jwt', { session: false });
 
@@ -27,6 +28,9 @@ module.exports = app => {
   };
 
   app.get('/api/listings', async (req, res) => {
+    const fakeData = fakeGen(10);
+    console.log(fakeData);
+
     const { searchConfigs, dates, guests, cost } = req.query;
 
     const searchQueryObj = new QueryBuilder()
@@ -36,11 +40,12 @@ module.exports = app => {
       .guests(guests)
       .build();
 
-    const listing = await Listing.find({
+    const listings = await Listing.find({
       $and: [{ 'details.includedDates': { $gte: start } }, searchQueryObj]
     }).select(`${details} ${location} pictures`);
 
-    res.send(listing);
+    console.log(listings);
+    res.send(listings);
   });
 
   app.get('/api/listings/user', requireSignin, async (req, res) => {
