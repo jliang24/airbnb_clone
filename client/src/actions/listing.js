@@ -47,6 +47,13 @@ export const fetchListings = user => async (dispatch, getState) => {
       : await listingAPI().get('/api/listings', {
           params: searchQuery
         });
+  dispatch({ type: FETCH_LISTINGS, payload: response.data });
+};
+
+export const fetchFakeListings = center => async dispatch => {
+  const response = await listingAPI().get('/api/fakeListings', {
+    params: center
+  });
 
   dispatch({ type: FETCH_LISTINGS, payload: response.data });
 };

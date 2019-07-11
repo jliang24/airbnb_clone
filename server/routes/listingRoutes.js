@@ -28,9 +28,6 @@ module.exports = app => {
   };
 
   app.get('/api/listings', async (req, res) => {
-    const fakeData = fakeGen(10);
-    console.log(fakeData);
-
     const { searchConfigs, dates, guests, cost } = req.query;
 
     const searchQueryObj = new QueryBuilder()
@@ -44,8 +41,20 @@ module.exports = app => {
       $and: [{ 'details.includedDates': { $gte: start } }, searchQueryObj]
     }).select(`${details} ${location} pictures`);
 
-    console.log(listings);
     res.send(listings);
+  });
+
+  app.get('/api/fakeListings', (req, res) => {
+    let { lat, lng } = req.query;
+    lat = parseFloat(lat);
+    lng = parseFloat(lng);
+    console.log(lat, lng);
+    const fakeData = new fakeGen()
+      .generateFakeData(10)
+      .createTestData(lat, lng)
+      .returnData();
+
+    res.send(fakeData);
   });
 
   app.get('/api/listings/user', requireSignin, async (req, res) => {

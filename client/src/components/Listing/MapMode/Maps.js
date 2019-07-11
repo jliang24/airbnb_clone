@@ -19,13 +19,33 @@ class MapMode extends Component {
     this.testData = this.createTestdata(5);
   }
 
+  randomGeo(lat, lng, radius) {
+    const y0 = lat;
+    const x0 = lng;
+    const rd = radius / 111300;
+    const u = Math.random();
+    const v = Math.random();
+    const w = rd * Math.sqrt(u);
+    const t = 2 * Math.PI * v;
+    const x = w * Math.cos(t);
+    const y = w * Math.sin(t);
+
+    const newLat = (y + y0).toFixed(5);
+    const newLng = (x + x0).toFixed(5);
+
+    return {
+      newLat,
+      newLng
+    };
+  }
+
   createTestdata(numPoints) {
     let { lat, lng } = this.defaultMap.center;
     const info = [];
     for (let i = 0; i < numPoints; i++) {
-      const newLat = lat + i * 0.01;
       const stringId = i.toString();
-      info.push({ lat: newLat, lng: lng, listingId: stringId });
+      const { newLat, newLng } = this.randomGeo(lat, lng, 5000);
+      info.push({ lat: newLat, lng: newLng, listingId: stringId });
     }
     return info;
   }
