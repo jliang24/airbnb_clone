@@ -1,12 +1,26 @@
 import React, { Component } from 'react';
 import TableItems from './TableItems';
-
-const testData = ['0', '1', '2', '3', '4'];
+import { connect } from 'react-redux';
 
 class MapTable extends Component {
   render() {
-    return testData.map(id => <TableItems listingId={id} />);
+    return this.props.listings.map(listing => {
+      const { lat, lng } = listing.location;
+      return (
+        <TableItems
+          moveCenter={() => this.props.moveCenter(lat, lng)}
+          key={listing._id}
+          listing={listing}
+        />
+      );
+    });
   }
 }
 
-export default MapTable;
+const mapStateToProps = state => {
+  return {
+    listings: Object.values(state.listings)
+  };
+};
+
+export default connect(mapStateToProps)(MapTable);

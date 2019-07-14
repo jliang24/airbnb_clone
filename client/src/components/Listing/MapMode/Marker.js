@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { updateActiveListing, pinListing } from 'actions';
+import MarkerDetails from './MarkerDetails';
 
 const K_SIZE = 40;
 
@@ -28,71 +29,44 @@ const hoverStyle = {
   color: '#f44336'
 };
 
-const detailStyle = {
-  backgroundColor: 'white',
-  position: 'absolute',
-  bottom: '15px',
-  border: '1px solid black',
-  width: '200px',
-  zIndex: 2
-};
-
-const testInfo = {
-  guests: 1,
-  beds: 1,
-  bedrooms: 1,
-  baths: 0
-};
-
 class Marker extends Component {
-  renderCloseButton = () => {
-    return (
-      <div
-        className="detail-close"
-        onMouseDown={() => this.props.pinListing('')}
-      >
-        Close
-      </div>
-    );
-  };
-  renderDetails() {
-    return (
-      <div className="detail-marker" style={detailStyle}>
-        Guests: {testInfo.guests}
-        {this.renderCloseButton()}
-      </div>
-    );
+  constructor(props) {
+    super(props);
+    this.listingId = props.listing._id;
+    this.listing = props.listing;
   }
 
   isActiveId = () => {
-    return this.props.listingId === this.props.activeId;
+    return this.listingId === this.props.activeId;
   };
 
   isPinnedId = () => {
-    return this.props.listingId === this.props.pinnedId;
+    return this.listingId === this.props.pinnedId;
   };
 
   onListingClicked() {
-    if (this.props.pinnedId === this.props.listingId) {
+    if (this.props.pinnedId === this.listingId) {
       return this.props.pinListing('');
     }
-    this.props.pinListing(this.props.listingId);
+
+    this.props.pinListing(this.listingId);
   }
 
   render() {
+    const listing = this.listing;
+    const { cost } = listing;
     const style = this.isActiveId() ? hoverStyle : regularStyle;
+
     return (
       <div>
-        {this.isPinnedId() && this.renderDetails()}
+        {this.isPinnedId() && <MarkerDetails listing={listing} />}
         <div
-          onMouseEnter={() =>
-            this.props.updateActiveListing(this.props.listingId)
-          }
+          onMouseEnter={() => this.props.updateActiveListing(this.listingId)}
           onMouseLeave={() => this.props.updateActiveListing('')}
           onMouseDown={() => this.onListingClicked()}
           style={style}
         >
-          {this.props.text}
+          {cost}
         </div>
       </div>
     );

@@ -8,8 +8,13 @@ const hoverStyle = {
 };
 
 class TableItems extends Component {
+  constructor(props) {
+    super(props);
+    this.listingId = props.listing._id;
+  }
+
   onListingHover() {
-    this.props.updateActiveListing(this.props.listingId);
+    this.props.updateActiveListing(this.listingId);
   }
 
   onListingLeave() {
@@ -17,14 +22,17 @@ class TableItems extends Component {
   }
 
   onListingClicked() {
-    if (this.props.pinnedId === this.props.listingId) {
+    if (this.props.pinnedId === this.listingId) {
       return this.props.pinListing('');
     }
-    this.props.pinListing(this.props.listingId);
+    this.props.moveCenter();
+    this.props.pinListing(this.listingId);
   }
   render() {
-    const style =
-      this.props.activeId === this.props.listingId ? hoverStyle : {};
+    const { title } = this.props.listing.location;
+
+    const style = this.props.activeId === this.listingId ? hoverStyle : {};
+
     return (
       <div
         onMouseDown={() => this.onListingClicked()}
@@ -32,7 +40,7 @@ class TableItems extends Component {
         onMouseEnter={() => this.onListingHover()}
         style={style}
       >
-        This is listing {this.props.listingId}
+        {title}
       </div>
     );
   }

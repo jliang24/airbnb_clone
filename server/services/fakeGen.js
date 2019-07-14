@@ -52,7 +52,7 @@ class fakeGen {
     return detailInfos;
   }
 
-  randomGeo(lat, lng, radius = 5000) {
+  randomGeo(lat, lng, radius = 8000) {
     const y0 = lat;
     const x0 = lng;
     const rd = radius / 111300;
