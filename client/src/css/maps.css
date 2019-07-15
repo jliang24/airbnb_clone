@@ -5,3 +5,18 @@
 .detail-close:hover {
   cursor: pointer;
 }
+
+.detail-description {
+  padding: 10px;
+  padding-top: 0px;
+}
+
+.detail-close {
+  display: inline-block;
+  margin-top: 12px;
+}
+
+.animate-table {
+  max-height: 1000px !important;
+  transition: max-height 1s ease-in-out !important;
+}

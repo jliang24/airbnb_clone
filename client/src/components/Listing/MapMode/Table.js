@@ -1,10 +1,22 @@
 import React, { Component } from 'react';
-import TableItems from './TableItems';
 import { connect } from 'react-redux';
+import { FixedSizeList as List } from 'react-window';
+
+import TableItems from './TableItems';
 
 class MapTable extends Component {
-  render() {
-    return this.props.listings.map(listing => {
+  constructor(props) {
+    super(props);
+    this.list = [];
+  }
+
+  componentDidUpdate() {
+    this.mapListValues();
+  }
+
+  mapListValues = () => {
+    if (this.props.listings.length <= 0) return;
+    const items = this.props.listings.map(listing => {
       const { lat, lng } = listing.location;
       return (
         <TableItems
@@ -14,6 +26,19 @@ class MapTable extends Component {
         />
       );
     });
+    this.list = items;
+  };
+
+  renderRow = ({ index, style }) => (
+    <div style={style}> {this.list[index]}</div>
+  );
+
+  render() {
+    return (
+      <List height={500} itemCount={10} itemSize={100} width={400}>
+        {this.renderRow}
+      </List>
+    );
   }
 }
 

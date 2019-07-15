@@ -29,6 +29,12 @@ const hoverStyle = {
   color: '#f44336'
 };
 
+const pinnedStyle = {
+  ...regularStyle,
+  border: '5px solid orange',
+  color: '#f44336'
+};
+
 class Marker extends Component {
   constructor(props) {
     super(props);
@@ -52,10 +58,17 @@ class Marker extends Component {
     this.props.pinListing(this.listingId);
   }
 
+  styleToUse() {
+    if (this.isPinnedId()) {
+      return pinnedStyle;
+    } else if (this.isActiveId()) {
+      return hoverStyle;
+    } else return regularStyle;
+  }
+
   render() {
     const listing = this.listing;
-    const { cost } = listing;
-    const style = this.isActiveId() ? hoverStyle : regularStyle;
+    const style = this.styleToUse();
 
     return (
       <div>
@@ -66,7 +79,7 @@ class Marker extends Component {
           onMouseDown={() => this.onListingClicked()}
           style={style}
         >
-          {cost}
+          {listing.cost}
         </div>
       </div>
     );

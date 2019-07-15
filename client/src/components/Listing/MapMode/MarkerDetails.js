@@ -1,18 +1,36 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
+import { pinListing } from 'actions';
 import detailIcons from 'utils/details';
 
 const detailStyle = {
   backgroundColor: 'white',
   position: 'absolute',
-  bottom: '130px',
+  bottom: '20px',
   width: '200px',
   zIndex: 2,
-  left: '10px',
+  left: '25px',
   boxShadow: '2px 2px 10px #817f7f'
 };
 
+const markerTableStyle = {
+  overflow: 'hidden',
+  position: 'absolute',
+  boxShadow: '0px 2px 10px #817f7f',
+  borderTop: '1px solid #888888',
+  maxHeight: 0,
+  transition: 'max-height 0.8s cubic-bezier(0, 1, 0, 1)',
+  width: '100%'
+};
+
 class MarkerDetails extends Component {
+  state = { showDetails: false };
+
+  toggleShowDetails = () => {
+    this.setState({ showDetails: !this.state.showDetails });
+  };
+
   renderCloseButton = () => {
     return (
       <div
@@ -20,6 +38,17 @@ class MarkerDetails extends Component {
         onMouseDown={() => this.props.pinListing('')}
       >
         Close
+      </div>
+    );
+  };
+
+  renderShowButton = () => {
+    return (
+      <div
+        className="detail-close ui basic mini right floated button"
+        onMouseDown={this.toggleShowDetails}
+      >
+        Show Details
       </div>
     );
   };
@@ -43,9 +72,14 @@ class MarkerDetails extends Component {
 
   renderTable(details) {
     return (
-      <table id="marker-table" className="ui celled table">
-        <tbody>{this.renderTableDetails(details)}</tbody>
-      </table>
+      <div
+        className={this.state.showDetails ? 'animate-table' : ''}
+        style={markerTableStyle}
+      >
+        <table className="ui single line table">
+          <tbody>{this.renderTableDetails(details)}</tbody>
+        </table>
+      </div>
     );
   }
 
@@ -55,12 +89,18 @@ class MarkerDetails extends Component {
     return (
       <div className="detail-marker" style={detailStyle}>
         <img className="image" src={'http://lorempixel.com/200/200/city'} />
-        <div class="header">{listing.location.title} </div>
-        {this.renderCloseButton()}
+        <div className="detail-description">
+          <div className="header">{listing.location.title} </div>
+          {this.renderCloseButton()}
+          {this.renderShowButton()}
+        </div>
         {this.renderTable(listing.details)}
       </div>
     );
   }
 }
 
-export default MarkerDetails;
+export default connect(
+  null,
+  { pinListing }
+)(MarkerDetails);

@@ -7,6 +7,10 @@ const hoverStyle = {
   backgroundColor: 'pink'
 };
 
+const pinnedStyle = {
+  backgroundColor: 'orange'
+};
+
 class TableItems extends Component {
   constructor(props) {
     super(props);
@@ -28,10 +32,19 @@ class TableItems extends Component {
     this.props.moveCenter();
     this.props.pinListing(this.listingId);
   }
+
+  styleToUse() {
+    if (this.listingId === this.props.pinnedId) {
+      return pinnedStyle;
+    } else if (this.listingId === this.props.activeId) {
+      return hoverStyle;
+    } else return {};
+  }
+
   render() {
     const { title } = this.props.listing.location;
 
-    const style = this.props.activeId === this.listingId ? hoverStyle : {};
+    const style = this.styleToUse();
 
     return (
       <div
