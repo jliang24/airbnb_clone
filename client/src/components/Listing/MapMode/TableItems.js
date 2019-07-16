@@ -46,6 +46,11 @@ class TableItems extends Component {
 
     const style = this.styleToUse();
 
+    // Title
+    // Num beds/guests/details
+    // Amenities
+    // Cost/night bottom right
+
     return (
       <div
         onMouseDown={() => this.onListingClicked()}
@@ -53,6 +58,16 @@ class TableItems extends Component {
         onMouseEnter={() => this.onListingHover()}
         style={style}
       >
+        <div class="content">
+          <a class="header">Rachel</a>
+          <div class="description">
+            Last seen watching{' '}
+            <a>
+              <b>Arrested Development</b>
+            </a>{' '}
+            just now.
+          </div>
+        </div>
         {title}
       </div>
     );

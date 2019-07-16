@@ -20,3 +20,12 @@
   max-height: 1000px !important;
   transition: max-height 1s ease-in-out !important;
 }
+
+#list-card {
+  display: flex;
+  border-bottom: 1px solid rgb(156, 154, 154);
+}
+
+#list-image {
+  align-self: center;
+}

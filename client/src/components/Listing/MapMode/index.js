@@ -28,7 +28,7 @@ class MapMode extends Component {
     //This works because google maps has already been added within google maps react component
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ address: configs.display }, (results, status) => {
-      if (status == 'OK') {
+      if (status === 'OK') {
         this.handleGeocoderSuccess(results);
       } else {
         return;
@@ -81,8 +81,10 @@ class MapMode extends Component {
           handleSearchResult={configs => this.handleSearchResult(configs)}
         />
         {this.renderButton()}
-        <Maps center={this.state.center} />
-        <MapTable moveCenter={(lat, lng) => this.moveCenter(lat, lng)} />
+        <div style={{ display: 'flex' }}>
+          <Maps center={this.state.center} />
+          <MapTable moveCenter={(lat, lng) => this.moveCenter(lat, lng)} />
+        </div>
       </div>
     );
   }

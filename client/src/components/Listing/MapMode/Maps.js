@@ -30,7 +30,7 @@ class MapMode extends Component {
 
   render() {
     return (
-      <div style={{ height: '800px', width: '80%' }}>
+      <div style={{ height: '800px', width: '70%' }}>
         <GoogleMapReact
           yesIWantToUseGoogleMapApiInternals
           bootstrapURLKeys={{
