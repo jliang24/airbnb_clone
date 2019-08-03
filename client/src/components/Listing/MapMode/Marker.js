@@ -72,14 +72,17 @@ class Marker extends Component {
 
     return (
       <div>
-        {this.isPinnedId() && <MarkerDetails listing={listing} />}
+        {this.isPinnedId() && (
+          <MarkerDetails listing={listing} idx={this.props.idx} />
+        )}
         <div
+          className="marker"
           onMouseEnter={() => this.props.updateActiveListing(this.listingId)}
           onMouseLeave={() => this.props.updateActiveListing('')}
           onMouseDown={() => this.onListingClicked()}
           style={style}
         >
-          {listing.cost}
+          ${listing.location.cost}
         </div>
       </div>
     );

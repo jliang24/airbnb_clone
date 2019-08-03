@@ -8,7 +8,9 @@ const locationSchema = new Schema({
   state: String,
   title: String,
   zip: String,
-  apt: String
+  apt: String,
+  lat: Number,
+  lng: Number
 });
 
 module.exports = locationSchema;

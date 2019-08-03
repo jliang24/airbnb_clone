@@ -16,10 +16,12 @@ class MapMode extends Component {
   }
 
   createMarkers() {
-    const markers = this.props.listings.map(listing => {
+    const markers = this.props.listings.map((listing, idx) => {
       const { lat, lng } = listing.location;
 
-      return <Marker key={lat} lat={lat} lng={lng} listing={listing} />;
+      return (
+        <Marker key={lat} lat={lat} lng={lng} listing={listing} idx={idx} />
+      );
     });
     return markers;
   }
@@ -32,13 +34,12 @@ class MapMode extends Component {
     return (
       <div style={{ height: '800px', width: '70%' }}>
         <GoogleMapReact
-          yesIWantToUseGoogleMapApiInternals
           bootstrapURLKeys={{
             key: 'AIzaSyDDpvoLFlIg5Xn15LQvWAm3bvOOGNLVxXk'
           }}
+          yesIWantToUseGoogleMapApiInternals
           center={this.props.center}
           defaultZoom={this.defaultMap.zoom}
-          yesIWantToUseGoogleMapApiInternals
           onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
         >
           {this.createMarkers()}

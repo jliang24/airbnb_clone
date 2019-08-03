@@ -7,13 +7,15 @@ import MapTable from './Table';
 import SearchBar from '../View/FilterBox/SearchBar';
 
 const initialState = { lat: 39.529, lng: -119.813 };
+
 class MapMode extends Component {
   constructor(props) {
     super(props);
-    this.state = { center: initialState, realData: false };
+    this.state = { center: initialState };
   }
   componentDidMount() {
-    this.props.fetchFakeListings(this.state.center);
+    this.props.fetchListings();
+    // this.props.fetchFakeListings(this.state.center);
   }
 
   handleGeocoderSuccess(results) {
@@ -42,45 +44,12 @@ class MapMode extends Component {
     this.setState({ center: { lat, lng } });
   };
 
-  renderButton() {
-    return this.state.realData
-      ? this.renderFakeButton()
-      : this.renderRealButton();
-  }
-
-  renderFakeButton() {
-    return (
-      <button onClick={this.onFakeDataClicked} className="ui small button">
-        Use Fake Data
-      </button>
-    );
-  }
-
-  onFakeDataClicked = () => {
-    this.props.fetchFakeListings(this.state.center);
-    this.setState({ realData: false });
-  };
-
-  renderRealButton() {
-    return (
-      <button onClick={this.onRealDataClicked} className="ui small button">
-        Use Real Data
-      </button>
-    );
-  }
-
-  onRealDataClicked = () => {
-    this.props.fetchListings();
-    this.setState({ realData: true });
-  };
-
   render() {
     return (
       <div>
         <SearchBar
           handleSearchResult={configs => this.handleSearchResult(configs)}
         />
-        {this.renderButton()}
         <div style={{ display: 'flex' }}>
           <Maps center={this.state.center} />
           <MapTable moveCenter={(lat, lng) => this.moveCenter(lat, lng)} />

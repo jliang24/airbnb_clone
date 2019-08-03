@@ -5,7 +5,11 @@ import { FixedSizeList as List } from 'react-window';
 import TableItems from './TableItems';
 
 class MapTable extends Component {
-  state = { list: [] };
+  constructor(props) {
+    super(props);
+    this.state = { list: [] };
+    this.domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
+  }
 
   componentDidUpdate() {
     this.mapListValues();
@@ -28,21 +32,29 @@ class MapTable extends Component {
     return this.setState({ list: items });
   };
 
-  renderRow = ({ index, style }) => (
-    <div id="list-card" style={style}>
-      <img
-        id="list-image"
-        className="ui image"
-        src="http://lorempixel.com/100/100/nature/"
-      />
-      {this.state.list[index]}
-    </div>
-  );
+  renderRow = ({ index, style }) => {
+    const listing = this.props.listings[index];
+    const pictures = listing
+      ? this.domainURL + listing.pictures[0]
+      : `http://lorempixel.com/200/200/city/${index}`;
+
+    return (
+      <div id="list-card" style={style}>
+        <img
+          id="list-image"
+          className="ui image"
+          src={pictures}
+          alt={'place image'}
+        />
+        {this.state.list[index]}
+      </div>
+    );
+  };
 
   render() {
     return (
       this.state.list.length > 0 && (
-        <List height={746} itemCount={10} itemSize={100} width={400}>
+        <List height={746} itemCount={10} itemSize={115} width={400}>
           {this.renderRow}
         </List>
       )

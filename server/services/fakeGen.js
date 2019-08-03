@@ -11,6 +11,8 @@ console.log(typeof faker.fake('{{random.number(5)}}'));
 //      city: 'dfh',
 //      cost: 51 } }
 
+const priceRange = JSON.stringify({ min: 10, max: 60 });
+
 const schema = {
   _id: '{{random.uuid}}',
   details: {
@@ -20,9 +22,9 @@ const schema = {
     baths: '{{random.number(7)}}'
   },
   location: {
-    title: '{{lorem.sentence}}'
-  },
-  cost: '{{commerce.price}}'
+    title: '{{company.catchPhrase}}',
+    cost: `{{random.number(${priceRange})}}`
+  }
 };
 
 class fakeGen {

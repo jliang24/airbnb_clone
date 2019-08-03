@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { updateActiveListing, pinListing } from 'actions';
 
@@ -41,8 +42,28 @@ class TableItems extends Component {
     } else return {};
   }
 
+  renderDetails(details) {
+    const detailArr = [];
+    for (let [detail, detailVal] of Object.entries(details)) {
+      if (detailVal === '0') continue;
+      const divArr = (
+        <div
+          key={detail}
+          style={{ textTransform: 'capitalize' }}
+          className="item"
+        >
+          {detail} : {detailVal}
+        </div>
+      );
+      detailArr.push(divArr);
+    }
+    return detailArr;
+  }
+
   render() {
-    const { title } = this.props.listing.location;
+    const { listing } = this.props;
+    const { title } = listing.location;
+    let roundedCost = Math.floor(listing.location.cost * 100) / 100;
 
     const style = this.styleToUse();
 
@@ -50,6 +71,7 @@ class TableItems extends Component {
     // Num beds/guests/details
     // Amenities
     // Cost/night bottom right
+    // Take me to listing
 
     return (
       <div
@@ -57,18 +79,23 @@ class TableItems extends Component {
         onMouseLeave={() => this.onListingLeave()}
         onMouseEnter={() => this.onListingHover()}
         style={style}
+        className="table-items"
       >
-        <div class="content">
-          <a class="header">Rachel</a>
-          <div class="description">
-            Last seen watching{' '}
-            <a>
-              <b>Arrested Development</b>
-            </a>{' '}
-            just now.
+        <b>{title}</b>
+        <div>
+          <div className="ui horizontal bulleted link list detail meta">
+            {this.renderDetails(listing.details)}
           </div>
         </div>
-        {title}
+        <div style={{ position: 'absolute', bottom: '10px' }}>
+          <div className="item cost">${roundedCost}/Night </div>
+          <Link
+            to={`/listings/${listing._id}`}
+            className="ui tiny secondary basic button"
+          >
+            View Listing
+          </Link>
+        </div>
       </div>
     );
   }

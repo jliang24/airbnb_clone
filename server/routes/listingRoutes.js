@@ -11,7 +11,8 @@ const requireSignin = passport.authenticate('jwt', { session: false });
 
 module.exports = app => {
   const details = 'details.guests details.bedrooms details.beds details.baths';
-  const location = 'location.title location.city location.state location.cost';
+  const location =
+    'location.title location.city location.state location.cost location.lat location.lng';
   const start = new Date();
   start.setHours(0, 0, 0, 0);
 
@@ -84,13 +85,14 @@ module.exports = app => {
   });
 
   app.post('/api/listings', requireSignin, async (req, res) => {
-    const { details, listing, amenities, pictures } = req.body;
+    const { details, listing, amenities, pictures, coords } = req.body;
+    console.log(req.body);
     const amenitiesArr = amenities ? _.keys(_.pickBy(amenities)) : null;
 
     const newListing = new Listing({
       details,
       pictures,
-      location: listing,
+      location: { ...listing, ...coords },
       amenities: amenitiesArr,
       _user: req.user._id,
       listingCreated: new Date()

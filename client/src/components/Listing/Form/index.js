@@ -32,7 +32,18 @@ class ListingForm extends Component {
       includedDates: [],
       unavailableDates: [],
       dateError: false,
-      forward: false
+      forward: false,
+      address: {
+        lat: 0,
+        lng: 0
+      }
+    };
+    this.defaultMap = {
+      center: {
+        lat: 39.529,
+        lng: -119.813
+      },
+      zoom: 12
     };
     this.handleStartDateChange = handleStartDateChange.bind(this);
     this.handleEndDateChange = handleEndDateChange.bind(this);
