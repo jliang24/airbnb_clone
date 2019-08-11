@@ -25,7 +25,7 @@ const regularStyle = {
 
 const hoverStyle = {
   ...regularStyle,
-  border: '5px solid #3f51b5',
+  border: '5px solid #82d6fa',
   color: '#f44336'
 };
 

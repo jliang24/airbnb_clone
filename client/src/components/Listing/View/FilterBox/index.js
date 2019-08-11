@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { resetSearch } from 'actions';
 
-import SearchBar from './SearchBar';
 import DatesFilter from './Dates';
 import GuestsFilter from './Guests';
 import CostFilter from './Cost';
 
 class FilterBox extends Component {
+  componentWillUnmount() {
+    this.props.resetSearch();
+  }
+
   render() {
     return (
-      <div>
-        <SearchBar />
-        <div className="filterbox ui three column grid">
-          <DatesFilter />
-          <GuestsFilter />
-          <CostFilter />
-        </div>
+      <div className="filterbox ui three column grid">
+        <DatesFilter />
+        <GuestsFilter />
+        <CostFilter />
       </div>
     );
   }
 }
 
-export default FilterBox;
+export default connect(
+  null,
+  { resetSearch }
+)(FilterBox);

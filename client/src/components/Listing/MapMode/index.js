@@ -11,19 +11,25 @@ const initialState = { lat: 39.529, lng: -119.813 };
 class MapMode extends Component {
   constructor(props) {
     super(props);
-    this.state = { center: initialState };
+    this.state = { center: initialState, shown: false };
   }
+
   componentDidMount() {
     this.props.fetchListings();
     // this.props.fetchFakeListings(this.state.center);
   }
 
-  handleGeocoderSuccess(results) {
-    let { lat, lng } = results[0].geometry.location;
+  showMap() {
+    if (!this.state.shown) {
+      this.setState({ shown: true });
+    }
+  }
+
+  handleGeocoderSuccess([results]) {
+    let { lat, lng } = results.geometry.location;
     lat = lat();
     lng = lng();
     this.setState({ center: { lat, lng } });
-    this.props.fetchFakeListings({ lat, lng });
   }
 
   handleSearchResult(configs) {
@@ -31,6 +37,7 @@ class MapMode extends Component {
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ address: configs.display }, (results, status) => {
       if (status === 'OK') {
+        this.showMap();
         this.handleGeocoderSuccess(results);
       } else {
         return;
@@ -44,14 +51,35 @@ class MapMode extends Component {
     this.setState({ center: { lat, lng } });
   };
 
+  refreshCenter = newCenter => {
+    if (this.state.center !== newCenter) {
+      return this.setState({ center: newCenter });
+    }
+  };
+
+  isMapShown() {
+    const visible = {
+      display: 'flex',
+      opacity: 1,
+      transition: 'all 0.7s ease-in'
+    };
+    const notVisible = {
+      opacity: 0,
+      zIndex: -1,
+      position: 'relative'
+    };
+    return this.state.shown ? visible : notVisible;
+  }
+
   render() {
     return (
       <div>
         <SearchBar
           handleSearchResult={configs => this.handleSearchResult(configs)}
         />
-        <div style={{ display: 'flex' }}>
-          <Maps center={this.state.center} />
+        {/* <FilterBox /> */}
+        <div style={{ marginTop: '10px', ...this.isMapShown() }}>
+          <Maps center={this.state.center} refreshCenter={this.refreshCenter} />
           <MapTable moveCenter={(lat, lng) => this.moveCenter(lat, lng)} />
         </div>
       </div>

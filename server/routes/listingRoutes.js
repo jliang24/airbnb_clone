@@ -114,7 +114,8 @@ module.exports = app => {
   });
 
   app.patch('/api/listings/:id', requireSignin, async (req, res) => {
-    const { details, listing, amenities, pictures } = req.body;
+    const { details, listing, amenities, pictures, coords } = req.body;
+    console.log(req.body);
     const amenitiesArr = amenities ? _.keys(_.pickBy(amenities)) : null;
     const isUser = await checkUser(req.params.id, req.user._id);
     if (!isUser) {
@@ -126,7 +127,7 @@ module.exports = app => {
       {
         $set: {
           details,
-          location: listing,
+          location: { ...listing, ...coords },
           amenities: amenitiesArr,
           pictures
         }

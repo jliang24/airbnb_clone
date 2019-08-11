@@ -85,7 +85,7 @@ class MarkerDetails extends Component {
           <tbody>
             {this.renderTableDetails(details)}
             <tr>
-              <td colspan="2">
+              <td colSpan="2">
                 <Link
                   style={{ width: '100%' }}
                   className="ui right floated primary button"
@@ -104,6 +104,7 @@ class MarkerDetails extends Component {
 
   render() {
     const listing = this.props.listing;
+    const { title, city, state } = listing.location;
 
     return (
       <div className="detail-marker" style={detailStyle}>
@@ -116,7 +117,7 @@ class MarkerDetails extends Component {
           style={{ height: '250px', width: '250px' }}
         />
         <div className="detail-description">
-          <div className="header">{listing.location.title} </div>
+          <div className="header">{title} </div>
           {this.renderCloseButton()}
           {this.renderShowButton()}
         </div>

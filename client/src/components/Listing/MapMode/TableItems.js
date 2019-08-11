@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { updateActiveListing, pinListing } from 'actions';
 
 const hoverStyle = {
-  backgroundColor: 'pink'
+  backgroundColor: '#82d6fa'
 };
 
 const pinnedStyle = {
@@ -62,16 +62,10 @@ class TableItems extends Component {
 
   render() {
     const { listing } = this.props;
-    const { title } = listing.location;
+    const { title, city, state } = listing.location;
     let roundedCost = Math.floor(listing.location.cost * 100) / 100;
 
     const style = this.styleToUse();
-
-    // Title
-    // Num beds/guests/details
-    // Amenities
-    // Cost/night bottom right
-    // Take me to listing
 
     return (
       <div
@@ -82,6 +76,15 @@ class TableItems extends Component {
         className="table-items"
       >
         <b>{title}</b>
+        <p
+          style={{
+            fontSize: '10px',
+            margin: '0px',
+            textTransform: 'capitalize'
+          }}
+        >
+          {city}, {state}
+        </p>
         <div>
           <div className="ui horizontal bulleted link list detail meta">
             {this.renderDetails(listing.details)}

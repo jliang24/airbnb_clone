@@ -30,6 +30,10 @@ class MapMode extends Component {
     map.setOptions({ disableDoubleClickZoom: true, gestureHandling: 'greedy' });
   }
 
+  handleMapChange = prop => {
+    this.props.refreshCenter(prop.center);
+  };
+
   render() {
     return (
       <div style={{ height: '800px', width: '70%' }}>
@@ -41,6 +45,7 @@ class MapMode extends Component {
           center={this.props.center}
           defaultZoom={this.defaultMap.zoom}
           onGoogleApiLoaded={({ map, maps }) => this.handleApiLoaded(map, maps)}
+          onChange={this.handleMapChange}
         >
           {this.createMarkers()}
         </GoogleMapReact>

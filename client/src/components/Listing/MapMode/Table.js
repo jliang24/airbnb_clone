@@ -54,7 +54,12 @@ class MapTable extends Component {
   render() {
     return (
       this.state.list.length > 0 && (
-        <List height={746} itemCount={10} itemSize={115} width={400}>
+        <List
+          height={746}
+          itemCount={this.state.list.length}
+          itemSize={115}
+          width={400}
+        >
           {this.renderRow}
         </List>
       )
