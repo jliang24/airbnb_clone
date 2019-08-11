@@ -7,6 +7,7 @@ import listings from './listings';
 import messages from './messages';
 import deviceDims from './deviceDims';
 import searchQuery from './searchQuery';
+import maps from './maps';
 
 export default combineReducers({
   auth,
@@ -15,6 +16,7 @@ export default combineReducers({
   messages,
   listings,
   deviceDims,
+  maps,
   searchQuery,
   form: formReducer
 });

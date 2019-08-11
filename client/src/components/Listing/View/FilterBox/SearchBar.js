@@ -26,9 +26,14 @@ class SearchBar extends Component {
 
   handleResultSelected = itemConfigs => {
     const { display } = itemConfigs;
+
     this.props.dispatch(change('searchbar', 'search', display));
     this.props.modifySearch(itemConfigs);
-    this.props.fetchListings();
+
+    this.props.handleSearchResult
+      ? this.props.handleSearchResult(itemConfigs)
+      : this.props.fetchListings();
+
     this.setState(initialState);
   };
 
@@ -135,14 +140,10 @@ class SearchBar extends Component {
     );
   };
 
-  handleSearchSubmit = () => {
-    console.log(this.state.results);
-  };
-
   render() {
     return (
       <>
-        <form onSubmit={this.props.handleSubmit(this.handleSearchSubmit)}>
+        <form>
           <Field
             onChange={(e, newValue) => this.handleSearchChange(e, newValue)}
             name="search"

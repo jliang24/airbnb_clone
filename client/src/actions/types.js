@@ -31,3 +31,8 @@ export const MODIFY_SEARCH = 'modify_search';
 export const MODIFY_DATES = 'modify_dates';
 export const MODIFY_GUESTS = 'modify_guests';
 export const MODIFY_COST = 'modify_cost';
+export const RESET_SEARCH = 'reset_search';
+
+//Map actions
+export const UPDATE_ACTIVE_LISTING = 'update_active_listing';
+export const PIN_LISTING = 'pin_listing';

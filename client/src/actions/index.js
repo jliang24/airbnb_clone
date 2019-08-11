@@ -4,3 +4,4 @@ export * from './pictures';
 export * from './listing';
 export * from './messages';
 export * from './searchQuery';
+export * from './maps';

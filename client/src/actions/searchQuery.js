@@ -2,7 +2,8 @@ import {
   MODIFY_SEARCH,
   MODIFY_DATES,
   MODIFY_GUESTS,
-  MODIFY_COST
+  MODIFY_COST,
+  RESET_SEARCH
 } from 'actions/types';
 
 export const modifySearch = searchConfigs => {
@@ -30,5 +31,11 @@ export const modifyCost = numCost => {
   return {
     type: MODIFY_COST,
     payload: numCost
+  };
+};
+
+export const resetSearch = () => {
+  return {
+    type: RESET_SEARCH
   };
 };

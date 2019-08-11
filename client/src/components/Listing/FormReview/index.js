@@ -43,6 +43,10 @@ class ListingFormReview extends Component {
     this.state = {
       renderCarousel: false
     };
+    this.coordinates = {
+      lat: null,
+      lng: null
+    };
   }
 
   componentDidMount() {
@@ -183,8 +187,10 @@ class ListingFormReview extends Component {
       },
       (results, status) => {
         if (status === 'OK') {
-          new maps.Circle(circleConfig(map, results[0].geometry.location));
-          map.setCenter(results[0].geometry.location);
+          const location = results[0].geometry.location;
+          new maps.Circle(circleConfig(map, location));
+          map.setCenter(location);
+          this.handleGeocoderSuccess(location);
         } else {
           handleFailure();
         }
@@ -192,9 +198,17 @@ class ListingFormReview extends Component {
     );
   };
 
+  handleGeocoderSuccess(location) {
+    let { lat, lng } = location;
+    lat = lat();
+    lng = lng();
+    this.coordinates = { lat, lng };
+  }
+
   onCreateListingClicked = async () => {
     const { details, amenities, pictures, listing } = this.props;
-    const listingValues = { details, amenities, pictures, listing };
+    const coords = this.coordinates;
+    const listingValues = { details, amenities, pictures, listing, coords };
 
     this.editMode
       ? await this.props.editListing(

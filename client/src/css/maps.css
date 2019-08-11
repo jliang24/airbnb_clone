@@ -1,0 +1,63 @@
+.detail-marker:hover {
+  cursor: default;
+}
+
+.detail-close:hover {
+  cursor: pointer;
+}
+
+.detail-description {
+  padding: 10px;
+  padding-top: 0px;
+}
+
+.detail-close {
+  display: inline-block;
+  margin-top: 12px;
+}
+
+.animate-table {
+  max-height: 1000px !important;
+  transition: max-height 1s ease-in-out !important;
+}
+
+.table-items {
+  width: 100%;
+  padding: 10px;
+}
+
+.detail > .item {
+  font-size: 10px !important;
+}
+
+.cost {
+  float: right;
+  margin-left: 60px;
+  margin-top: 6px;
+}
+
+div.marker::after {
+  border-bottom: 10px solid;
+  border-bottom-color: inherit !important;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  content: '';
+  height: 0;
+  left: 0px;
+  position: absolute;
+  top: 29px;
+  width: 0;
+  transform: rotateX(180deg);
+  z-index: -1;
+}
+
+#list-card {
+  display: flex;
+  border-bottom: 1px solid rgb(156, 154, 154);
+}
+
+#list-image {
+  align-self: center;
+  height: 115px;
+  width: 100px;
+}

@@ -11,8 +11,6 @@ import history from 'historyObj';
 import 'css/listingcards.css';
 
 class ListingCards extends Component {
-  state = { title: '', id: '' };
-
   componentDidMount() {
     const user = this.props.user;
     this.props.fetchListings(user && true);

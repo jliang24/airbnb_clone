@@ -5,12 +5,14 @@ const Messages = mongoose.model('messages');
 const passport = require('passport');
 const _ = require('lodash');
 const QueryBuilder = require('../services/QueryBuilder');
+const fakeGen = require('../services/fakeGen');
 
 const requireSignin = passport.authenticate('jwt', { session: false });
 
 module.exports = app => {
   const details = 'details.guests details.bedrooms details.beds details.baths';
-  const location = 'location.title location.city location.state location.cost';
+  const location =
+    'location.title location.city location.state location.cost location.lat location.lng';
   const start = new Date();
   start.setHours(0, 0, 0, 0);
 
@@ -36,11 +38,24 @@ module.exports = app => {
       .guests(guests)
       .build();
 
-    const listing = await Listing.find({
+    const listings = await Listing.find({
       $and: [{ 'details.includedDates': { $gte: start } }, searchQueryObj]
     }).select(`${details} ${location} pictures`);
 
-    res.send(listing);
+    res.send(listings);
+  });
+
+  app.get('/api/fakeListings', (req, res) => {
+    let { lat, lng } = req.query;
+    lat = parseFloat(lat);
+    lng = parseFloat(lng);
+    console.log(lat, lng);
+    const fakeData = new fakeGen()
+      .generateFakeData(10)
+      .createTestData(lat, lng)
+      .returnData();
+
+    res.send(fakeData);
   });
 
   app.get('/api/listings/user', requireSignin, async (req, res) => {
@@ -70,14 +85,15 @@ module.exports = app => {
   });
 
   app.post('/api/listings', requireSignin, async (req, res) => {
-    const { details, listing, amenities, pictures } = req.body;
+    const { details, listing, amenities, pictures, coords } = req.body;
+    console.log(req.body);
     const amenitiesArr = amenities ? _.keys(_.pickBy(amenities)) : null;
 
     const newListing = new Listing({
       details,
-      location: listing,
-      amenities: amenitiesArr,
       pictures,
+      location: { ...listing, ...coords },
+      amenities: amenitiesArr,
       _user: req.user._id,
       listingCreated: new Date()
     });
@@ -98,7 +114,8 @@ module.exports = app => {
   });
 
   app.patch('/api/listings/:id', requireSignin, async (req, res) => {
-    const { details, listing, amenities, pictures } = req.body;
+    const { details, listing, amenities, pictures, coords } = req.body;
+    console.log(req.body);
     const amenitiesArr = amenities ? _.keys(_.pickBy(amenities)) : null;
     const isUser = await checkUser(req.params.id, req.user._id);
     if (!isUser) {
@@ -110,7 +127,7 @@ module.exports = app => {
       {
         $set: {
           details,
-          location: listing,
+          location: { ...listing, ...coords },
           amenities: amenitiesArr,
           pictures
         }
