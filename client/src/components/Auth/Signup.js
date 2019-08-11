@@ -66,8 +66,9 @@ const validate = values => {
         return 'first name';
       case 'lastName':
         return 'last name';
+      default:
+        return '';
     }
-    return field;
   };
   fields.forEach(field => {
     if (!values[field])

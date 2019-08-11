@@ -1,5 +1,3 @@
-import { any } from 'prop-types';
-
 export const capitalizeFirstLetter = string => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };

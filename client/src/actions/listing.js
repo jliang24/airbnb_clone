@@ -47,6 +47,7 @@ export const fetchListings = user => async (dispatch, getState) => {
       : await listingAPI().get('/api/listings', {
           params: searchQuery
         });
+
   dispatch({ type: FETCH_LISTINGS, payload: response.data });
 };
 

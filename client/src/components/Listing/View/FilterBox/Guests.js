@@ -13,12 +13,14 @@ class GuestsFilter extends Component {
   state = { ...initialState };
 
   incrementValue = () => {
-    return this.setState({ guests: (this.state.guests += 1) });
+    let guests = this.state.guests;
+    return this.setState({ guests: (guests += 1) });
   };
 
   decrementValue = () => {
-    if (this.state.guests <= 1) return;
-    return this.setState({ guests: (this.state.guests -= 1) });
+    let guests = this.state.guests;
+    if (guests <= 1) return;
+    return this.setState({ guests: (guests -= 1) });
   };
 
   onApplySelected = () => {

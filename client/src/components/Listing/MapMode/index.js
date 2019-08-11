@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchFakeListings, fetchListings } from 'actions';
+import { fetchFakeListings, fetchListings, clearListings } from 'actions';
 import Maps from './Maps';
 import MapTable from './Table';
 import SearchBar from '../View/FilterBox/SearchBar';
@@ -17,6 +17,10 @@ class MapMode extends Component {
   componentDidMount() {
     this.props.fetchListings();
     // this.props.fetchFakeListings(this.state.center);
+  }
+
+  componentWillUnmount() {
+    this.props.clearListings();
   }
 
   showMap() {
@@ -66,7 +70,9 @@ class MapMode extends Component {
     const notVisible = {
       opacity: 0,
       zIndex: -1,
-      position: 'relative'
+      position: 'relative',
+      height: '0px',
+      overflow: 'hidden'
     };
     return this.state.shown ? visible : notVisible;
   }
@@ -96,5 +102,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fetchFakeListings, fetchListings }
+  { fetchFakeListings, fetchListings, clearListings }
 )(MapMode);

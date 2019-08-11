@@ -44,7 +44,7 @@ class Messages extends Component {
         picture,
         listingId,
         dateSent,
-        hostResponse,
+        // hostResponse,
         response,
         _id
       } = message;
@@ -128,6 +128,7 @@ class Messages extends Component {
               <img
                 id="message-img"
                 className="column"
+                alt="msg img"
                 style={{
                   height: checkHeight(idx),
                   maxWidth: '300px',

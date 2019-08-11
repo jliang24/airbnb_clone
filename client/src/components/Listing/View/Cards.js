@@ -16,6 +16,8 @@ class ListingCards extends Component {
     this.props.fetchListings(user && true);
   }
 
+  componentDidUpdate() {}
+
   componentWillUnmount() {
     this.props.clearListings();
   }

@@ -44,7 +44,7 @@ class MapTable extends Component {
           id="list-image"
           className="ui image"
           src={pictures}
-          alt={'place image'}
+          alt="place pic"
         />
         {this.state.list[index]}
       </div>

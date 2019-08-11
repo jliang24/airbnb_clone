@@ -8,7 +8,7 @@ import states from 'utils/states';
 import zipcodeToState from 'utils/zipcode';
 import { capitalizeFirstLetter, hasNumbers } from 'utils/text';
 import SearchResults from './SearchResults';
-import { fetchListings, modifySearch } from 'actions';
+import { fetchListings, modifySearch, resetSearch } from 'actions';
 
 import 'css/searchbar.css';
 
@@ -16,6 +16,10 @@ const initialState = { results: {}, active: false };
 
 class SearchBar extends Component {
   state = initialState;
+
+  componentWillUnmount() {
+    this.props.resetSearch();
+  }
 
   handleSearchChange = (e, newValue) => {
     const filteredResults = newValue ? this.filterByStateAndCity(newValue) : [];
@@ -168,5 +172,5 @@ SearchBar = reduxForm({
 
 export default connect(
   null,
-  { fetchListings, modifySearch }
+  { fetchListings, modifySearch, resetSearch }
 )(SearchBar);

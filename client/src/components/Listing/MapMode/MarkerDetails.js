@@ -104,11 +104,12 @@ class MarkerDetails extends Component {
 
   render() {
     const listing = this.props.listing;
-    const { title, city, state } = listing.location;
+    const { title } = listing.location;
 
     return (
       <div className="detail-marker" style={detailStyle}>
         <img
+          alt=""
           className="image"
           src={
             this.domainURL + listing.pictures[0] ||
