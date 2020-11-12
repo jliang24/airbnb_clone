@@ -22,6 +22,7 @@ import Home from 'components/Home/index';
 import 'semantic/dist/semantic.min.css';
 import 'css/themes.css';
 
+console.log('test')
 const store = createStore(
   reducers,
   {
