@@ -8,7 +8,6 @@ class MapTable extends Component {
   constructor(props) {
     super(props);
     this.state = { list: [] };
-    this.domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
   }
 
   componentDidUpdate() {
@@ -35,7 +34,7 @@ class MapTable extends Component {
   renderRow = ({ index, style }) => {
     const listing = this.props.listings[index];
     const pictures = listing
-      ? this.domainURL + listing.pictures[0]
+      ? listing.pictures[0]
       : `http://lorempixel.com/200/200/city/${index}`;
 
     return (

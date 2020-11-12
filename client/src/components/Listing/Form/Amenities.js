@@ -195,14 +195,13 @@ const ListingAmenities = props => {
 
   const renderPictures = () => {
     if (!props.pictures || props.pictures.length === 0) return null;
-    const domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
     const picContainer = props.pictures.map(picURL => (
       <img
         key={picURL}
         alt={picURL}
         style={{ maxHeight: '200px' }}
         className="card"
-        src={domainURL + picURL}
+        src={picURL}
       />
     ));
     return (

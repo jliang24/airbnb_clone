@@ -33,7 +33,6 @@ class ListingCards extends Component {
   }
 
   renderList() {
-    const domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
 
     return this.props.listings.map(({ details, pictures, location, _id }) => {
       const renderDetails = () => {
@@ -58,7 +57,7 @@ class ListingCards extends Component {
       };
 
       const renderPicture = () => {
-        if (pictures[0]) return domainURL + pictures[0];
+        if (pictures[0]) return  pictures[0];
         return 'https://loremflickr.com/2000/2000';
       };
 

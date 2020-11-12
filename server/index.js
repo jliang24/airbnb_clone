@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const keys = require('./config/keys');
 mongoose.connect(keys.mongoURI);
+app.use(bodyParser({limit: '4MB'}))
 app.use(morgan('combined'));
 app.use(cors());
 app.use(bodyParser.json({ type: '*/*' }));

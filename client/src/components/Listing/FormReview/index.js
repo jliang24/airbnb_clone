@@ -81,14 +81,13 @@ class ListingFormReview extends Component {
   }
 
   renderPictures() {
-    const domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
     let imagePics;
 
     if (this.props.pictures) {
       imagePics = this.props.pictures.map(picture => {
         return {
-          original: domainURL + picture,
-          thumbnail: domainURL + picture
+          original: picture,
+          thumbnail: picture
         };
       });
     }

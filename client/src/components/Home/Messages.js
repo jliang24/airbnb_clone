@@ -49,8 +49,6 @@ class Messages extends Component {
         _id
       } = message;
 
-      const domainURL = `https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/`;
-
       const checkHeight = idx => {
         if (this.state.columnHeights.length > 0) {
           return this.state.columnHeights[idx];
@@ -138,7 +136,7 @@ class Messages extends Component {
                 }}
                 src={
                   picture
-                    ? domainURL + picture
+                    ? picture
                     : 'https://loremflickr.com/2000/2000 '
                 }
               />

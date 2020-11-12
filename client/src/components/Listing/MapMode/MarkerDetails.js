@@ -29,7 +29,6 @@ class MarkerDetails extends Component {
   state = { showDetails: false };
   constructor(props) {
     super(props);
-    this.domainURL = 'https://s3-us-west-1.amazonaws.com/airbnb-clone-jeff/';
   }
 
   toggleShowDetails = () => {
@@ -112,7 +111,7 @@ class MarkerDetails extends Component {
           alt=""
           className="image"
           src={
-            this.domainURL + listing.pictures[0] ||
+            listing.pictures[0] ||
             `http://lorempixel.com/250/250/city/${this.props.idx}`
           }
           style={{ height: '250px', width: '250px' }}
