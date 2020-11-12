@@ -12,10 +12,6 @@ cloudinary.config({
   api_secret: keys.cloudSecret 
 });
 
-// const s3 = new AWS.S3({
-//   accessKeyId: keys.awsAccessKeyId,
-//   secretAccessKey: keys.awsSecretAccesskey
-// });
 
 module.exports = app => {
   app.post('/api/upload/:type', requireSignin, (req, res) => {
@@ -25,19 +21,12 @@ module.exports = app => {
     const data = req.body.pictures;
 
 
-    cloudinary.v2.uploader.upload(data, function(error, result) { res.send({ url: result.secure_url}) })
+    cloudinary.v2.uploader.upload(data, function(error, result) { 
+      console.log(error)
+      res.send({ url: result.secure_url}) 
+    })
 
-    // s3.getSignedUrl(
-    //   'putObject',
-    //   {
-    //     Bucket: 'airbnb-clone-jeff',
-    //     ContentType: `image/${type}`,
-    //     Key: key
-    //   },
-    //   (err, url) => {
-    //     res.send({ key, url });
-    //   }
-    // );
+
   });
 };
 
