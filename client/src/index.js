@@ -1,32 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Router, Route, Switch } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import reduxThunk from 'redux-thunk';
+import React from "react";
+import ReactDOM from "react-dom";
+import { Router, Route, Switch } from "react-router-dom";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import reduxThunk from "redux-thunk";
 
-import App from 'components/App';
-import reducers from 'reducers';
-import history from 'historyObj';
-import Landing from 'components/Landing';
-import Signup from 'components/Auth/Signup';
-import Signout from 'components/Auth/Signout';
-import Signin from 'components/Auth/Signin';
-import ListingCreate from 'components/Listing/Create';
-import ListingDelete from 'components/Listing/Delete';
-import ListingView from 'components/Listing/View';
-import ListingMap from 'components/Listing/MapMode';
-import ListingFormReview from 'components/Listing/FormReview';
-import Home from 'components/Home/index';
+import App from "components/App";
+import reducers from "reducers";
+import history from "historyObj";
+import Landing from "components/Landing";
+import Signup from "components/Auth/Signup";
+import Signout from "components/Auth/Signout";
+import Signin from "components/Auth/Signin";
+import ListingCreate from "components/Listing/Create";
+import ListingDelete from "components/Listing/Delete";
+import ListingView from "components/Listing/View";
+import ListingMap from "components/Listing/MapMode";
+import ListingFormReview from "components/Listing/FormReview";
+import Home from "components/Home/index";
 
-import 'semantic/dist/semantic.min.css';
-import 'css/themes.css';
+import "semantic/dist/semantic.min.css";
+import "css/themes.css";
 
-console.log('test')
 const store = createStore(
   reducers,
   {
-    auth: { authenticated: localStorage.getItem('token') }
+    auth: { authenticated: localStorage.getItem("token") },
   },
   applyMiddleware(reduxThunk)
 );
@@ -51,5 +50,5 @@ ReactDOM.render(
       </App>
     </Router>
   </Provider>,
-  document.querySelector('#root')
+  document.querySelector("#root")
 );
