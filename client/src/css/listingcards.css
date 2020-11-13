@@ -32,6 +32,9 @@ div.filterbox {
   margin-top: 15px !important;
 }
 
+.image-card {
+  height: 300px !important;
+}
 @media (max-width: 678px) {
   #cardlist {
     margin: 0px 30px;

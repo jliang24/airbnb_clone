@@ -33,12 +33,10 @@ class ListingCards extends Component {
   }
 
   renderList() {
-
     return this.props.listings.map(({ details, pictures, location, _id }) => {
       const renderDetails = () => {
         return detailUtils.keys.map((detail, idx) => {
           const detailValue = details[detail];
-          if (detailValue > 0)
             return (
               <div
                 className={(idx + 1) % 2 === 0 ? '' : 'column'}
@@ -68,7 +66,7 @@ class ListingCards extends Component {
           className="card"
         >
           <div className="image">
-            <img alt={location.title} src={renderPicture()} />
+            <img className="image-card" alt={location.title} src={renderPicture()} />
           </div>
           <div className="content">
             <div className="header">{location.title}</div>
