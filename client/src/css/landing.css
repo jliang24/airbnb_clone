@@ -1,0 +1,14 @@
+#landing {
+  min-height: 700px;
+}
+
+.ui.text.container {
+  display: block;
+}
+
+.ui.inverted.header {
+  display: flex;
+  justify-content: center;
+  margin-top: 3em !important;
+  font-size: 4em;
+}
